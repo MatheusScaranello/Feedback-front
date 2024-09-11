@@ -3,7 +3,7 @@ import { useState } from 'react';
 import apiUsuarios from '../../service/usuario';
 
 const Feedback = (localParametro) => {
-    const [local, setLocal] = useState(localParametro);
+    const [local, setLocal] = useState("SENAI");
     const [nota, setNota] = useState(0);
     const [observacao, setObservacao] = useState('');
     
