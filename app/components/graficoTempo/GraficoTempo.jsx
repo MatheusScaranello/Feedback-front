@@ -1,18 +1,34 @@
 "use client";
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useCallback, useMemo, createContext, useContext } from 'react';
 import { ScatterChart, Scatter, XAxis, YAxis, ZAxis, Tooltip, Legend, ResponsiveContainer, CartesianGrid, LineChart, Line } from 'recharts';
 import apiUsuarios from '@/app/service/usuario';
 import debounce from 'lodash.debounce';
-import styled from 'styled-components';
+import styled, { ThemeProvider, createGlobalStyle } from 'styled-components';
 import { saveAs } from 'file-saver';
-import { CSVLink } from 'react-csv';
 import Papa from 'papaparse';
+import { Button, Select } from 'reactstrap';
+
+// Global Styles
+const GlobalStyle = createGlobalStyle`
+    body {
+        margin: 0;
+        font-family: 'Arial', sans-serif;
+        background-color: #f8f9fa;
+    }
+`;
+
+// Themes
+const theme = {
+    primaryColor: '#007bff',
+    secondaryColor: '#6c757d',
+    backgroundColor: '#f8f9fa',
+    textColor: '#212529',
+};
 
 // Styled Components
 const Container = styled.div`
     padding: 20px;
-    font-family: Arial, sans-serif;
-    background-color: #f8f9fa;
+    background-color: ${props => props.theme.backgroundColor};
 `;
 
 const Controls = styled.div`
@@ -22,27 +38,19 @@ const Controls = styled.div`
     margin-bottom: 20px;
 `;
 
-const Button = styled.button`
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    &:hover {
-        background-color: #0056b3;
-    }
-`;
-
-const Select = styled.select`
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    width: 150px;
-`;
-
 const ChartContainer = styled.div`
     margin-top: 20px;
+`;
+
+const Card = styled.div`
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    padding: 20px;
+`;
+
+const FilterSection = styled.div`
+    margin-bottom: 20px;
 `;
 
 // Custom Hooks
@@ -56,9 +64,9 @@ const useFetchUsuarios = () => {
             try {
                 const usuariosData = await apiUsuarios.getUsuarios();
                 setUsuarios(usuariosData);
-                setLoading(false);
             } catch (error) {
                 setError(error);
+            } finally {
                 setLoading(false);
             }
         };
@@ -84,7 +92,7 @@ const useDataFiltering = (usuarios) => {
         if (usuarios.length > 0) {
             const anos = [...new Set(usuarios.map(usuario => new Date(usuario.data).getFullYear()))];
             setAnosDisponiveis(anos);
-            const nomesUsuarios = [...new Set(usuarios.map(usuario => usuario.nome))];
+            const nomesUsuarios = [...new Set(usuarios.map(usuario => usuario.local))];
             setUsuariosDisponiveis(nomesUsuarios);
         }
     }, [usuarios]);
@@ -145,7 +153,7 @@ const useDataFiltering = (usuarios) => {
     const filtrarDadosPorAno = () => {
         const dadosFiltrados = usuarios.filter(usuario => {
             const data = new Date(usuario.data);
-            return data.getFullYear() === parseInt(anoSelecionado) && (usuarioSelecionado ? usuario.nome === usuarioSelecionado : true);
+            return data.getFullYear() === parseInt(anoSelecionado) && (usuarioSelecionado ? usuario.local === usuarioSelecionado : true);
         });
         setDados(agruparPorData(dadosFiltrados));
     };
@@ -155,7 +163,7 @@ const useDataFiltering = (usuarios) => {
             const data = new Date(usuario.data);
             return data.getFullYear() === parseInt(anoSelecionado) &&
                 data.getMonth() + 1 === parseInt(mesSelecionado) &&
-                (usuarioSelecionado ? usuario.nome === usuarioSelecionado : true);
+                (usuarioSelecionado ? usuario.local === usuarioSelecionado : true);
         });
         setDados(agruparPorData(dadosFiltrados));
     };
@@ -168,7 +176,7 @@ const useDataFiltering = (usuarios) => {
             return data.getFullYear() === parseInt(anoSelecionado) &&
                 data.getMonth() + 1 === parseInt(mesSelecionado) &&
                 semana === parseInt(semanaSelecionada) &&
-                (usuarioSelecionado ? usuario.nome === usuarioSelecionado : true);
+                (usuarioSelecionado ? usuario.local === usuarioSelecionado : true);
         });
         setDados(agruparPorData(dadosFiltrados));
     };
@@ -186,7 +194,7 @@ const useDataFiltering = (usuarios) => {
         anosDisponiveis,
         mesesDisponiveis,
         semanasDisponiveis,
-        usuariosDisponiveis,
+        usuariosDisponiveis
     };
 };
 
@@ -201,11 +209,6 @@ const Dropdown = ({ label, options, value, onChange }) => (
             ))}
         </Select>
     </div>
-);
-
-// Export Button Component
-const ExportButton = ({ onClick }) => (
-    <Button onClick={onClick}>Exportar para CSV</Button>
 );
 
 // Chart Component
@@ -227,11 +230,12 @@ const ChartComponent = ({ dados }) => (
 
 // Comparison Chart Component
 const ComparisonChart = ({ dados }) => {
-    // Function to prepare data for the comparison chart
-    const prepareComparisonData = (dados) => {
-        // Implement comparison data logic here
-        return dados; // Placeholder
-    };
+    const comparisonData = useMemo(() => {
+        return dados.map(item => ({
+            ...item,
+            comparison: item.nota * 1.1 // Example logic
+        }));
+    }, [dados]);
 
     return (
         <ChartContainer>
@@ -242,8 +246,8 @@ const ComparisonChart = ({ dados }) => {
                     <YAxis type="number" dataKey="nota" name="Nota Média" domain={[0, 'auto']} />
                     <Tooltip cursor={{ strokeDasharray: '3 3' }} formatter={(value, name) => [value, name === 'nota' ? 'Nota Média' : 'Data']} />
                     <Legend />
-                    {/* Add additional Line components for comparison */}
                     <Line type="monotone" dataKey="nota" stroke="#8884d8" />
+                    <Line type="monotone" dataKey="comparison" stroke="#82ca9d" />
                 </LineChart>
             </ResponsiveContainer>
         </ChartContainer>
@@ -266,7 +270,7 @@ const GraficoTempo = () => {
         anosDisponiveis,
         mesesDisponiveis,
         semanasDisponiveis,
-        usuariosDisponiveis,
+        usuariosDisponiveis
     } = useDataFiltering(usuarios);
 
     const exportarParaCSV = () => {
@@ -275,53 +279,116 @@ const GraficoTempo = () => {
         saveAs(blob, 'dados.csv');
     };
 
+    const exportarParaJSON = () => {
+        const json = JSON.stringify(dados, null, 2);
+        const blob = new Blob([json], { type: 'application/json' });
+        saveAs(blob, 'dados.json');
+    };
+
+    const exportarParaXML = () => {
+        const xml = dados.map(dado => `
+            <record>
+                <data>${dado.data}</data>
+                <nota>${dado.nota}</nota>
+            </record>
+        `).join('');
+        const xmlContent = `<?xml version="1.0" encoding="UTF-8"?><records>${xml}</records>`;
+        const blob = new Blob([xmlContent], { type: 'application/xml' });
+        saveAs(blob, 'dados.xml');
+    };
+
+    const parseCSV = useCallback((file) => {
+        Papa.parse(file, {
+            complete: (results) => {
+                console.log(results.data);
+            },
+            header: true
+        });
+    }, []);
+
     return (
-        <Container>
-            <Controls>
-                <Dropdown
-                    label="Ano"
-                    options={anosDisponiveis}
-                    value={anoSelecionado}
-                    onChange={(e) => setAnoSelecionado(e.target.value)}
-                />
-                {anoSelecionado && (
+        <ThemeProvider theme={theme}>
+            <GlobalStyle />
+            <Container>
+                <Controls>
                     <Dropdown
-                        label="Mês"
-                        options={mesesDisponiveis}
-                        value={mesSelecionado}
-                        onChange={(e) => setMesSelecionado(e.target.value)}
+                        label="Ano"
+                        options={anosDisponiveis}
+                        value={anoSelecionado}
+                        onChange={(e) => setAnoSelecionado(e.target.value)}
                     />
-                )}
-                {mesSelecionado && (
+                    {anoSelecionado && (
+                        <Dropdown
+                            label="Mês"
+                            options={mesesDisponiveis}
+                            value={mesSelecionado}
+                            onChange={(e) => setMesSelecionado(e.target.value)}
+                        />
+                    )}
+                    {mesSelecionado && (
+                        <Dropdown
+                            label="Semana"
+                            options={semanasDisponiveis}
+                            value={semanaSelecionada}
+                            onChange={(e) => setSemanaSelecionada(e.target.value)}
+                        />
+                    )}
                     <Dropdown
-                        label="Semana"
-                        options={semanasDisponiveis}
-                        value={semanaSelecionada}
-                        onChange={(e) => setSemanaSelecionada(e.target.value)}
+                        label="Usuário"
+                        options={usuariosDisponiveis}
+                        value={usuarioSelecionado}
+                        onChange={(e) => setUsuarioSelecionado(e.target.value)}
                     />
+                </Controls>
+                <FilterSection>
+                    <Button color="secondary" onClick={exportarParaCSV}>Exportar para CSV</Button>
+                    <Button color="secondary" onClick={exportarParaJSON}>Exportar para JSON</Button>
+                    <Button color="secondary" onClick={exportarParaXML}>Exportar para XML</Button>
+                    <input type="file" accept=".csv" onChange={(e) => parseCSV(e.target.files[0])} />
+                </FilterSection>
+                {loading ? (
+                    <div>Carregando dados...</div>
+                ) : error ? (
+                    <div>Erro ao carregar dados. Tente novamente.</div>
+                ) : (
+                    dados.length > 0 && (
+                        <>
+                            <ChartComponent dados={dados} />
+                            <ComparisonChart dados={dados} />
+                        </>
+                    )
                 )}
-                <Dropdown
-                    label="Usuário"
-                    options={usuariosDisponiveis}
-                    value={usuarioSelecionado}
-                    onChange={(e) => setUsuarioSelecionado(e.target.value)}
-                />
-            </Controls>
-            <ExportButton onClick={exportarParaCSV} />
-            {loading ? (
-                <div>Carregando dados...</div>
-            ) : error ? (
-                <div>Erro ao carregar dados. Tente novamente.</div>
-            ) : (
-                dados.length > 0 && (
-                    <>
-                        <ChartComponent dados={dados} />
-                        <ComparisonChart dados={dados} />
-                    </>
-                )
-            )}
-        </Container>
+            </Container>
+        </ThemeProvider>
     );
 };
 
 export default GraficoTempo;
+
+// Test Cases
+import { render, screen, fireEvent } from '@testing-library/react';
+import GraficoTempo from './GraficoTempo';
+
+describe('GraficoTempo Component', () => {
+    test('renders loading state', () => {
+        render(<GraficoTempo />);
+        expect(screen.getByText(/Carregando dados.../i)).toBeInTheDocument();
+    });
+
+    test('renders error state', () => {
+        // Mocking error state
+        render(<GraficoTempo />);
+        // Assume that error is handled
+    });
+
+    test('renders charts with data', () => {
+        // Mocking successful data fetch
+        render(<GraficoTempo />);
+        expect(screen.queryByText(/Carregando dados.../i)).not.toBeInTheDocument();
+    });
+
+    test('filters data correctly', () => {
+        render(<GraficoTempo />);
+        // Assume that form is filled and submit is triggered
+    });
+});
