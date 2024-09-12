@@ -364,31 +364,3 @@ const GraficoTempo = () => {
 };
 
 export default GraficoTempo;
-
-// Test Cases
-import { render, screen, fireEvent } from '@testing-library/react';
-import GraficoTempo from './GraficoTempo';
-
-describe('GraficoTempo Component', () => {
-    test('renders loading state', () => {
-        render(<GraficoTempo />);
-        expect(screen.getByText(/Carregando dados.../i)).toBeInTheDocument();
-    });
-
-    test('renders error state', () => {
-        // Mocking error state
-        render(<GraficoTempo />);
-        // Assume that error is handled
-    });
-
-    test('renders charts with data', () => {
-        // Mocking successful data fetch
-        render(<GraficoTempo />);
-        expect(screen.queryByText(/Carregando dados.../i)).not.toBeInTheDocument();
-    });
-
-    test('filters data correctly', () => {
-        render(<GraficoTempo />);
-        // Assume that form is filled and submit is triggered
-    });
-});
