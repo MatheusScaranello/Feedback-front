@@ -23,7 +23,7 @@ export default function Admin() {
 
     return (
         <>
-            <h1>Analise de desempenho</h1>
+            <h1 className={styles.titulo}>Analise de desempenho</h1>
             <GraficoPizza />
             <GraficoTempo />
             <ComentariosPage />
