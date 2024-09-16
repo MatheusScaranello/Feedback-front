@@ -202,12 +202,12 @@ const useDataFiltering = (usuarios) => {
 const Dropdown = ({ label, options, value, onChange }) => (
     <div>
         <label>{label}</label>
-        <Select onChange={onChange} value={value}>
+        <select onChange={onChange} value={value}>
             <option value="">Selecione</option>
             {options.map(option => (
                 <option key={option} value={option}>{option}</option>
             ))}
-        </Select>
+        </select>
     </div>
 );
 
