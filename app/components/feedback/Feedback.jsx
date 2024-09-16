@@ -1,7 +1,6 @@
 import styles from './feedback.module.css';
 import { useState } from 'react';
 import apiUsuarios from '../../service/usuario';
-import Header from '../header/Header';
 
 const Feedback = (localParametro) => {
     const [local, setLocal] = useState("SENAI");
@@ -28,16 +27,15 @@ const Feedback = (localParametro) => {
     };
 
     return (
-        <> 
-        <Header/>
+        <>
         <div className={styles.fundo}>
         <div className={styles.card}>
-            <h2>Em uma escala de 0 a 10, o quanto você recomendaria nosso serviço?</h2>
+            <h2 className={styles.text}>Em uma escala de 0 a 10, o quanto você recomendaria nosso serviço?</h2>
             <div className={styles.scale}>
                 {[...Array(11).keys()].map((num) => (
                     <button
                         key={num}
-                        className={num === nota ? styles.selected : ''}
+                        className={num === nota ? styles.selected : styles.notSelected}
                         onClick={() => setNota(num)}
                     >
                         {num}
@@ -45,8 +43,8 @@ const Feedback = (localParametro) => {
                     </button>
                 ))}
             </div>
-            <p>Não Satisfeito</p>
-            <p>Satisfeito</p>
+            <p className={styles.avali}>Não Satisfeito</p>
+            <p className={styles.avali}>Satisfeito</p>
             <textarea
                 placeholder="Fale como podemos melhorar (opcional)"
                 value={observacao}
