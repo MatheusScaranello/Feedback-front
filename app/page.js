@@ -6,6 +6,7 @@ import Feedback from "./components/feedback/Feedback";
 import GraficoPizza from "./components/graficoPizza/GraficoPizza";
 import GraficoTempo from "./components/graficoTempo/GraficoTempo";
 
+
 export default function Home() {
     const [usuarios, setUsuarios] = useState([]);
 

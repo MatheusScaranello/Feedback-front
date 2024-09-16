@@ -1,0 +1,50 @@
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 20px solid red; /* Linha vermelha na parte superior */
+    background-color: #f5f5f5;
+    height: 80px; /* Altura do cabeçalho */
+   
+}
+
+.leftSide, .rightSide {
+    display: flex;
+    align-items: center;
+}
+
+.leftSide {
+    flex: 1; /* A imagem ocupa uma parte do espaço */
+    margin-top: 10px;
+}
+
+.rightSide {
+    flex: 2; /* O texto ocupa uma parte maior do espaço */
+    text-align: left;
+    margin-top: 10px;
+}
+
+.img {
+    max-width: 155px;
+    height: auto;
+    margin-left: 350px; /* Espaçamento entre a imagem e o texto */
+}
+
+.h1 {
+    font-size: 20px;
+    color: #333;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    margin-left: 5px;
+        
+}
+
+.divider {
+    width: 1px;
+    height: 50px; /* Altura da linha divisória */
+    background-color: #ff0000; /* Cor da divisória */
+    margin: 0 20px; /* Espaçamento entre a imagem e o texto */
+    margin-top: 10px;
+    margin-right: 10px;
+    
+}
