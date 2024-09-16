@@ -43,10 +43,12 @@ const Feedback = (localParametro) => {
                     </button>
                 ))}
             </div>
+           
             <p className={styles.avali}>Não Satisfeito</p>
-            <p className={styles.avali}>Satisfeito</p>
+            <p className={styles.avali}>Satisfeito</p> 
+            <h2 className={styles.text}>Fale como podemos melhorar (opcional)</h2>
             <textarea
-                placeholder="Fale como podemos melhorar (opcional)"
+                placeholder="..."
                 value={observacao}
                 onChange={(e) => setObservacao(e.target.value)}
             />
