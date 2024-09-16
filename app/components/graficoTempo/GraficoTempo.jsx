@@ -279,24 +279,6 @@ const GraficoTempo = () => {
         saveAs(blob, 'dados.csv');
     };
 
-    const exportarParaJSON = () => {
-        const json = JSON.stringify(dados, null, 2);
-        const blob = new Blob([json], { type: 'application/json' });
-        saveAs(blob, 'dados.json');
-    };
-
-    const exportarParaXML = () => {
-        const xml = dados.map(dado => `
-            <record>
-                <data>${dado.data}</data>
-                <nota>${dado.nota}</nota>
-            </record>
-        `).join('');
-        const xmlContent = `<?xml version="1.0" encoding="UTF-8"?><records>${xml}</records>`;
-        const blob = new Blob([xmlContent], { type: 'application/xml' });
-        saveAs(blob, 'dados.xml');
-    };
-
     const parseCSV = useCallback((file) => {
         Papa.parse(file, {
             complete: (results) => {
@@ -334,16 +316,14 @@ const GraficoTempo = () => {
                         />
                     )}
                     <Dropdown
-                        label="Usuário"
+                        label="Local"
                         options={usuariosDisponiveis}
                         value={usuarioSelecionado}
                         onChange={(e) => setUsuarioSelecionado(e.target.value)}
                     />
                 </Controls>
                 <FilterSection>
-                    <Button color="secondary" onClick={exportarParaCSV}>Exportar para CSV</Button>
-                    <Button color="secondary" onClick={exportarParaJSON}>Exportar para JSON</Button>
-                    <Button color="secondary" onClick={exportarParaXML}>Exportar para XML</Button>
+                    <Button color="secondary" onClick={exportarParaCSV}>Exportar Excel</Button>
                     <input type="file" accept=".csv" onChange={(e) => parseCSV(e.target.files[0])} />
                 </FilterSection>
                 {loading ? (
