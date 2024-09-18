@@ -44,16 +44,24 @@ const Feedback = (localParametro) => {
                     </button>
                 ))}
             </div>
-           
-            <p className={styles.avali}>Não Satisfeito</p>
-            <p className={styles.avali}>Satisfeito</p> 
-            <h2 className={styles.text02}>Fale como podemos melhorar (opcional)</h2>
+            <div className={styles.avaliContainer}>
+                    <p className={styles.avali01}>Não Satisfeito</p>
+                    <p className={styles.avali}>Satisfeito</p>
+                </div>
+            <div>
+                  <h2 className={styles.text02}>Fale como podemos melhorar (opcional)</h2>
+            </div>
+          
             <textarea
+                className={styles.textarea}
                 placeholder="..."
                 value={observacao}
                 onChange={(e) => setObservacao(e.target.value)}
             />
-            <button className={styles.submit} onClick={handleSubmit}>Enviar</button>
+            <div>
+                 <button className={styles.submit} onClick={handleSubmit} >Enviar</button>
+            </div>
+           
         </div>
         </div>
         

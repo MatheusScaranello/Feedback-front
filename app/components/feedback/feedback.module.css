@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 .card {
     padding: 20px;
     border: 1px solid #000000;
@@ -38,7 +38,8 @@
     border-radius: 5px;
     background-color: white;
     cursor: pointer;
-   
+    font-family: "Inter", sans-serif;
+    
  
    
 }
@@ -65,11 +66,12 @@
 }
 
 .textarea {
-    width: 120%;
-    height: 120px;
-    margin-top: 10px;
+    width: 650px; /* 100% da largura do container pai */
+    height: 100px; /* Aumenta a altura */
     padding: 10px;
     border-radius: 4px;
+    border: 1px solid #000000; /* Adiciona uma borda para melhor visualização */
+    resize: none; /* Impede o redimensionamento manual */
     
 }
 
@@ -80,15 +82,39 @@
     border: none;
     border-radius: 2px;
     cursor: pointer;
-    margin-top: 20px;
+   margin-top:25px;
+   height: 50px; 
+   width: 228px;
 }
 
+
 /* Flexbox para os itens .avali ficarem lado a lado */
-.avali {
+.avaliContainer {
     display: flex;
-    justify-content: space-between;
-    flex-wrap: nowrap; /* Para garantir que fiquem lado a lado */
-    gap: 20px; /* Espaço entre os elementos */
+    justify-content: space-between; /* Isso garante que os elementos fiquem nas extremidades */
+    margin: 30px 0; /* Espaçamento vertical */
+}
+
+.avali {
+    flex: 1; /* Faz com que cada item ocupe espaço igual */
+    text-align: center; /* Centraliza o texto */
+    padding: 10px; /* Espaçamento interno */
+    margin: -35px 0; /* Espaçamento vertical */
+    font-family: "Inter", sans-serif;
+    margin-right: -40px;
+    margin-left: 200px;
+   
+}
+
+.avali01 {
+    flex: 1; /* Faz com que cada item ocupe espaço igual */
+    text-align: center; /* Centraliza o texto */
+    padding: 10px; /* Espaçamento interno */
+    margin: -35px 0; /* Espaçamento vertical */
+    font-family: "Inter", sans-serif;
+    margin-right: 300px;
+    font-size: 15px;
+ 
 }
 
 .text{
@@ -96,5 +122,15 @@
   font-family: "Inter", sans-serif;
   font-size: 20px;
   margin-top: 50px;
+
+}
+
+.text02{
+   
+  font-style: italic;
+  font-family: "Inter", sans-serif;
+  font-size: 17px;
+  margin-top: 10px;
+  margin-right: 320px;
 
 }
