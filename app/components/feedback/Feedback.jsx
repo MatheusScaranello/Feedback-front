@@ -2,6 +2,7 @@ import styles from './feedback.module.css';
 import { useState } from 'react';
 import apiUsuarios from '../../service/usuario';
 
+
 const Feedback = (localParametro) => {
     const [local, setLocal] = useState("SENAI");
     const [nota, setNota] = useState(0);
@@ -46,7 +47,7 @@ const Feedback = (localParametro) => {
            
             <p className={styles.avali}>Não Satisfeito</p>
             <p className={styles.avali}>Satisfeito</p> 
-            <h2 className={styles.text}>Fale como podemos melhorar (opcional)</h2>
+            <h2 className={styles.text02}>Fale como podemos melhorar (opcional)</h2>
             <textarea
                 placeholder="..."
                 value={observacao}
@@ -55,6 +56,7 @@ const Feedback = (localParametro) => {
             <button className={styles.submit} onClick={handleSubmit}>Enviar</button>
         </div>
         </div>
+        
          </>
     );
 }
