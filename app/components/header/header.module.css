@@ -30,7 +30,7 @@
     width: 180px; /* Largura da imagem */
     height: 280px; /* Altura da imagem */
     height: auto;
-
+    margin-right: 20px;
     margin-left: 650px; /* Espaçamento entre a imagem e o texto */
 }
 
@@ -51,6 +51,6 @@
     margin: 0 20px; /* Espaçamento entre a imagem e o texto */
     margin-top: 10px;
     margin-left: 80px; /* Espaçamento entre a imagem e o texto */
-    margin-right: 10px;
+    margin-right: 20px;
     
 }
