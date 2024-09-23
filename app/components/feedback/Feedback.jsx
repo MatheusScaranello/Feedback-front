@@ -1,6 +1,7 @@
 import styles from './feedback.module.css';
 import { useState } from 'react';
 import apiUsuarios from '../../service/usuario';
+import Header from '../header/Header';
 
 const Feedback = (localParametro) => {
     const [local, setLocal] = useState("SENAI");
@@ -27,6 +28,9 @@ const Feedback = (localParametro) => {
     };
 
     return (
+        <> 
+        <Header/>
+        <div className={styles.fundo}>
         <div className={styles.card}>
             <h2>Em uma escala de 0 a 10, o quanto você recomendaria nosso serviço?</h2>
             <div className={styles.scale}>
@@ -50,7 +54,11 @@ const Feedback = (localParametro) => {
             />
             <button className={styles.submit} onClick={handleSubmit}>Enviar</button>
         </div>
+        </div>
+         </>
     );
 }
+       
+       
 
 export default Feedback;
