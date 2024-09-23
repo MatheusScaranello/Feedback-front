@@ -13,6 +13,7 @@ const PieChart = ({ initialLocal }) => {
     const [usuarios, setUsuarios] = useState([]);
     const [selectedLocal, setSelectedLocal] = useState(initialLocal || '');
     const [selectedSegment, setSelectedSegment] = useState(null);
+    const [periodo, setPeriodo] = useState({ inicio: '', fim: '' });
 
     useEffect(() => {
         async function fetchUsuarios() {
@@ -28,11 +29,24 @@ const PieChart = ({ initialLocal }) => {
 
     const uniqueLocals = [...new Set(usuarios.map(usuario => usuario.local))];
 
-    const usuariosFiltrados = selectedLocal ? usuarios.filter((usuario) => usuario.local === selectedLocal) : usuarios;
+    const usuariosFiltrados = usuarios.filter(usuario => {
+        const dataUsuario = new Date(usuario.data);
+        const inicio = new Date(periodo.inicio);
+        const fim = new Date(periodo.fim);
+        return (!selectedLocal || usuario.local === selectedLocal) &&
+               (periodo.inicio === '' || dataUsuario >= inicio) &&
+               (periodo.fim === '' || dataUsuario <= fim);
+    });
 
-    const insatisfeitos = usuariosFiltrados.filter((usuario) => usuario.nota <= 6).length;
-    const satisfeitos = usuariosFiltrados.filter((usuario) => usuario.nota >= 7 && usuario.nota <= 8).length;
-    const muitoSatisfeitos = usuariosFiltrados.filter((usuario) => usuario.nota >= 9 && usuario.nota <= 10).length;
+    const insatisfeitos = usuariosFiltrados.filter(usuario => usuario.nota <= 6).length;
+    const satisfeitos = usuariosFiltrados.filter(usuario => usuario.nota >= 7 && usuario.nota <= 8).length;
+    const muitoSatisfeitos = usuariosFiltrados.filter(usuario => usuario.nota >= 9 && usuario.nota <= 10).length;
+
+    const totalRespondentes = usuariosFiltrados.length;
+    const promotores = muitoSatisfeitos;
+    const detratores = insatisfeitos;
+    const neutros = satisfeitos;
+    const nps = totalRespondentes > 0 ? (((promotores - detratores) / totalRespondentes) * 100).toFixed(2) : 0;
 
     const data = {
         labels: ['Insatisfeitos', 'Satisfeitos', 'Muito satisfeitos'],
@@ -40,7 +54,7 @@ const PieChart = ({ initialLocal }) => {
             {
                 label: 'Pontuação',
                 data: [insatisfeitos, satisfeitos, muitoSatisfeitos],
-                backgroundColor: ['#BFBFBF', '#3366CC', '#FF9933'],
+                backgroundColor: ['#FF0000', '#FFFF00', '#00FF00'],
             }
         ]
     };
@@ -104,6 +118,39 @@ const PieChart = ({ initialLocal }) => {
                 <option value="">Todos os Locais</option>
                 {uniqueLocals.map(local => <option key={local} value={local}>{local}</option>)}
             </select>
+            <div className={styles.periodo}>
+                <label>Período da Pesquisa:</label>
+                <input type="date" value={periodo.inicio} onChange={(e) => setPeriodo({ ...periodo, inicio: e.target.value })} />
+                <input type="date" value={periodo.fim} onChange={(e) => setPeriodo({ ...periodo, fim: e.target.value })} />
+            </div>
+            <div className={styles.metrics}>
+                <div className={styles.metric}>
+                    <h3>% Promotores</h3>
+                    <p>{((promotores / totalRespondentes) * 100).toFixed(1)}%</p>
+                    <h3>Promotores</h3>
+                    <p>{promotores}</p>
+                </div>
+                <div className={styles.metric}>
+                    <h3>% Neutros</h3>
+                    <p>{((neutros / totalRespondentes) * 100).toFixed(1)}%</p>
+                    <h3>Neutros</h3>
+                    <p>{neutros}</p>
+                </div>
+                <div className={styles.metric}>
+                    <h3>% Detratores</h3>
+                    <p>{((detratores / totalRespondentes) * 100).toFixed(1)}%</p>
+                    <h3>Detratores</h3>
+                    <p>{detratores}</p>
+                </div>
+                <div className={styles.metric}>
+                    <h3>NPS</h3>
+                    <p>{nps}</p>
+                </div>
+                <div className={styles.metric}>
+                    <h3>Total Pesquisados</h3>
+                    <p>{totalRespondentes}</p>
+                </div>
+            </div>
             <Pie data={data} options={options} />
             {segmentDetails}
             <button className={styles.exportButton} onClick={handleExportCSV}>Exportar Dados para CSV</button>
