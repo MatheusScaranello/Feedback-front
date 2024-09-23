@@ -34,7 +34,9 @@ export default function Home() {
                     </li>
                 ))}
             </ul> */}
-            <Feedback/>
+
+ 
+            <GraficoPizza />
         </>
     );
 }

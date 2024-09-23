@@ -1,4 +1,3 @@
-"use client";
 import { useState, useEffect } from "react";
 import React from 'react';
 import { Pie } from 'react-chartjs-2';
@@ -9,57 +8,220 @@ import styles from "./graficoPizza.module.css";
 // Registrar os elementos do Chart.js
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const PieChart = (local) => {
+const PieChart = ({ initialLocal }) => {
     const [usuarios, setUsuarios] = useState([]);
+    const [selectedLocal, setSelectedLocal] = useState(initialLocal || '');
+    const [selectedSegment, setSelectedSegment] = useState(null);
+    const [periodo, setPeriodo] = useState({ inicio: '', fim: '' });
+    const [rangeInicio, setRangeInicio] = useState(0);
+    const [rangeFim, setRangeFim] = useState(100);
 
     useEffect(() => {
-        async function fetchUsuarios() {
+        const fetchUsuarios = async () => {
             try {
-                const data = await apiUsuarios.getUsuarioByLocal(local);
+                const data = await apiUsuarios.getUsuarios();
                 setUsuarios(data);
             } catch (error) {
                 console.error(error);
             }
-        }
+        };
         fetchUsuarios();
     }, []);
 
-    // Filtrar os usuários por nota Muito satisfeitos (9-10): Usuários satisfeitos que provavelmente recomendaram o serviço.
-     //Neutros (7-8): Usuários satisfeitos, mas não entusiasmados.
-     //Detratores (0-6): Usuários insatisfeitos que podem prejudicar a reputação.
-    const insatisfeitos = usuarios.filter((usuario) => usuario.nota <= 6).length;
-    const satisfeitos = usuarios.filter((usuario) => usuario.nota >= 7 && usuario.nota <= 8).length;
-    const muitoSatisfeitos = usuarios.filter((usuario) => usuario.nota >= 9 && usuario.nota <= 10).length;
+    const uniqueLocals = [...new Set(usuarios.map(usuario => usuario.local))];
 
+    const calcularDatas = () => {
+        const datas = usuarios.map(usuario => new Date(usuario.data)).filter(date => !isNaN(date));
+        const menorData = new Date(Math.min(...datas));
+        const maiorData = new Date(Math.max(...datas));
+        return { menorData, maiorData };
+    };
 
+    const { menorData, maiorData } = calcularDatas();
 
+    const usuariosFiltrados = usuarios.filter(usuario => {
+        const dataUsuario = new Date(usuario.data);
+        return (!selectedLocal || usuario.local === selectedLocal) &&
+               (periodo.inicio === '' || dataUsuario >= new Date(periodo.inicio)) &&
+               (periodo.fim === '' || dataUsuario <= new Date(periodo.fim));
+    });
 
-  const data = {
-    labels: ['Insatisfeitos', 'Satisfeitos', 'Muito satisfeitos'],
-    datasets: [
-      {
-        label: 'Pontuação',
-        data: [insatisfeitos, satisfeitos, muitoSatisfeitos],
-        backgroundColor: ['#BFBFBF', '#3366CC', '#FF9933']
-      }
-    ]
-  };
+    const calcularEstatisticas = (usuarios) => {
+        const insatisfeitos = usuarios.filter(usuario => usuario.nota <= 6).length;
+        const satisfeitos = usuarios.filter(usuario => usuario.nota >= 7 && usuario.nota <= 8).length;
+        const muitoSatisfeitos = usuarios.filter(usuario => usuario.nota >= 9 && usuario.nota <= 10).length;
+        const totalRespondentes = usuarios.length;
+        const nps = totalRespondentes > 0 ? (((muitoSatisfeitos - insatisfeitos) / totalRespondentes) * 100).toFixed(2) : 0;
 
-  const options = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: 'bottom'
-      }
-    }
-  };
+        return { insatisfeitos, satisfeitos, muitoSatisfeitos, totalRespondentes, nps };
+    };
 
-  return (
-    <div>
-      <h2>Pontuação</h2>
-      <Pie data={data} options={options} />
-    </div>
-  );
+    const { insatisfeitos, satisfeitos, muitoSatisfeitos, totalRespondentes, nps } = calcularEstatisticas(usuariosFiltrados);
+
+    useEffect(() => {
+        if (menorData && maiorData && !isNaN(menorData) && !isNaN(maiorData)) {
+            const diasInicio = Math.ceil((Date.now() - menorData.getTime()) / (1000 * 60 * 60 * 24));
+            const diasFim = Math.ceil((Date.now() - maiorData.getTime()) / (1000 * 60 * 60 * 24));
+            setRangeInicio(diasInicio);
+            setRangeFim(diasFim);
+            setPeriodo({ inicio: formatDate(menorData), fim: formatDate(maiorData) });
+        }
+    }, [usuarios]);
+
+    const formatDate = (date) => date.toISOString().split('T')[0]; // YYYY-MM-DD
+
+    const ajustarDataSlider = (valor, referencia) => {
+        const dataBase = referencia === 'inicio' ? menorData : maiorData;
+        if (!dataBase || isNaN(dataBase.getTime())) return '';
+
+        const novaData = new Date(dataBase);
+        novaData.setDate(novaData.getDate() + Number(valor));
+        return formatDate(novaData);
+    };
+
+    const handleRangeChange = (e, tipo) => {
+        const valor = e.target.value;
+        const novaData = ajustarDataSlider(valor, tipo === 'inicio' ? 'inicio' : 'fim');
+
+        if (tipo === 'inicio') {
+            setRangeInicio(valor);
+            setPeriodo(prev => ({ ...prev, inicio: novaData }));
+        } else {
+            setRangeFim(valor);
+            setPeriodo(prev => ({ ...prev, fim: novaData }));
+        }
+    };
+
+    const data = {
+        labels: ['Detratores', 'Neutros', 'Promotores'],
+        datasets: [{
+            label: 'Pontuação',
+            data: [insatisfeitos, satisfeitos, muitoSatisfeitos],
+            backgroundColor: ['#FF0000', '#FFFF00', '#00FF00'],
+        }],
+    };
+
+    const options = {
+        responsive: true,
+        plugins: {
+            legend: { position: 'bottom' },
+            tooltip: {
+                callbacks: {
+                    label: (context) => `${context.label || ''}: ${context.raw || 0} usuários`
+                }
+            }
+        },
+        onClick: (event, elements) => {
+            if (elements.length > 0) {
+                setSelectedSegment(elements[0].index);
+            }
+        }
+    };
+
+    const segmentDetails = selectedSegment !== null && (
+        <div className={styles.details}>
+            <h3>Detalhes do Segmento</h3>
+            <p>Segmento: {data.labels[selectedSegment]}</p>
+            <p>Total: {data.datasets[0].data[selectedSegment]} usuários</p>
+        </div>
+    );
+
+    const handleExportCSV = () => {
+        const csvHeader = "Local,Nota,Observacao,Data\n";
+        const csvRows = usuariosFiltrados.map(usuario => 
+            `${usuario.local},${usuario.nota},"${usuario.observacao || ''}",${usuario.data}`
+        ).join("\n");
+        
+        const csvContent = "data:text/csv;charset=utf-8," + csvHeader + csvRows;
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", `usuarios_${selectedLocal || 'todos'}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
+    return (
+        <div className={styles.chartContainer}>
+            <h2 className={styles.title}>Pontuação por {selectedLocal || "Todos os Locais"}</h2>
+            <select
+                className={styles.localSelector}
+                value={selectedLocal}
+                onChange={(e) => setSelectedLocal(e.target.value)}
+            >
+                <option value="">Todos os Locais</option>
+                {uniqueLocals.map(local => <option key={local} value={local}>{local}</option>)}
+            </select>
+
+            <div className={styles.periodo}>
+                <label>Período da Pesquisa:</label>
+                <div>
+                    <input
+                        type="date"
+                        value={periodo.inicio}
+                        onChange={(e) => setPeriodo({ ...periodo, inicio: e.target.value })}
+                    />
+                    <input
+                        type="date"
+                        value={periodo.fim}
+                        onChange={(e) => setPeriodo({ ...periodo, fim: e.target.value })}
+                    />
+                </div>
+                <div className={styles.sliderContainer}>
+                    <label>Data de Início</label>
+                    <input
+                        type="range"
+                        min="0"
+                        max="100"
+                        value={rangeInicio}
+                        onChange={(e) => handleRangeChange(e, 'inicio')}
+                    />
+                    <label>Data de Fim</label>
+                    <input
+                        type="range"
+                        min="0"
+                        max="100"
+                        value={rangeFim}
+                        onChange={(e) => handleRangeChange(e, 'fim')}
+                    />
+                </div>
+            </div>
+
+            <div className={styles.metrics}>
+                <div className={styles.metric}>
+                    <h3>% Promotores</h3>
+                    <p>{totalRespondentes > 0 ? ((muitoSatisfeitos / totalRespondentes) * 100).toFixed(1) : 0}%</p>
+                    <h3>Promotores</h3>
+                    <p>{muitoSatisfeitos}</p>
+                </div>
+                <div className={styles.metric}>
+                    <h3>% Neutros</h3>
+                    <p>{totalRespondentes > 0 ? ((satisfeitos / totalRespondentes) * 100).toFixed(1) : 0}%</p>
+                    <h3>Neutros</h3>
+                    <p>{satisfeitos}</p>
+                </div>
+                <div className={styles.metric}>
+                    <h3>% Detratores</h3>
+                    <p>{totalRespondentes > 0 ? ((insatisfeitos / totalRespondentes) * 100).toFixed(1) : 0}%</p>
+                    <h3>Detratores</h3>
+                    <p>{insatisfeitos}</p>
+                </div>
+                <div className={styles.metric}>
+                    <h3>NPS</h3>
+                    <p>{nps}</p>
+                </div>
+                <div className={styles.metric}>
+                    <h3>Total Pesquisados</h3>
+                    <p>{totalRespondentes}</p>
+                </div>
+            </div>
+
+            <Pie data={data} options={options} />
+            {segmentDetails}
+            <button className={styles.exportButton} onClick={handleExportCSV}>Exportar Dados para CSV</button>
+        </div>
+    );
 };
 
 export default PieChart;
