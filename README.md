@@ -1,5 +1,4 @@
-#        Sistema de Avaliação - Front-End
-
+<h1 align="center">Sistema de Avaliação - Front-End </h1>
 ## Descrição
 Este repositório contém o frontend do sistema de avaliação, desenvolvido para permitir que os usuários avaliem o atendimento [atendimento secretaria senai valinhos] e que os funcionários visualizem o histórico dessas avaliações.
 
