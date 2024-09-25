@@ -1,10 +1,17 @@
-.footer{
-    background-color: red;
-    color: white;
-    text-align: center;
-    padding: 10px;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
+.footer {
+  background-color: red;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  position: fixed; /* Mantém o footer fixo na parte inferior */
+  bottom: 0; /* Posiciona o footer na parte inferior da tela */
+  width: 100%; /* Largura total da tela */
+  z-index: 1000; /* Garante que o footer fique acima de outros elementos */
+}
 
+.p{
+  font-size: 15px;
+  font-family: Arial, sans-serif;
+  margin: 5px;
+  text-align: center;
 }

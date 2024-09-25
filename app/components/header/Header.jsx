@@ -2,7 +2,12 @@
 import React from "react";
 import styles from "./header.module.css";
 
+
+const Header = (props) => {
+{
+
 export default function Header() {
+
     return (
         <header className={styles.header}>
             <div className={styles.leftSide}>
@@ -10,10 +15,18 @@ export default function Header() {
             </div>
             <div className={styles.divider}></div> {/* Divisória */}
             <div className={styles.rightSide}>
+
+                <h1 className={styles.h1}>{props.title}</h1>
+
                 <h1 className={styles.h1}>Pesquisa de Satisfação</h1>
+
             </div>
         </header>
     );
 }
 
+}
+
+
+export default Header;
 

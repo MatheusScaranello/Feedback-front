@@ -5,6 +5,9 @@ import apiUsuarios from "./service/usuario";
 import Feedback from "./components/feedback/Feedback";
 import GraficoPizza from "./components/graficoPizza/GraficoPizza";
 import GraficoTempo from "./components/graficoTempo/GraficoTempo";
+import Header from "./components/header/Header";
+import Footer from "./components/footer/footerPage";
+
 
 
 export default function Home() {
@@ -26,6 +29,7 @@ export default function Home() {
 
     return (
         <>
+            <Header title="Pesquisa de Sastifação" />
             {/* <h1>Lista de Usuários</h1>
             <ul>
                 {usuarios.map((usuario) => (
@@ -35,8 +39,13 @@ export default function Home() {
                 ))}
             </ul> */}
 
+
+            <Feedback/>
+            <Footer/>
  
             <GraficoPizza />
+
         </>
+        
     );
 }

@@ -23,6 +23,14 @@ export default function Admin() {
     }, []);
 
     return (
+
+        <>
+            <h1 className={styles.titulo}>Analise de desempenho</h1>
+            <GraficoPizza />
+            <GraficoTempo />
+            <ComentariosPage />
+        </>
+
         <div className={styles.container}>
             <h1 className={styles.titulo}>Análise de Desempenho</h1>
             <div className={styles.graficoContainer}>
@@ -37,6 +45,7 @@ export default function Admin() {
                 <ComentariosPage />
             </div>
         </div>
+
     );
         
     
