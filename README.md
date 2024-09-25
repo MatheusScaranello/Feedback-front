@@ -28,8 +28,10 @@ Este repositório contém o frontend do sistema de avaliação, desenvolvido par
    git clone 
 
 2. **Instalação**
+    ```bash
     npm i 
     
 3. **Instalação das bibiotecas**
+    ```bash
    npm install react-gauge-chart
 
