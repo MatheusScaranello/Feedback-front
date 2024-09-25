@@ -4,6 +4,15 @@
   <img src="https://i.imgur.com/9hSrsWQ.png" alt="Nome da equipe"  width="300" height="300">
 </div>
 
+Nossa equipe é composta por:
+
+- **Matheus Menezes Scaranello**-
+- **Marina Elis de Morais -**
+- **Thayná Marques Vazzoler -**
+- **Nickolas Nicolau  -**
+- **Rafael Amaral -**
+
+Juntos, estamos comprometidos em criar um sistema para feedback de eventos.
 
 Este repositório contém o frontend do sistema de avaliação, desenvolvido para permitir que os usuários avaliem o atendimento [atendimento secretaria senai valinhos] e que os funcionários visualizem o histórico dessas avaliações.
 
