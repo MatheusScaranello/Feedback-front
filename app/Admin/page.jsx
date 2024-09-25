@@ -26,12 +26,12 @@ export default function Admin() {
         <div className={styles.container}>
             <h1 className={styles.titulo}>Análise de Desempenho</h1>
             <div className={styles.graficoContainer}>
-                <div className={styles.grafico}>
+                {/* <div className={styles.grafico}>
                     <GraficoPizza />
                 </div>
                 <div className={styles.grafico}>
                     <GraficoTempo />
-                </div>
+                </div> */}
             </div>
             <div className={styles.comentarios}>
                 <ComentariosPage />
