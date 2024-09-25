@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import React from 'react';
 import { Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import GaugeChart from 'react-gauge-chart';
 import apiUsuarios from '@/app/service/usuario';
 import styles from "./graficoPizza.module.css";
 
@@ -68,7 +69,7 @@ const PieChart = ({ initialLocal }) => {
         }
     }, [usuarios]);
 
-    const formatDate = (date) => date.toISOString().split('T')[0]; // YYYY-MM-DD
+    const formatDate = (date) => date.toISOString().split('T')[0];
 
     const ajustarDataSlider = (valor, referencia) => {
         const dataBase = referencia === 'inicio' ? menorData : maiorData;
@@ -188,6 +189,23 @@ const PieChart = ({ initialLocal }) => {
                 </div>
             </div>
 
+            <div className={styles.gaugeContainer}>
+                <h3>NPS</h3>
+                <GaugeChart 
+    id="nps-gauge"
+    nrOfLevels={50} // Transição ainda mais suave
+    arcsLength={[0.3, 0.4, 0.3]}
+    colors={['#ff6f61', '#ffc107', '#28a745']} // Cores modernas e suaves
+    percent={(nps + 100) / 200}
+    arcPadding={0.03} // Mais espaçamento entre os arcos
+    needleColor="#5a6268"
+    needleBaseColor="#5a6268"
+    textColor="#212529"
+    formatTextValue={(value) => `${value}%`} // Formato do texto com porcentagem
+    style={{ width: '85%', maxWidth: '400px', margin: '0 auto' }} // Ajuste de tamanho e centralização
+/>
+            </div>
+
             <div className={styles.metrics}>
                 <div className={styles.metric}>
                     <h3>% Promotores</h3>
@@ -206,10 +224,6 @@ const PieChart = ({ initialLocal }) => {
                     <p>{totalRespondentes > 0 ? ((insatisfeitos / totalRespondentes) * 100).toFixed(1) : 0}%</p>
                     <h3>Detratores</h3>
                     <p>{insatisfeitos}</p>
-                </div>
-                <div className={styles.metric}>
-                    <h3>NPS</h3>
-                    <p>{nps}</p>
                 </div>
                 <div className={styles.metric}>
                     <h3>Total Pesquisados</h3>
