@@ -31,7 +31,7 @@ Este repositório contém o frontend do sistema de avaliação, desenvolvido par
     ```bash
     npm i 
     
-3. **Instalação das bibiotecas**
+3. **Instalação da bibioteca**
     ```bash
    npm install react-gauge-chart
 
