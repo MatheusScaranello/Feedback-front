@@ -1,346 +1,306 @@
-"use client";
-import React, { useState, useEffect, useCallback, useMemo, createContext, useContext } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { ScatterChart, Scatter, XAxis, YAxis, ZAxis, Tooltip, Legend, ResponsiveContainer, CartesianGrid, LineChart, Line } from 'recharts';
 import apiUsuarios from '@/app/service/usuario';
-import debounce from 'lodash.debounce';
 import styled, { ThemeProvider, createGlobalStyle } from 'styled-components';
 import { saveAs } from 'file-saver';
 import Papa from 'papaparse';
-import { Button, Select } from 'reactstrap';
+import { Button } from 'reactstrap';
+import * as tf from '@tensorflow/tfjs';
+import Select from 'react-select';
+import { DateRange } from 'react-date-range';
+import 'react-date-range/dist/styles.css'; // Estilos padrão
+import 'react-date-range/dist/theme/default.css'; // Tema padrão
 
 // Global Styles
 const GlobalStyle = createGlobalStyle`
-    body {
-        margin: 0;
-        font-family: 'Arial', sans-serif;
-        background-color: #f8f9fa;
-    }
+  body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+  }
 `;
 
 // Themes
 const theme = {
-    primaryColor: '#007bff',
-    secondaryColor: '#6c757d',
-    backgroundColor: '#f8f9fa',
-    textColor: '#212529',
+  primaryColor: '#007bff',
+  secondaryColor: '#6c757d',
+  backgroundColor: '#f8f9fa',
+  textColor: '#212529',
 };
 
 // Styled Components
 const Container = styled.div`
-    padding: 20px;
-    background-color: ${props => props.theme.backgroundColor};
+  padding: 20px;
+  background-color: ${props => props.theme.backgroundColor};
 `;
 
 const Controls = styled.div`
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
 `;
 
 const ChartContainer = styled.div`
-    margin-top: 20px;
+  margin-top: 20px;
 `;
 
-const Card = styled.div`
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    padding: 20px;
+const ErrorMessage = styled.div`
+  color: red;
+  font-weight: bold;
 `;
 
-const FilterSection = styled.div`
-    margin-bottom: 20px;
+const LoadingMessage = styled.div`
+  color: ${props => props.theme.primaryColor};
+  font-weight: bold;
 `;
 
-// Custom Hooks
-const useFetchUsuarios = () => {
-    const [usuarios, setUsuarios] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-
-    useEffect(() => {
-        const fetchUsuarios = async () => {
-            try {
-                const usuariosData = await apiUsuarios.getUsuarios();
-                setUsuarios(usuariosData);
-            } catch (error) {
-                setError(error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchUsuarios();
-    }, []);
-
-    return { usuarios, loading, error };
-};
-
-const useDataFiltering = (usuarios) => {
-    const [anoSelecionado, setAnoSelecionado] = useState('');
-    const [mesSelecionado, setMesSelecionado] = useState('');
-    const [semanaSelecionada, setSemanaSelecionada] = useState('');
-    const [usuarioSelecionado, setUsuarioSelecionado] = useState('');
-    const [dados, setDados] = useState([]);
-    const [anosDisponiveis, setAnosDisponiveis] = useState([]);
-    const [mesesDisponiveis, setMesesDisponiveis] = useState([]);
-    const [semanasDisponiveis, setSemanasDisponiveis] = useState([]);
-    const [usuariosDisponiveis, setUsuariosDisponiveis] = useState([]);
-
-    useEffect(() => {
-        if (usuarios.length > 0) {
-            const anos = [...new Set(usuarios.map(usuario => new Date(usuario.data).getFullYear()))];
-            setAnosDisponiveis(anos);
-            const nomesUsuarios = [...new Set(usuarios.map(usuario => usuario.local))];
-            setUsuariosDisponiveis(nomesUsuarios);
-        }
-    }, [usuarios]);
-
-    useEffect(() => {
-        if (anoSelecionado) {
-            const meses = [...new Set(usuarios
-                .filter(usuario => new Date(usuario.data).getFullYear() === parseInt(anoSelecionado))
-                .map(usuario => new Date(usuario.data).getMonth() + 1))];
-            setMesesDisponiveis(meses);
-            setMesSelecionado('');
-            setSemanaSelecionada('');
-            filtrarDadosPorAno();
-        }
-    }, [anoSelecionado, usuarios]);
-
-    useEffect(() => {
-        if (mesSelecionado) {
-            const semanas = [...new Set(usuarios
-                .filter(usuario => {
-                    const data = new Date(usuario.data);
-                    return data.getFullYear() === parseInt(anoSelecionado) && data.getMonth() + 1 === parseInt(mesSelecionado);
-                })
-                .map(usuario => {
-                    const data = new Date(usuario.data);
-                    const primeiroDiaMes = new Date(data.getFullYear(), data.getMonth(), 1);
-                    return Math.ceil((data.getDate() + primeiroDiaMes.getDay()) / 7);
-                }))];
-            setSemanasDisponiveis(semanas);
-            setSemanaSelecionada('');
-            filtrarDadosPorMes();
-        }
-    }, [mesSelecionado, usuarios, anoSelecionado]);
-
-    useEffect(() => {
-        if (semanaSelecionada) {
-            filtrarDadosPorSemana();
-        }
-    }, [semanaSelecionada, usuarios, anoSelecionado, mesSelecionado]);
-
-    const agruparPorData = (dados) => {
-        const agrupados = dados.reduce((acc, usuario) => {
-            const data = new Date(usuario.data).toLocaleDateString();
-            if (!acc[data]) {
-                acc[data] = { totalNota: 0, count: 0 };
-            }
-            acc[data].totalNota += usuario.nota;
-            acc[data].count += 1;
-            return acc;
-        }, {});
-
-        return Object.keys(agrupados).map(data => ({
-            data,
-            nota: agrupados[data].totalNota / agrupados[data].count
-        }));
-    };
-
-    const filtrarDadosPorAno = () => {
-        const dadosFiltrados = usuarios.filter(usuario => {
-            const data = new Date(usuario.data);
-            return data.getFullYear() === parseInt(anoSelecionado) && (usuarioSelecionado ? usuario.local === usuarioSelecionado : true);
-        });
-        setDados(agruparPorData(dadosFiltrados));
-    };
-
-    const filtrarDadosPorMes = () => {
-        const dadosFiltrados = usuarios.filter(usuario => {
-            const data = new Date(usuario.data);
-            return data.getFullYear() === parseInt(anoSelecionado) &&
-                data.getMonth() + 1 === parseInt(mesSelecionado) &&
-                (usuarioSelecionado ? usuario.local === usuarioSelecionado : true);
-        });
-        setDados(agruparPorData(dadosFiltrados));
-    };
-
-    const filtrarDadosPorSemana = () => {
-        const dadosFiltrados = usuarios.filter(usuario => {
-            const data = new Date(usuario.data);
-            const primeiroDiaMes = new Date(data.getFullYear(), data.getMonth(), 1);
-            const semana = Math.ceil((data.getDate() + primeiroDiaMes.getDay()) / 7);
-            return data.getFullYear() === parseInt(anoSelecionado) &&
-                data.getMonth() + 1 === parseInt(mesSelecionado) &&
-                semana === parseInt(semanaSelecionada) &&
-                (usuarioSelecionado ? usuario.local === usuarioSelecionado : true);
-        });
-        setDados(agruparPorData(dadosFiltrados));
-    };
-
-    return {
-        anoSelecionado,
-        setAnoSelecionado,
-        mesSelecionado,
-        setMesSelecionado,
-        semanaSelecionada,
-        setSemanaSelecionada,
-        usuarioSelecionado,
-        setUsuarioSelecionado,
-        dados,
-        anosDisponiveis,
-        mesesDisponiveis,
-        semanasDisponiveis,
-        usuariosDisponiveis
-    };
-};
-
-// Component for Dropdowns
-const Dropdown = ({ label, options, value, onChange }) => (
-    <div>
-        <label>{label}</label>
-        <select onChange={onChange} value={value}>
-            <option value="">Selecione</option>
-            {options.map(option => (
-                <option key={option} value={option}>{option}</option>
-            ))}
-        </select>
+const MultiSelectDropdown = ({ label, options, value, onChange }) => (
+    <div style={{ minWidth: 200 }}>
+      <label>{label}</label>
+      <Select
+        isMulti
+        options={options.map(option => ({ value: option, label: option }))}
+        value={value.map(v => ({ value: v, label: v }))}
+        onChange={(selectedOptions) => onChange(selectedOptions.map(option => option.value))}
+      />
     </div>
-);
+  );
 
-// Chart Component
-const ChartComponent = ({ dados }) => (
+  const ChartComponent = ({ dados }) => (
     <ChartContainer>
         <ResponsiveContainer width="100%" height={400}>
             <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis type="category" dataKey="data" name="Data" tickFormatter={(tick) => tick} />
-                <YAxis type="number" dataKey="nota" name="Nota Média" domain={[0, 'auto']} />
-                <ZAxis type="number" range={[100]} />
-                <Tooltip cursor={{ strokeDasharray: '3 3' }} formatter={(value, name) => [value, name === 'nota' ? 'Nota Média' : 'Data']} />
+                <CartesianGrid />
+                <XAxis dataKey="data" type="category" name="Data" />
+                <YAxis dataKey="nota" type="number" name="Nota" />
+                <Tooltip cursor={{ strokeDasharray: '3 3' }} />
                 <Legend />
-                <Scatter name="Notas Médias por Data" data={dados} fill="#8884d8" />
+                <Scatter name="Nota" data={dados} fill="#8884d8" />
             </ScatterChart>
         </ResponsiveContainer>
     </ChartContainer>
 );
 
-// Comparison Chart Component
-const ComparisonChart = ({ dados }) => {
-    const comparisonData = useMemo(() => {
-        return dados.map(item => ({
-            ...item,
-            comparison: item.nota * 1.1 // Example logic
-        }));
-    }, [dados]);
+const ComparisonChart = ({ dados, dadosComparacao }) => (
+    <ChartContainer>
+        <ResponsiveContainer width="100%" height={400}>
+            <LineChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
+                <CartesianGrid />
+                <XAxis dataKey="data" type="category" name="Data" />
+                <YAxis dataKey="nota" type="number" name="Nota" />
+                <Tooltip cursor={{ strokeDasharray: '3 3' }} />
+                <Legend />
+                <Line name="Nota" data={dados} fill="#8884d8" />
+                {dadosComparacao.map((dadosComp, i) => (
+                    <Line key={i} name={`Comparação ${i + 1}`} data={dadosComp} fill="#82ca9d" />
+                ))}
+            </LineChart>
+        </ResponsiveContainer>
+    </ChartContainer>
+);
 
-    return (
-        <ChartContainer>
-            <ResponsiveContainer width="100%" height={400}>
-                <LineChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis type="category" dataKey="data" name="Data" tickFormatter={(tick) => tick} />
-                    <YAxis type="number" dataKey="nota" name="Nota Média" domain={[0, 'auto']} />
-                    <Tooltip cursor={{ strokeDasharray: '3 3' }} formatter={(value, name) => [value, name === 'nota' ? 'Nota Média' : 'Data']} />
-                    <Legend />
-                    <Line type="monotone" dataKey="nota" stroke="#8884d8" />
-                    <Line type="monotone" dataKey="comparison" stroke="#82ca9d" />
-                </LineChart>
-            </ResponsiveContainer>
-        </ChartContainer>
-    );
+// Function to group data by date
+const agruparPorData = (dados) => {
+  const agrupados = dados.reduce((acc, usuario) => {
+    const data = new Date(usuario.data).toLocaleDateString();
+    if (!acc[data]) {
+      acc[data] = { totalNota: 0, count: 0 };
+    }
+    acc[data].totalNota += usuario.nota;
+    acc[data].count += 1;
+    return acc;
+  }, {});
+
+  return Object.keys(agrupados).map(data => ({
+    data,
+    nota: agrupados[data].totalNota / agrupados[data].count,
+  }));
+};
+
+// Custom Hooks
+const useFetchUsuarios = () => {
+  const [usuarios, setUsuarios] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchUsuarios = async () => {
+      try {
+        const usuariosData = await apiUsuarios.getUsuarios();
+        setUsuarios(usuariosData);
+      } catch (error) {
+        setError(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUsuarios();
+  }, []);
+
+  return { usuarios, loading, error };
+};
+
+const useDataFiltering = (usuarios, dateRange) => {
+  const [anoSelecionado, setAnoSelecionado] = useState([]);
+  const [mesSelecionado, setMesSelecionado] = useState([]);
+  const [localSelecionado, setLocalSelecionado] = useState([]);
+
+  const anosDisponiveis = useMemo(() => [...new Set(usuarios.map(usuario => new Date(usuario.data).getFullYear()))], [usuarios]);
+  const locaisDisponiveis = useMemo(() => [...new Set(usuarios.map(usuario => usuario.local))], [usuarios]);
+
+  const mesesDisponiveis = useMemo(() => {
+    if (anoSelecionado.length > 0) {
+      return [...new Set(usuarios
+        .filter(usuario => anoSelecionado.includes(new Date(usuario.data).getFullYear()))
+        .map(usuario => new Date(usuario.data).getMonth() + 1))];
+    }
+    return [];
+  }, [anoSelecionado, usuarios]);
+
+  const dadosFiltrados = useMemo(() => {
+    const filtered = usuarios.filter(usuario => {
+      const data = new Date(usuario.data);
+      return (anoSelecionado.length === 0 || anoSelecionado.includes(data.getFullYear())) &&
+             (mesSelecionado.length === 0 || mesSelecionado.includes(data.getMonth() + 1)) &&
+             (localSelecionado.length === 0 || localSelecionado.includes(usuario.local)) &&
+             (!dateRange || (data >= dateRange.startDate && data <= dateRange.endDate));
+    });
+    return agruparPorData(filtered);
+  }, [anoSelecionado, mesSelecionado, localSelecionado, usuarios, dateRange]);
+
+  return {
+    anoSelecionado,
+    setAnoSelecionado,
+    mesSelecionado,
+    setMesSelecionado,
+    localSelecionado,
+    setLocalSelecionado,
+    dadosFiltrados,
+    anosDisponiveis,
+    mesesDisponiveis,
+    locaisDisponiveis,
+  };
 };
 
 // Main Component
 const GraficoTempo = () => {
-    const { usuarios, loading, error } = useFetchUsuarios();
-    const {
-        anoSelecionado,
-        setAnoSelecionado,
-        mesSelecionado,
-        setMesSelecionado,
-        semanaSelecionada,
-        setSemanaSelecionada,
-        usuarioSelecionado,
-        setUsuarioSelecionado,
-        dados,
-        anosDisponiveis,
-        mesesDisponiveis,
-        semanasDisponiveis,
-        usuariosDisponiveis
-    } = useDataFiltering(usuarios);
+  const { usuarios, loading, error } = useFetchUsuarios();
+  const [dateRange, setDateRange] = useState({
+    startDate: new Date(),
+    endDate: new Date(),
+    key: 'selection',
+  });
 
-    const exportarParaCSV = () => {
-        const csvData = dados.map(row => `${row.data},${row.nota}`).join('\n');
-        const blob = new Blob([csvData], { type: 'text/csv' });
-        saveAs(blob, 'dados.csv');
-    };
+  const {
+    anoSelecionado,
+    setAnoSelecionado,
+    mesSelecionado,
+    setMesSelecionado,
+    localSelecionado,
+    setLocalSelecionado,
+    dadosFiltrados,
+    anosDisponiveis,
+    mesesDisponiveis,
+    locaisDisponiveis,
+  } = useDataFiltering(usuarios, dateRange);
 
-    const parseCSV = useCallback((file) => {
-        Papa.parse(file, {
-            complete: (results) => {
-                console.log(results.data);
-            },
-            header: true
-        });
-    }, []);
+  const [dadosComparacao, setDadosComparacao] = useState([]);
 
-    return (
-        <ThemeProvider theme={theme}>
-            <GlobalStyle />
-            <Container>
-                <Controls>
-                    <Dropdown
-                        label="Ano"
-                        options={anosDisponiveis}
-                        value={anoSelecionado}
-                        onChange={(e) => setAnoSelecionado(e.target.value)}
-                    />
-                    {anoSelecionado && (
-                        <Dropdown
-                            label="Mês"
-                            options={mesesDisponiveis}
-                            value={mesSelecionado}
-                            onChange={(e) => setMesSelecionado(e.target.value)}
-                        />
-                    )}
-                    {mesSelecionado && (
-                        <Dropdown
-                            label="Semana"
-                            options={semanasDisponiveis}
-                            value={semanaSelecionada}
-                            onChange={(e) => setSemanaSelecionada(e.target.value)}
-                        />
-                    )}
-                    <Dropdown
-                        label="Local"
-                        options={usuariosDisponiveis}
-                        value={usuarioSelecionado}
-                        onChange={(e) => setUsuarioSelecionado(e.target.value)}
-                    />
-                </Controls>
-                <FilterSection>
-                    <Button color="secondary" onClick={exportarParaCSV}>Exportar Excel</Button>
-                    <input type="file" accept=".csv" onChange={(e) => parseCSV(e.target.files[0])} />
-                </FilterSection>
-                {loading ? (
-                    <div>Carregando dados...</div>
-                ) : error ? (
-                    <div>Erro ao carregar dados. Tente novamente.</div>
-                ) : (
-                    dados.length > 0 && (
-                        <>
-                            <ChartComponent dados={dados} />
-                            <ComparisonChart dados={dados} />
-                        </>
-                    )
-                )}
-            </Container>
-        </ThemeProvider>
-    );
+  const handleComparisonSelection = (newAnoComp, newMesComp, newLocalComp) => {
+    const filteredData = usuarios.filter(usuario => {
+      const data = new Date(usuario.data);
+      return (newAnoComp.length === 0 || newAnoComp.includes(data.getFullYear())) &&
+             (newMesComp.length === 0 || newMesComp.includes(data.getMonth() + 1)) &&
+             (newLocalComp.length === 0 || newLocalComp.includes(usuario.local));
+    });
+    setDadosComparacao(prev => [...prev, agruparPorData(filteredData)]);
+  };
+
+  const exportarParaCSV = () => {
+    const csvData = dadosFiltrados.map(row => `${row.data},${row.nota}`).join('\n');
+    const blob = new Blob([csvData], { type: 'text/csv' });
+    saveAs(blob, 'dados.csv');
+  };
+
+  const parseCSV = useCallback((file) => {
+    Papa.parse(file, {
+      complete: (results) => {
+        console.log(results.data);
+      },
+      header: true,
+    });
+  }, []);
+
+  const runModel = async () => {
+    if (dadosFiltrados.length > 0) {
+      const model = tf.sequential();
+      model.add(tf.layers.dense({ units: 1, inputShape: [1] }));
+      model.compile({ optimizer: 'sgd', loss: 'meanSquaredError' });
+
+      const xs = tf.tensor1d(dadosFiltrados.map((_, i) => i));
+      const ys = tf.tensor1d(dadosFiltrados.map(d => d.nota));
+
+      await model.fit(xs, ys, { epochs: 100 });
+
+      const result = model.predict(tf.tensor1d([dadosFiltrados.length]));
+      result.print(); // Log prediction for the next point
+    }
+  };
+
+  useEffect(() => {
+    runModel();
+  }, [dadosFiltrados]);
+
+  return (
+    <ThemeProvider theme={theme}>
+      <GlobalStyle />
+      <Container>
+        <Controls>
+          <DateRange
+            ranges={[dateRange]}
+            onChange={item => setDateRange(item.selection)}
+            moveRangeOnFirstSelection={false}
+          />
+          <MultiSelectDropdown
+            label="Ano"
+            options={anosDisponiveis}
+            value={anoSelecionado}
+            onChange={setAnoSelecionado}
+          />
+          <MultiSelectDropdown
+            label="Mês"
+            options={mesesDisponiveis}
+            value={mesSelecionado}
+            onChange={setMesSelecionado}
+          />
+          <MultiSelectDropdown
+            label="Local"
+            options={locaisDisponiveis}
+            value={localSelecionado}
+            onChange={setLocalSelecionado}
+          />
+          <Button onClick={() => handleComparisonSelection(anoSelecionado, mesSelecionado, localSelecionado)}>Adicionar Comparação</Button>
+        </Controls>
+        <Button color="secondary" onClick={exportarParaCSV}>Exportar Excel</Button>
+        <input type="file" accept=".csv" onChange={(e) => parseCSV(e.target.files[0])} />
+
+        {loading ? (
+          <LoadingMessage>Carregando dados...</LoadingMessage>
+        ) : error ? (
+          <ErrorMessage>Erro ao carregar dados. Tente novamente.</ErrorMessage>
+        ) : (
+          dadosFiltrados.length > 0 && (
+            <>
+              <ChartComponent dados={dadosFiltrados} />
+              <ComparisonChart dados={dadosFiltrados} dadosComparacao={dadosComparacao} />
+            </>
+          )
+        )}
+      </Container>
+    </ThemeProvider>
+  );
 };
 
 export default GraficoTempo;

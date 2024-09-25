@@ -1,6 +1,7 @@
 import styles from './feedback.module.css';
 import { useState } from 'react';
 import apiUsuarios from '../../service/usuario';
+import Header from '../header/Header';
 
 
 const Feedback = (localParametro) => {
@@ -28,7 +29,12 @@ const Feedback = (localParametro) => {
     };
 
     return (
+
         <>
+
+        <> 
+        <Header/>
+
         <div className={styles.fundo}>
         <div className={styles.card}>
             <h2 className={styles.text}>Em uma escala de 0 a 10, o quanto você recomendaria nosso serviço?</h2>
@@ -64,7 +70,11 @@ const Feedback = (localParametro) => {
            
         </div>
         </div>
+
         
+
+        </div>
+
          </>
     );
 }

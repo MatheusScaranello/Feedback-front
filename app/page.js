@@ -9,6 +9,7 @@ import Header from "./components/header/Header";
 import Footer from "./components/footer/footerPage";
 
 
+
 export default function Home() {
     const [usuarios, setUsuarios] = useState([]);
 
@@ -38,8 +39,12 @@ export default function Home() {
                 ))}
             </ul> */}
 
+
             <Feedback/>
             <Footer/>
+ 
+            <GraficoPizza />
+
         </>
         
     );
