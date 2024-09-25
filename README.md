@@ -38,5 +38,5 @@ Este repositório contém o frontend do sistema de avaliação, desenvolvido par
 <h1 align="center">Sistema de Avaliação - Tela de feedback </h1>
 
 <div align="center">
-  <img src="https://imgur.com/871qjE7" alt="Nome da equipe"  width="300" height="300">
+  <img src="https://imgur.com/871qjE7.png" alt="Nome da equipe"  width="300" height="300">
 </div>
