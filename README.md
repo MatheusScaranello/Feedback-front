@@ -1,7 +1,7 @@
 <h1 align="center">Sistema de Avaliação - Front-End </h1>
 
 <div align="center">
-  <img src="https://i.imgur.com/9hSrsWQ.png" alt="Nome da equipe"  width="300" height="200">
+  <img src="https://i.imgur.com/9hSrsWQ.png" alt="Nome da equipe"  width="300" height="300">
 </div>
 
 
