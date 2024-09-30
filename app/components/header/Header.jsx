@@ -15,7 +15,7 @@ const Header = (props) => {
             <div className={styles.divider}></div> {/* Divisória */}
             <div className={styles.rightSide}>
                 <h1 className={styles.h1}>{props.title}</h1>
-                <h1 className={styles.h1}>Pesquisa de Satisfação</h1>
+              
             </div>
         </header>
     );
