@@ -4,6 +4,8 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import GaugeChart from 'react-gauge-chart';
 import apiUsuarios from '@/app/service/usuario';
 import styles from "./graficoPizza.module.css";
+import Header from "../header/Header";
+import Footer from "../footer/footerPage";
 
 // Registrar os elementos do Chart.js
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -141,6 +143,8 @@ const PieChart = ({ initialLocal }) => {
 
     return (
         <div className={styles.chartContainer}>
+            <Header/>
+            
             <h2 className={styles.title}>Pontuação por {selectedLocal || "Todos os Locais"}</h2>
             <select
                 className={styles.localSelector}
@@ -230,6 +234,8 @@ const PieChart = ({ initialLocal }) => {
             <Pie data={data} options={options} />
             {segmentDetails}
             <button className={styles.exportButton} onClick={handleExportCSV}>Exportar Dados para CSV</button>
+
+            <Footer/>
         </div>
     );
 };
