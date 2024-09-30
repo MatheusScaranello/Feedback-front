@@ -142,8 +142,10 @@ const PieChart = ({ initialLocal }) => {
     };
 
     return (
+        <>
+        <Header/>
         <div className={styles.chartContainer}>
-            <Header/>
+            
             
             <h2 className={styles.title}>Pontuação por {selectedLocal || "Todos os Locais"}</h2>
             <select
@@ -235,8 +237,10 @@ const PieChart = ({ initialLocal }) => {
             {segmentDetails}
             <button className={styles.exportButton} onClick={handleExportCSV}>Exportar Dados para CSV</button>
 
-            <Footer/>
+           
         </div>
+         <Footer/>
+    </>
     );
 };
 
