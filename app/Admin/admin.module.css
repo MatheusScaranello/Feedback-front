@@ -1,5 +1,3 @@
-/* admin.module.css */
-
 .titulo {
     font-size: 2rem;
     margin-bottom: 20px;
@@ -15,42 +13,12 @@
 }
 
 .graficoContainer {
-    display: flex; 
-    flex-direction: column; /* Mudando para coluna para empilhar os gráficos */
-    gap: 20px; 
-    border: 5px solid black; /* Borda preta */
-    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    border: #333    solid 1px;
+    border-radius: 5px;
     padding: 20px;
-    border-radius: 10px;
-    background-color: #f5f5f5;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-    width: 100%;
-    max-width: 800px;
-    overflow: hidden;
-    overflow-y: auto; /* Permite rolagem vertical, se necessário */
-    scroll-behavior: smooth;
-    max-height: 500px;
-}
-
-.grafico {
-    flex: 1; 
-    max-width: 40%; /* Permite que o gráfico ocupe toda a largura */
-}
-
-.comentarios {
-    width: 100%;
-    max-width: 800px;
-    margin: 20px 0;
-}
-
-@media (max-width: 600px) {
-    .titulo {
-        font-size: 1.5rem;
-    }
-
-    .grafico,
-    .comentarios {
-        width: 90%;
-    }
+    
+    
 }
