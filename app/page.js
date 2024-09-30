@@ -42,8 +42,7 @@ export default function Home() {
 
             <Feedback/>
             <Footer/>
- 
-            <GraficoPizza />
+
 
         </>
         
