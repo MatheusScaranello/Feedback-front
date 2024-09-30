@@ -2,14 +2,9 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     border-top: 35px solid red; /* Linha vermelha na parte superior */
     background-color: #f5f5f5;
     height: 85px; /* Altura do cabeçalho */
-
-    border-top: 20px solid red; /* Linha vermelha na parte superior */
-    background-color: #f5f5f5;
-    height: 80px; /* Altura do cabeçalho */
    
 }
 
@@ -28,22 +23,18 @@
     flex: 2; /* O texto ocupa uma parte maior do espaço */
     text-align: left;
     margin-top: 10px;
-    margin-left: 20px; /* Espaçamento entre a imagem e o texto */
+    margin-left: 70px; /* Espaçamento entre a imagem e o texto */
 }
 
 .img {
-    width: 180px; /* Largura da imagem */
+    width: 250px; /* Largura da imagem */
     height: 280px; /* Altura da imagem */
     height: auto;
-    margin-right: 20px;
-    margin-left: 650px; /* Espaçamento entre a imagem e o texto */
+    margin-left: 350px; /* Espaçamento entre a imagem e o texto */
+    margin-left: 950px; /* Espaçamento entre a imagem e o texto */
 }
 
-.img {
-    max-width: 155px;
-    height: auto;
-    margin-left: 350px; /* Espaçamento entre a imagem e o texto */
-}
+
 
 .h1 {
     font-size: 20px;
@@ -63,12 +54,9 @@
     margin: 0 20px; /* Espaçamento entre a imagem e o texto */
     margin-top: 10px;
     margin-left: 80px; /* Espaçamento entre a imagem e o texto */
-    margin-right: 20px;
-    margin-right: 10px;
+    
+    
     
 }
 
    
-    
-
-
