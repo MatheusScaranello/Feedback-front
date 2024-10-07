@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react";
-import React from 'react';
+import React, { useState, useEffect, useMemo } from "react";
 import { Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import GaugeChart from 'react-gauge-chart';
 import apiUsuarios from '@/app/service/usuario';
 import styles from "./graficoPizza.module.css";
+import Header from "../header/Header";
+import Footer from "../footer/footerPage";
 
 // Registrar os elementos do Chart.js
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -29,23 +30,54 @@ const PieChart = ({ initialLocal }) => {
         fetchUsuarios();
     }, []);
 
-    const uniqueLocals = [...new Set(usuarios.map(usuario => usuario.local))];
+    const uniqueLocals = useMemo(() => [...new Set(usuarios.map(usuario => usuario.local))], [usuarios]);
 
-    const calcularDatas = () => {
+    const { menorData, maiorData } = useMemo(() => {
         const datas = usuarios.map(usuario => new Date(usuario.data)).filter(date => !isNaN(date));
-        const menorData = new Date(Math.min(...datas));
-        const maiorData = new Date(Math.max(...datas));
-        return { menorData, maiorData };
+        return {
+            menorData: new Date(Math.min(...datas)),
+            maiorData: new Date(Math.max(...datas))
+        };
+    }, [usuarios]);
+
+    useEffect(() => {
+        if (menorData && maiorData && !isNaN(menorData) && !isNaN(maiorData)) {
+            const diasTotal = Math.ceil((maiorData - menorData) / (1000 * 60 * 60 * 24));
+            setRangeInicio(0);
+            setRangeFim(diasTotal);
+            setPeriodo({ inicio: formatDate(menorData), fim: formatDate(maiorData) });
+        }
+    }, [menorData, maiorData]);
+
+    const formatDate = (date) => date.toISOString().split('T')[0];
+
+    const ajustarDataSlider = (valor, referencia) => {
+        const novaData = new Date(menorData);
+        novaData.setDate(novaData.getDate() + Number(valor));
+        return formatDate(novaData);
     };
 
-    const { menorData, maiorData } = calcularDatas();
+    const handleRangeChange = (e, tipo) => {
+        const valor = e.target.value;
+        const novaData = ajustarDataSlider(valor, tipo);
 
-    const usuariosFiltrados = usuarios.filter(usuario => {
-        const dataUsuario = new Date(usuario.data);
-        return (!selectedLocal || usuario.local === selectedLocal) &&
-               (periodo.inicio === '' || dataUsuario >= new Date(periodo.inicio)) &&
-               (periodo.fim === '' || dataUsuario <= new Date(periodo.fim));
-    });
+        if (tipo === 'inicio') {
+            setRangeInicio(valor);
+            setPeriodo(prev => ({ ...prev, inicio: novaData }));
+        } else {
+            setRangeFim(valor);
+            setPeriodo(prev => ({ ...prev, fim: novaData }));
+        }
+    };
+
+    const usuariosFiltrados = useMemo(() => {
+        return usuarios.filter(usuario => {
+            const dataUsuario = new Date(usuario.data);
+            return (!selectedLocal || usuario.local === selectedLocal) &&
+                (periodo.inicio === '' || dataUsuario >= new Date(periodo.inicio)) &&
+                (periodo.fim === '' || dataUsuario <= new Date(periodo.fim));
+        });
+    }, [usuarios, selectedLocal, periodo]);
 
     const calcularEstatisticas = (usuarios) => {
         const insatisfeitos = usuarios.filter(usuario => usuario.nota <= 6).length;
@@ -57,41 +89,7 @@ const PieChart = ({ initialLocal }) => {
         return { insatisfeitos, satisfeitos, muitoSatisfeitos, totalRespondentes, nps };
     };
 
-    const { insatisfeitos, satisfeitos, muitoSatisfeitos, totalRespondentes, nps } = calcularEstatisticas(usuariosFiltrados);
-
-    useEffect(() => {
-        if (menorData && maiorData && !isNaN(menorData) && !isNaN(maiorData)) {
-            const diasInicio = Math.ceil((Date.now() - menorData.getTime()) / (1000 * 60 * 60 * 24));
-            const diasFim = Math.ceil((Date.now() - maiorData.getTime()) / (1000 * 60 * 60 * 24));
-            setRangeInicio(diasInicio);
-            setRangeFim(diasFim);
-            setPeriodo({ inicio: formatDate(menorData), fim: formatDate(maiorData) });
-        }
-    }, [usuarios]);
-
-    const formatDate = (date) => date.toISOString().split('T')[0];
-
-    const ajustarDataSlider = (valor, referencia) => {
-        const dataBase = referencia === 'inicio' ? menorData : maiorData;
-        if (!dataBase || isNaN(dataBase.getTime())) return '';
-
-        const novaData = new Date(dataBase);
-        novaData.setDate(novaData.getDate() + Number(valor));
-        return formatDate(novaData);
-    };
-
-    const handleRangeChange = (e, tipo) => {
-        const valor = e.target.value;
-        const novaData = ajustarDataSlider(valor, tipo === 'inicio' ? 'inicio' : 'fim');
-
-        if (tipo === 'inicio') {
-            setRangeInicio(valor);
-            setPeriodo(prev => ({ ...prev, inicio: novaData }));
-        } else {
-            setRangeFim(valor);
-            setPeriodo(prev => ({ ...prev, fim: novaData }));
-        }
-    };
+    const { insatisfeitos, satisfeitos, muitoSatisfeitos, totalRespondentes, nps } = useMemo(() => calcularEstatisticas(usuariosFiltrados), [usuariosFiltrados]);
 
     const data = {
         labels: ['Detratores', 'Neutros', 'Promotores'],
@@ -144,7 +142,11 @@ const PieChart = ({ initialLocal }) => {
     };
 
     return (
+        <>
+        <Header/>
         <div className={styles.chartContainer}>
+            
+            
             <h2 className={styles.title}>Pontuação por {selectedLocal || "Todos os Locais"}</h2>
             <select
                 className={styles.localSelector}
@@ -174,36 +176,37 @@ const PieChart = ({ initialLocal }) => {
                     <input
                         type="range"
                         min="0"
-                        max="100"
+                        max={rangeFim}
                         value={rangeInicio}
                         onChange={(e) => handleRangeChange(e, 'inicio')}
                     />
-                    <label>Data de Fim</label>
+                    
                     <input
                         type="range"
                         min="0"
-                        max="100"
+                        max={rangeFim}
                         value={rangeFim}
                         onChange={(e) => handleRangeChange(e, 'fim')}
                     />
                 </div>
+                <label>Data de Fim</label>
             </div>
 
             <div className={styles.gaugeContainer}>
                 <h3>NPS</h3>
                 <GaugeChart 
-    id="nps-gauge"
-    nrOfLevels={50} // Transição ainda mais suave
-    arcsLength={[0.3, 0.4, 0.3]}
-    colors={['#ff6f61', '#ffc107', '#28a745']} // Cores modernas e suaves
-    percent={(nps + 100) / 200}
-    arcPadding={0.03} // Mais espaçamento entre os arcos
-    needleColor="#5a6268"
-    needleBaseColor="#5a6268"
-    textColor="#212529"
-    formatTextValue={(value) => `${value}%`} // Formato do texto com porcentagem
-    style={{ width: '85%', maxWidth: '400px', margin: '0 auto' }} // Ajuste de tamanho e centralização
-/>
+                    id="nps-gauge"
+                    nrOfLevels={50}
+                    arcsLength={[0.3, 0.4, 0.3]}
+                    colors={['#ff6f61', '#ffc107', '#28a745']}
+                    percent={(nps + 100) / 200}
+                    arcPadding={0.03}
+                    needleColor="#5a6268"
+                    needleBaseColor="#5a6268"
+                    textColor="#212529"
+                    formatTextValue={(value) => `${value}%`}
+                    style={{ width: '85%', maxWidth: '400px', margin: '0 auto' }}
+                />
             </div>
 
             <div className={styles.metrics}>
@@ -234,7 +237,11 @@ const PieChart = ({ initialLocal }) => {
             <Pie data={data} options={options} />
             {segmentDetails}
             <button className={styles.exportButton} onClick={handleExportCSV}>Exportar Dados para CSV</button>
+
+           
         </div>
+         <Footer/>
+    </>
     );
 };
 
