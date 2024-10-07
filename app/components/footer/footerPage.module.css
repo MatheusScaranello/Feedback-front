@@ -1,10 +1,9 @@
-.footer{
-    background-color: red;
-    color: white;
-    text-align: center;
-    padding: 10px;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-
-}
+.footer {
+    background-color: red; /* Cor de fundo do footer */
+    color: white; 
+    text-align: center; /* Centraliza o texto do footer */
+    padding: 10px; /* Padding do footer */
+    position: relative; /* Mantém o footer em relação ao fluxo do documento */
+    bottom: 0; /* Posiciona o footer na parte inferior da tela */
+    width: 100%; /* Garante que o footer ocupe toda a largura */
+  }
