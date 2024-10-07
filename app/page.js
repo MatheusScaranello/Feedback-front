@@ -5,6 +5,7 @@ import apiUsuarios from "./service/usuario";
 import Feedback from "./components/feedback/Feedback";
 import GraficoPizza from "./components/graficoPizza/GraficoPizza";
 import GraficoTempo from "./components/graficoTempo/GraficoTempo";
+import ComentariosPage from "./components/comentarios/comentariosPage";
 
 
 export default function Home() {
@@ -36,7 +37,7 @@ export default function Home() {
             </ul> */}
 
  
-            <GraficoPizza />
+            <ComentariosPage />
         </>
     );
 }
