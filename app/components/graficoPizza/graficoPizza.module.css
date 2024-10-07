@@ -92,32 +92,57 @@
   align-items: center;
   justify-content: space-between;
 }
+.sliderContainer {
+  --slider-bg: #e0e0e0; /* Cor de fundo da barra */
+  --slider-bg-hover: #d0d0d0; /* Cor da barra ao passar o mouse */
+  --slider-thumb-bg: #e60000; /* Cor do polegar */
+  --slider-thumb-bg-hover: #b30000; /* Cor do polegar ao passar o mouse */
+  --slider-thumb-bg-focus: #ff1a1a; /* Cor do polegar ao focar */
+  --slider-thumb-shadow: rgba(0, 0, 0, 0.3); /* Sombra do polegar */
+  --slider-thumb-shadow-hover: rgba(0, 0, 0, 0.5); /* Sombra do polegar ao passar o mouse */
+  --slider-thumb-shadow-focus: rgba(255, 0, 0, 0.6); /* Sombra do polegar ao focar */
+}
 
 .sliderContainer input[type="range"] {
-  width: 48%;
   -webkit-appearance: none;
-  height: 8px;
+  width: 100%;
+  height: 10px; /* Aumentei para mais presença */
   border-radius: 5px;
-  background: #e0e0e0;
+  background: linear-gradient(to right, var(--slider-bg) 0%, var(--slider-bg-hover) 100%);
   outline: none;
-  opacity: 0.8;
-  transition: opacity 0.3s;
+  transition: background 0.4s ease; /* Transição suave */
 }
 
 .sliderContainer input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
-  width: 22px;
-  height: 22px;
-  background: #e60000;
+  appearance: none;
+  width: 26px; /* Aumentei para melhor interação */
+  height: 26px; /* Aumentei para melhor interação */
   border-radius: 50%;
+  background: var(--slider-thumb-bg);
   cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s, background-color 0.3s;
+  box-shadow: 0 4px 10px var(--slider-thumb-shadow); /* Sombra aprimorada */
+  transition: background-color 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease; /* Transições suaves */
 }
 
 .sliderContainer input[type="range"]::-webkit-slider-thumb:hover {
-  background-color: #b30000;
-  transform: scale(1.1);
+  background-color: var(--slider-thumb-bg-hover);
+  transform: scale(1.15); /* Aumentado para um feedback mais forte */
+  box-shadow: 0 6px 12px var(--slider-thumb-shadow-hover); /* Sombra ao passar o mouse */
+}
+
+.sliderContainer input[type="range"]:focus::-webkit-slider-thumb {
+  background-color: var(--slider-thumb-bg-focus);
+  box-shadow: 0 0 20px var(--slider-thumb-shadow-focus); /* Efeito de foco aprimorado */
+}
+
+.sliderContainer input[type="range"]:active::-webkit-slider-thumb {
+  transform: scale(1.25); /* Aumenta ainda mais quando pressionado */
+  background-color: #cc0000; /* Cor ao pressionar */
+}
+
+.sliderContainer input[type="range"]:active {
+  background: linear-gradient(to right, var(--slider-bg-hover) 0%, var(--slider-bg) 100%); /* Cor da barra ativa */
 }
 
 /* Estilo para métricas */

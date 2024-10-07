@@ -180,7 +180,7 @@ const PieChart = ({ initialLocal }) => {
                         value={rangeInicio}
                         onChange={(e) => handleRangeChange(e, 'inicio')}
                     />
-                    <label>Data de Fim</label>
+                    
                     <input
                         type="range"
                         min="0"
@@ -189,6 +189,7 @@ const PieChart = ({ initialLocal }) => {
                         onChange={(e) => handleRangeChange(e, 'fim')}
                     />
                 </div>
+                <label>Data de Fim</label>
             </div>
 
             <div className={styles.gaugeContainer}>
