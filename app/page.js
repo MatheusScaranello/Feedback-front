@@ -6,6 +6,7 @@ import Feedback from "./components/feedback/Feedback";
 import GraficoPizza from "./components/graficoPizza/GraficoPizza";
 import GraficoTempo from "./components/graficoTempo/GraficoTempo";
 import ComentariosPage from "./components/comentarios/comentariosPage";
+import RangeDate from "./components/rangeDate/RangeDate";
 
 
 export default function Home() {
@@ -37,7 +38,7 @@ export default function Home() {
             </ul> */}
 
  
-            <ComentariosPage />
+            <RangeDate />
         </>
     );
 }

@@ -4,8 +4,8 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import GaugeChart from 'react-gauge-chart';
 import apiUsuarios from '@/app/service/usuario';
 import styles from "./graficoPizza.module.css";
-import Header from "../header/Header";
-import Footer from "../footer/footerPage";
+import { format } from 'date-fns';
+import RangeDate from "../rangeDate/RangeDate";
 
 // Registrar os elementos do Chart.js
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -157,38 +157,8 @@ const PieChart = ({ initialLocal }) => {
             </select>
 
             <div className={styles.periodo}>
-                <label>Período da Pesquisa:</label>
-                <div>
-                    <input
-                        type="date"
-                        value={periodo.inicio}
-                        onChange={(e) => setPeriodo({ ...periodo, inicio: e.target.value })}
-                    />
-                    <input
-                        type="date"
-                        value={periodo.fim}
-                        onChange={(e) => setPeriodo({ ...periodo, fim: e.target.value })}
-                    />
-                </div>
-                <div className={styles.sliderContainer}>
-                    <label>Data de Início</label>
-                    <input
-                        type="range"
-                        min="0"
-                        max={rangeFim}
-                        value={rangeInicio}
-                        onChange={(e) => handleRangeChange(e, 'inicio')}
-                    />
-                    
-                    <input
-                        type="range"
-                        min="0"
-                        max={rangeFim}
-                        value={rangeFim}
-                        onChange={(e) => handleRangeChange(e, 'fim')}
-                    />
-                </div>
-                <label>Data de Fim</label>
+                <RangeDate
+                />
             </div>
 
             <div className={styles.gaugeContainer}>
