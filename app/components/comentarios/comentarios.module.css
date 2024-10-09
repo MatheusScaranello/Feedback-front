@@ -62,7 +62,7 @@
 }
 
 .sortButton:hover {
-  background-color: darkred; /* Alterado para um tom mais escuro */
+  background-color: darkred; 
 }
 
 .listView {
@@ -77,27 +77,23 @@
 
 .item {
   background-color: white;
-  padding: 20px;
+  padding: 40px 20px; /* Aumentei o padding superior */
   border-radius: 4px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s, box-shadow 0.3s;
-  margin: 48px  60px;
-  container: 100px;
+  margin: 48px 60px;
   width: 265px;
   text-align: center;
   border: 1px solid black;
   height: 150px;
   display: inline-block;
-  contain: content;
-  
 }
-
 .span {
   font-size: 17px;
   color: black;
- padding: 30px 0 30px;
+  font-family: Arial, sans-serif;
+  padding: 20px 0 10px 0; /* Adicionei padding superior */
   text-align: center;
-
 }
 
 .item:hover {
