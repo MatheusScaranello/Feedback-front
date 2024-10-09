@@ -77,23 +77,26 @@
 
 .item {
   background-color: white;
-  padding: 40px 20px; /* Aumentei o padding superior */
+  padding: 20px;
   border-radius: 4px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s, box-shadow 0.3s;
-  margin: 48px 60px;
-  width: 265px;
+  margin: 20px; 
+  width: calc(33.33% - 40px); 
+  height: 150px;
   text-align: center;
   border: 1px solid black;
-  height: 150px;
   display: inline-block;
 }
+
 .span {
   font-size: 17px;
   color: black;
   font-family: Arial, sans-serif;
-  padding: 20px 0 10px 0; /* Adicionei padding superior */
+  display: inline-block;
   text-align: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .item:hover {
@@ -114,7 +117,7 @@
 
 .pageButton {
   padding: 10px 15px;
-  border: 1px solid red; /* Mantive a borda vermelha */
+  border: 1px solid red; 
   background-color: white;
   color: black;
   border-radius: 4px;
@@ -124,5 +127,5 @@
 
 .pageButton:hover {
   background-color: red;
-  color: white; /* Muda a cor do texto ao passar o mouse */
+  color: white; 
 }
