@@ -1,41 +1,26 @@
 "use client";
 import { useState, useEffect } from "react";
 import styles from "./admin.module.css";
-import apiUsuarios from "../service/usuario";
 import GraficoPizza from "../components/graficoPizza/GraficoPizza";
-import GraficoTempo from "../components/graficoTempo/GraficoTempo";
 import ComentariosPage from "../components/comentarios/ComentariosPage";
-
+import Header from "../components/header/Header";
+import Footer from "../components/footer/footerPage";
 
 export default function Admin() {
-    const [usuarios, setUsuarios] = useState([]);
+    const [flag, setFlag] = useState(false);
 
-    useEffect(() => {
-        async function fetchUsuarios() {
-            try {
-                const data = await apiUsuarios.getUsuarios();
-                setUsuarios(data);
-            } catch (error) {
-                console.error(error);
-            }
-        }
-        fetchUsuarios();
-    }, []);
+    const handleGrafico = () => {
+        setFlag(!flag);
+    }
 
     return (
         <div className={styles.container}>
-            <h1 className={styles.titulo}>Análise de Desempenho</h1>
-            <div className={styles.graficoContainer}>
-                {/* <div className={styles.grafico}>
-                    <GraficoPizza />
-                </div>
-                <div className={styles.grafico}>
-                    <GraficoTempo />
-                </div> */}
+            <Header />
+            <div className={styles.content}>
+                {flag ? <GraficoPizza /> : <ComentariosPage />}
             </div>
-            <div className={styles.comentarios}>
-                <ComentariosPage />
-            </div>
+                <button onClick={handleGrafico}>{flag ? 'Comentários' : 'Gráfico'}</button>
+            <Footer />
         </div>
     );
         

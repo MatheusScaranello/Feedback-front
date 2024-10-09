@@ -143,7 +143,6 @@ const PieChart = ({ initialLocal }) => {
 
     return (
         <>
-        <Header/>
         <div className={styles.chartContainer}>
             
             
@@ -240,7 +239,6 @@ const PieChart = ({ initialLocal }) => {
 
            
         </div>
-         <Footer/>
     </>
     );
 };

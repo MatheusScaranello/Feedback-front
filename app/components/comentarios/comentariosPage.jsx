@@ -2,8 +2,6 @@
 import { useState, useEffect } from "react";
 import styles from "./comentarios.module.css";
 import apiUsuarios from "../../service/usuario";
-import Header from "../header/Header";
-import Footer from "../footer/footerPage";
 import { div } from "@tensorflow/tfjs";
 
 export default function ComentariosPage() {
@@ -98,10 +96,9 @@ export default function ComentariosPage() {
 
   return (
     <div>
-      <Header />
     <div className={styles.container}>
       
-      <h1 className={styles.h1}>Lista de Usuários</h1>
+      <h1 className={styles.h1}>Comentários</h1>
       {error && <p className={styles.error}>{error}</p>}
       <div className={styles.controls}>
         <input
@@ -169,7 +166,6 @@ export default function ComentariosPage() {
       </div>
 
     </div>
-    <Footer />
 
     </div>
     
