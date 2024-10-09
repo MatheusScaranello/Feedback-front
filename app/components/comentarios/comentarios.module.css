@@ -81,24 +81,23 @@
   border-radius: 4px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s, box-shadow 0.3s;
-  margin: 10px; /* Margem reduzida para espaçamento entre colunas */
-  width: calc(33.33% - 20px); /* Largura ajustada para compensar margens */
-  height: 150px; /* Fixando a altura */
+  margin: 10px; 
+  width: calc(33.33% - 20px);
+  height: 150px; 
   text-align: center;
   border: 1px solid black;
-  display:inline-table; /* Usando flexbox para alinhar o conteúdo */
-  /* Alinhando o conteúdo horizontalmente */
-  flex-direction: column; /* Alinhando o conteúdo horizontalmente */
-  justify-content: center; /* Centraliza o texto verticalmente */
+  display:inline-table; 
+  flex-direction: column;
+  justify-content: center; 
 }
 
 .span {
   font-size: 17px;
   color: black;
   font-family: Arial, sans-serif;
-  display: block; /* Alterei para block para ocupar toda a largura */
+  display: block; 
   text-align: center;
-  margin: 0; /* Remove margens para evitar espaçamentos desiguais */
+  margin: 0; 
   margin-bottom: 20px;
   margin-top: 20px;
 }
