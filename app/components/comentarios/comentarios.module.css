@@ -81,24 +81,27 @@
   border-radius: 4px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s, box-shadow 0.3s;
-  margin: 20px; 
-  width: calc(33.33% - 40px); 
-  height: 150px;
+  margin: 10px; /* Margem reduzida para espaçamento entre colunas */
+  width: calc(33.33% - 20px); /* Largura ajustada para compensar margens */
+  height: 150px; /* Fixando a altura */
   text-align: center;
   border: 1px solid black;
-  display: inline-block;
+  display:inline-table; /* Usando flexbox para alinhar o conteúdo */
+  /* Alinhando o conteúdo horizontalmente */
+  flex-direction: column; /* Alinhando o conteúdo horizontalmente */
+  justify-content: center; /* Centraliza o texto verticalmente */
 }
 
 .span {
   font-size: 17px;
   color: black;
   font-family: Arial, sans-serif;
-  display: inline-block;
+  display: block; /* Alterei para block para ocupar toda a largura */
   text-align: center;
-  margin-top: 20px;
+  margin: 0; /* Remove margens para evitar espaçamentos desiguais */
   margin-bottom: 20px;
+  margin-top: 20px;
 }
-
 .item:hover {
   transform: translateY(-10px);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
