@@ -151,7 +151,7 @@ export default function ComentariosPage() {
         {currentUsuarios.length > 0 ? (
           currentUsuarios.map((usuario) => (
             <div key={usuario.id} className={styles.item}>
-              <span>
+              <span className={styles.span}>
                 ID: {usuario.id} - Nota: {usuario.nota} - Local: {usuario.local} - Data: {dataBonita(usuario.data)} - Observação: {usuario.observacao}
               </span>
             </div>
