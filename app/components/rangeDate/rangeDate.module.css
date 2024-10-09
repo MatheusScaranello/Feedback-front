@@ -1,0 +1,187 @@
+/* Estilos gerais */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.rangeContainer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.label {
+    font-weight: bold;
+    color: #333;
+}
+
+.dateInput {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: border-color 0.3s ease;
+}
+
+.dateInput:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+/* Estilos para o Slider */
+.slider {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.thumb {
+    background-color: #007bff;
+    color: white;
+    padding: 8px;
+    border-radius: 50%;
+}
+
+.track {
+    height: 4px;
+    background-color: #e0e0e0;
+    border-radius: 2px;
+}
+
+/* Estilos para o período selecionado */
+.periodo-selecionado {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.periodo-selecionado span {
+    font-weight: bold;
+    color: #333;
+}
+
+/* Estilos para o botão de reset */
+.reset-button {
+    display: inline-block;
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.reset-button:hover {
+    background-color: #0056b3;
+}
+
+/* Estilos para o período selecionado quando não há usuários */
+.sem-usuarios {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    font-size: 18px;
+    color: #999;
+}
+
+/* Estilos para o período selecionado quando há usuários */
+.periodo-selecionado-com-usuarios {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.periodo-selecionado-com-usuarios span {
+    font-weight: bold;
+    color: #333;
+}
+
+/* Estilos para o gráfico de barras */
+.grafico-barras {
+    width: 100%;
+    height: 300px;
+    margin-top: 30px;
+}
+
+.grafico-barras canvas {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* Estilos para os dados detalhados */
+.detalhes-dados {
+    margin-top: 40px;
+}
+
+.detalhes-dados table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.detalhes-dados th,
+.detalhes-dados td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.detalhes-dados tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* Estilos para o cabeçalho da página */
+.cabecalho-pagina {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cabecalho-pagina h1 {
+    margin: 0;
+}
+
+/* Estilos para o menu lateral */
+.menu-lateral {
+    position: fixed;
+    top: 50px;
+    left: 0;
+    bottom: 0;
+    width: 250px;
+    background-color: #f8f9fa;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+}
+
+.menu-lateral ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.menu-lateral li {
+    padding: 12px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.menu-lateral a {
+    color: #333;
+    text-decoration: none;
+}
+
+.menu-lateral a:hover {
+    color: #0066cc;
+}
