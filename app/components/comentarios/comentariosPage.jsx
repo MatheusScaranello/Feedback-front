@@ -96,6 +96,7 @@ export default function ComentariosPage() {
 
   return (
     <div>
+
     <div className={styles.container}>
       
       <h1 className={styles.h1}>Comentários</h1>
