@@ -24,6 +24,7 @@
   }
 }
 
+/* Estilo do título */
 .title {
   font-size: 32px;
   text-align: center;
@@ -32,33 +33,31 @@
   color: #e60000;
   font-weight: bold;
   letter-spacing: 1.5px;
-  position: relative;
-  z-index: 1;
 }
 
-.localSelector {
+/* Estilos comuns para seletores e inputs */
+.localSelector,
+.periodo input[type="date"] {
   width: 100%;
   padding: 10px;
   font-size: 18px;
   border: 1px solid #ddd;
   border-radius: 6px;
   margin-bottom: 30px;
-  transition: border-color 0.3s;
   background: #f9f9f9;
-  position: relative;
-  z-index: 1;
+  transition: border-color 0.3s, background 0.3s;
 }
 
-.localSelector:focus {
+.localSelector:focus,
+.periodo input[type="date"]:focus {
   border-color: #e60000;
   background: #fff;
+  box-shadow: 0 0 8px rgba(230, 0, 0, 0.2);
 }
 
 /* Estilo para o período */
 .periodo {
   margin-bottom: 30px;
-  position: relative;
-  z-index: 1;
 }
 
 .periodo label {
@@ -69,80 +68,56 @@
   color: #e60000;
 }
 
-.periodo input[type="date"] {
-  padding: 8px;
-  font-size: 16px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  margin-right: 12px;
-  transition: border-color 0.3s;
-  background: #f9f9f9;
-}
-
-.periodo input[type="date"]:focus {
-  border-color: #e60000;
-  background: #fff;
-  box-shadow: 0 0 8px rgba(230, 0, 0, 0.2);
-}
-
 /* Slider container */
 .sliderContainer {
   margin-top: 15px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-}
-.sliderContainer {
-  --slider-bg: #e0e0e0; /* Cor de fundo da barra */
-  --slider-bg-hover: #d0d0d0; /* Cor da barra ao passar o mouse */
-  --slider-thumb-bg: #e60000; /* Cor do polegar */
-  --slider-thumb-bg-hover: #b30000; /* Cor do polegar ao passar o mouse */
-  --slider-thumb-bg-focus: #ff1a1a; /* Cor do polegar ao focar */
-  --slider-thumb-shadow: rgba(0, 0, 0, 0.3); /* Sombra do polegar */
-  --slider-thumb-shadow-hover: rgba(0, 0, 0, 0.5); /* Sombra do polegar ao passar o mouse */
-  --slider-thumb-shadow-focus: rgba(255, 0, 0, 0.6); /* Sombra do polegar ao focar */
+  --slider-bg: #e0e0e0;
+  --slider-bg-hover: #d0d0d0;
+  --slider-thumb-bg: #e60000;
+  --slider-thumb-bg-hover: #b30000;
+  --slider-thumb-bg-focus: #ff1a1a;
+  --slider-thumb-shadow: rgba(0, 0, 0, 0.3);
 }
 
 .sliderContainer input[type="range"] {
   -webkit-appearance: none;
   width: 100%;
-  height: 10px; /* Aumentei para mais presença */
+  height: 10px;
   border-radius: 5px;
-  background: linear-gradient(to right, var(--slider-bg) 0%, var(--slider-bg-hover) 100%);
+  background: var(--slider-bg);
   outline: none;
-  transition: background 0.4s ease; /* Transição suave */
+  transition: background 0.4s ease;
 }
 
 .sliderContainer input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 26px; /* Aumentei para melhor interação */
-  height: 26px; /* Aumentei para melhor interação */
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
   background: var(--slider-thumb-bg);
   cursor: pointer;
-  box-shadow: 0 4px 10px var(--slider-thumb-shadow); /* Sombra aprimorada */
-  transition: background-color 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease; /* Transições suaves */
+  box-shadow: 0 4px 10px var(--slider-thumb-shadow);
+  transition: background-color 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
 }
 
 .sliderContainer input[type="range"]::-webkit-slider-thumb:hover {
   background-color: var(--slider-thumb-bg-hover);
-  transform: scale(1.15); /* Aumentado para um feedback mais forte */
-  box-shadow: 0 6px 12px var(--slider-thumb-shadow-hover); /* Sombra ao passar o mouse */
+  transform: scale(1.15);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
 }
 
 .sliderContainer input[type="range"]:focus::-webkit-slider-thumb {
   background-color: var(--slider-thumb-bg-focus);
-  box-shadow: 0 0 20px var(--slider-thumb-shadow-focus); /* Efeito de foco aprimorado */
+  box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
 }
 
 .sliderContainer input[type="range"]:active::-webkit-slider-thumb {
-  transform: scale(1.25); /* Aumenta ainda mais quando pressionado */
-  background-color: #cc0000; /* Cor ao pressionar */
-}
-
-.sliderContainer input[type="range"]:active {
-  background: linear-gradient(to right, var(--slider-bg-hover) 0%, var(--slider-bg) 100%); /* Cor da barra ativa */
+  transform: scale(1.25);
+  background-color: #cc0000;
 }
 
 /* Estilo para métricas */
@@ -211,8 +186,6 @@
   border-radius: 20px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
   transition: all 0.3s ease;
-  position: relative;
-  z-index: 1;
 }
 
 .gaugeContainer:hover {
@@ -228,6 +201,7 @@
   letter-spacing: 1px;
 }
 
+/* Responsividade */
 @media (max-width: 768px) {
   .metric {
     flex: 1 1 calc(50% - 20px);
@@ -274,7 +248,6 @@
   height: 100%;
   top: 0;
   left: 0;
-  background: linear-gradient(135deg, rgba(230, 0, 0, 0.1), rgba(255, 255, 255, 0));
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.5s ease;

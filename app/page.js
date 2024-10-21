@@ -7,7 +7,8 @@ import GraficoPizza from "./components/graficoPizza/GraficoPizza";
 import GraficoTempo from "./components/graficoTempo/GraficoTempo";
 import ComentariosPage from "./components/comentarios/comentariosPage";
 import RangeDate from "./components/rangeDate/RangeDate";
-
+import Header from "./components/header/Header";
+import Footer from "./components/footer/footerPage";
 
 export default function Home() {
     const [usuarios, setUsuarios] = useState([]);
@@ -36,9 +37,11 @@ export default function Home() {
                     </li>
                 ))}
             </ul> */}
-
+            <Header />
+       
+            <Feedback/>      
+            <Footer />
  
-            <RangeDate />
         </>
     );
 }
