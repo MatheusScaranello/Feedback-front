@@ -1,7 +1,6 @@
 import styles from './feedback.module.css';
 import { useState } from 'react';
 import apiUsuarios from '../../service/usuario';
-import Header from '../header/Header';
 
 
 const Feedback = (localParametro) => {
