@@ -3,11 +3,11 @@ import { useState } from 'react';
 import apiUsuarios from '../../service/usuario';
 import Header from '../header/Header';
 
+
 const Feedback = (localParametro) => {
     const [local, setLocal] = useState("SENAI");
     const [nota, setNota] = useState(0);
     const [observacao, setObservacao] = useState('');
-    
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -28,37 +28,44 @@ const Feedback = (localParametro) => {
     };
 
     return (
-        <> 
-        <Header/>
-        <div className={styles.fundo}>
-        <div className={styles.card}>
-            <h2>Em uma escala de 0 a 10, o quanto você recomendaria nosso serviço?</h2>
-            <div className={styles.scale}>
-                {[...Array(11).keys()].map((num) => (
-                    <button
-                        key={num}
-                        className={num === nota ? styles.selected : ''}
-                        onClick={() => setNota(num)}
-                    >
-                        {num}
-                        
-                    </button>
-                ))}
+        <>
+    
+            <div className={styles.fundo}>
+                <div className={styles.card}>
+                    <h2 className={styles.text}>
+                        Em uma escala de 0 a 10, o quanto você recomendaria nosso serviço?
+                    </h2>
+                    <div className={styles.scale}>
+                        {[...Array(11).keys()].map((num) => (
+                            <button
+                                key={num}
+                                className={num === nota ? styles.selected : styles.notSelected}
+                                onClick={() => setNota(num)}
+                            >
+                                {num}
+                            </button>
+                        ))}
+                    </div>
+                    <div className={styles.avaliContainer}>
+                        <p className={styles.avali01}>Não Satisfeito</p>
+                        <p className={styles.avali}>Satisfeito</p>
+                    </div>
+                    <h2 className={styles.text02}>Fale como podemos melhorar (opcional)</h2>
+                    <textarea
+                        className={styles.textarea}
+                        placeholder="..."
+                        value={observacao}
+                        onChange={(e) => setObservacao(e.target.value)}
+                    />
+                    <div>
+                        <button className={styles.submit} onClick={handleSubmit}>
+                            Enviar
+                        </button>
+                    </div>
+                </div>
             </div>
-            <p>Não Satisfeito</p>
-            <p>Satisfeito</p>
-            <textarea
-                placeholder="Fale como podemos melhorar (opcional)"
-                value={observacao}
-                onChange={(e) => setObservacao(e.target.value)}
-            />
-            <button className={styles.submit} onClick={handleSubmit}>Enviar</button>
-        </div>
-        </div>
-         </>
+        </>
     );
 }
-       
-       
 
 export default Feedback;
