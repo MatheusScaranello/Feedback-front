@@ -5,6 +5,7 @@ import RangeDate from "../components/rangeDate/RangeDate";
 import ComentariosPage from "../components/comentarios/ComentariosPage";
 import Header from "../components/header/Header";
 import Footer from "../components/footer/footerPage";
+import { div } from "@tensorflow/tfjs";
 
 export default function Admin() {
     const [flag, setFlag] = useState(false);
@@ -14,13 +15,17 @@ export default function Admin() {
     }
 
     return (
+        <div>
+   <Header />
+
         <div className={styles.container}>
-            <Header />
+         
             <div className={styles.content}>
                 {flag ? <RangeDate /> : <ComentariosPage />}
             </div>
                 <button onClick={handleGrafico}>{flag ? 'Comentários' : 'Gráfico'}</button>
             <Footer />
+        </div>
         </div>
     );
         

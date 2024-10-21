@@ -10,8 +10,9 @@
   border: 1px solid black;
   transition: transform 0.3s, box-shadow 0.3s;
 }
-.fundo{
 
+.fundo{
+ 
   background-image: url('https://i.imgur.com/u5YXLL2.png');
   background-repeat: no-repeat;
   background-size: cover;
