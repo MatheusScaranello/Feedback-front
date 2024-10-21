@@ -1,95 +1,44 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useMemo } from "react";
 import { Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import GaugeChart from 'react-gauge-chart';
-import apiUsuarios from '@/app/service/usuario';
 import styles from "./graficoPizza.module.css";
 import { format } from 'date-fns';
-import RangeDate from "../rangeDate/RangeDate";
 
 // Registrar os elementos do Chart.js
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const PieChart = ({ initialLocal }) => {
-    const [usuarios, setUsuarios] = useState([]);
+const PieChart = ({ usuarios, initialLocal }) => {
     const [selectedLocal, setSelectedLocal] = useState(initialLocal || '');
+    const [searchTerm, setSearchTerm] = useState('');
     const [selectedSegment, setSelectedSegment] = useState(null);
-    const [periodo, setPeriodo] = useState({ inicio: '', fim: '' });
-    const [rangeInicio, setRangeInicio] = useState(0);
-    const [rangeFim, setRangeFim] = useState(100);
 
-    useEffect(() => {
-        const fetchUsuarios = async () => {
-            try {
-                const data = await apiUsuarios.getUsuarios();
-                setUsuarios(data);
-            } catch (error) {
-                console.error(error);
-            }
-        };
-        fetchUsuarios();
-    }, []);
-
-    const uniqueLocals = useMemo(() => [...new Set(usuarios.map(usuario => usuario.local))], [usuarios]);
-
-    const { menorData, maiorData } = useMemo(() => {
-        const datas = usuarios.map(usuario => new Date(usuario.data)).filter(date => !isNaN(date));
-        return {
-            menorData: new Date(Math.min(...datas)),
-            maiorData: new Date(Math.max(...datas))
-        };
+    // Obter locais únicos e ordená-los
+    const uniqueLocals = useMemo(() => {
+        const locals = [...new Set(usuarios.map(({ local }) => local))];
+        return locals.sort((a, b) => a.localeCompare(b)); // Ordenação alfabética
     }, [usuarios]);
 
-    useEffect(() => {
-        if (menorData && maiorData && !isNaN(menorData) && !isNaN(maiorData)) {
-            const diasTotal = Math.ceil((maiorData - menorData) / (1000 * 60 * 60 * 24));
-            setRangeInicio(0);
-            setRangeFim(diasTotal);
-            setPeriodo({ inicio: formatDate(menorData), fim: formatDate(maiorData) });
-        }
-    }, [menorData, maiorData]);
+    // Filtrar os locais com base no termo de busca
+    const filteredLocals = useMemo(() => {
+        return uniqueLocals.filter(local => 
+            local.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+    }, [searchTerm, uniqueLocals]);
 
-    const formatDate = (date) => date.toISOString().split('T')[0];
-
-    const ajustarDataSlider = (valor, referencia) => {
-        const novaData = new Date(menorData);
-        novaData.setDate(novaData.getDate() + Number(valor));
-        return formatDate(novaData);
-    };
-
-    const handleRangeChange = (e, tipo) => {
-        const valor = e.target.value;
-        const novaData = ajustarDataSlider(valor, tipo);
-
-        if (tipo === 'inicio') {
-            setRangeInicio(valor);
-            setPeriodo(prev => ({ ...prev, inicio: novaData }));
-        } else {
-            setRangeFim(valor);
-            setPeriodo(prev => ({ ...prev, fim: novaData }));
-        }
-    };
-
-    const usuariosFiltrados = useMemo(() => {
-        return usuarios.filter(usuario => {
-            const dataUsuario = new Date(usuario.data);
-            return (!selectedLocal || usuario.local === selectedLocal) &&
-                (periodo.inicio === '' || dataUsuario >= new Date(periodo.inicio)) &&
-                (periodo.fim === '' || dataUsuario <= new Date(periodo.fim));
-        });
-    }, [usuarios, selectedLocal, periodo]);
-
-    const calcularEstatisticas = (usuarios) => {
-        const insatisfeitos = usuarios.filter(usuario => usuario.nota <= 6).length;
-        const satisfeitos = usuarios.filter(usuario => usuario.nota >= 7 && usuario.nota <= 8).length;
-        const muitoSatisfeitos = usuarios.filter(usuario => usuario.nota >= 9 && usuario.nota <= 10).length;
+    const calcularEstatisticas = useMemo(() => {
+        const insatisfeitos = usuarios.filter(({ nota }) => nota <= 6).length;
+        const satisfeitos = usuarios.filter(({ nota }) => nota >= 7 && nota <= 8).length;
+        const muitoSatisfeitos = usuarios.filter(({ nota }) => nota >= 9 && nota <= 10).length;
         const totalRespondentes = usuarios.length;
-        const nps = totalRespondentes > 0 ? (((muitoSatisfeitos - insatisfeitos) / totalRespondentes) * 100).toFixed(2) : 0;
+        const nps = totalRespondentes > 0 
+            ? (((muitoSatisfeitos - insatisfeitos) / totalRespondentes) * 100).toFixed(2) 
+            : 0;
 
         return { insatisfeitos, satisfeitos, muitoSatisfeitos, totalRespondentes, nps };
-    };
+    }, [usuarios]);
 
-    const { insatisfeitos, satisfeitos, muitoSatisfeitos, totalRespondentes, nps } = useMemo(() => calcularEstatisticas(usuariosFiltrados), [usuariosFiltrados]);
+    const { insatisfeitos, satisfeitos, muitoSatisfeitos, totalRespondentes, nps } = calcularEstatisticas;
 
     const data = {
         labels: ['Detratores', 'Neutros', 'Promotores'],
@@ -106,14 +55,12 @@ const PieChart = ({ initialLocal }) => {
             legend: { position: 'bottom' },
             tooltip: {
                 callbacks: {
-                    label: (context) => `${context.label || ''}: ${context.raw || 0} usuários`
+                    label: ({ label, raw }) => `${label || ''}: ${raw || 0} usuários`
                 }
             }
         },
-        onClick: (event, elements) => {
-            if (elements.length > 0) {
-                setSelectedSegment(elements[0].index);
-            }
+        onClick: (_, elements) => {
+            if (elements.length > 0) setSelectedSegment(elements[0].index);
         }
     };
 
@@ -127,10 +74,10 @@ const PieChart = ({ initialLocal }) => {
 
     const handleExportCSV = () => {
         const csvHeader = "Local,Nota,Observacao,Data\n";
-        const csvRows = usuariosFiltrados.map(usuario => 
-            `${usuario.local},${usuario.nota},"${usuario.observacao || ''}",${usuario.data}`
+        const csvRows = usuarios.map(({ local, nota, observacao, data }) =>
+            `${local},${nota},"${observacao || ''}",${format(new Date(data), 'dd/MM/yyyy')}`
         ).join("\n");
-        
+
         const csvContent = "data:text/csv;charset=utf-8," + csvHeader + csvRows;
         const encodedUri = encodeURI(csvContent);
         const link = document.createElement("a");
@@ -142,28 +89,36 @@ const PieChart = ({ initialLocal }) => {
     };
 
     return (
-        <>
         <div className={styles.chartContainer}>
-            
-            
             <h2 className={styles.title}>Pontuação por {selectedLocal || "Todos os Locais"}</h2>
+
+            {/* Campo de busca para filtrar os locais */}
+            <input
+                type="text"
+                placeholder="Buscar local..."
+                className={styles.searchInput}
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+            />
+
             <select
                 className={styles.localSelector}
                 value={selectedLocal}
                 onChange={(e) => setSelectedLocal(e.target.value)}
             >
                 <option value="">Todos os Locais</option>
-                {uniqueLocals.map(local => <option key={local} value={local}>{local}</option>)}
+                {filteredLocals.length > 0 ? (
+                    filteredLocals.map(local => (
+                        <option key={local} value={local}>{local}</option>
+                    ))
+                ) : (
+                    <option disabled>Nenhum local encontrado</option>
+                )}
             </select>
-
-            <div className={styles.periodo}>
-                <RangeDate
-                />
-            </div>
 
             <div className={styles.gaugeContainer}>
                 <h3>NPS</h3>
-                <GaugeChart 
+                <GaugeChart
                     id="nps-gauge"
                     nrOfLevels={50}
                     arcsLength={[0.3, 0.4, 0.3]}
@@ -205,11 +160,10 @@ const PieChart = ({ initialLocal }) => {
 
             <Pie data={data} options={options} />
             {segmentDetails}
-            <button className={styles.exportButton} onClick={handleExportCSV}>Exportar Dados para CSV</button>
-
-           
+            <button className={styles.exportButton} onClick={handleExportCSV}>
+                Exportar Dados para CSV
+            </button>
         </div>
-    </>
     );
 };
 
