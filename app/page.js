@@ -38,7 +38,7 @@ export default function Home() {
             </ul> */}
 
  
-            <RangeDate />
+            <Feedback/>
         </>
     );
 }
