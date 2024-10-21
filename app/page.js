@@ -39,7 +39,7 @@ export default function Home() {
             </ul> */}
             <Header />
        
-            <Feedback/>      
+           <Feedback />     
             <Footer />
  
         </>
