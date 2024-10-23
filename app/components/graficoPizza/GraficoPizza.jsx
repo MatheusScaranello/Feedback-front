@@ -4,6 +4,7 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import GaugeChart from 'react-gauge-chart';
 import styles from "./graficoPizza.module.css";
 import { format } from 'date-fns';
+import { he } from "date-fns/locale";
 
 // Registrar os elementos do Chart.js
 ChartJS.register(ArcElement, Tooltip, Legend);

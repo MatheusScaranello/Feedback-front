@@ -12,7 +12,6 @@
 }
 
 
-
 .localSelector,
 .periodo input[type="date"] {
   width: 100%;
@@ -176,8 +175,6 @@
 
 }
 
-
-
 .gaugeContainer h3 {
   margin-bottom: 12px; 
   font-size: 18px;
@@ -238,3 +235,4 @@
 .details p {
    margin-top: 5px;
 }
+
