@@ -36,7 +36,8 @@ export default function Home() {
             </ul> */}
             <Header nome={nome} />
        
-           <Feedback />     
+           <Feedback />  
+              
             <Footer />
  
         </>

@@ -160,7 +160,7 @@ const PieChart = ({ usuarios, initialLocal }) => {
                 </div>
             </div>
 
-            <Pie data={data} options={options} />
+            <Pie data={data} options={options} style={{ width: '60%', maxWidth: '400px', margin: '0 auto' }}/>
             {segmentDetails}
             <button className={styles.exportButton} onClick={handleExportCSV}>
                 Exportar Dados para CSV

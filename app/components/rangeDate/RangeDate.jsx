@@ -5,6 +5,7 @@ import format from 'date-fns/format';
 import apiUsuarios from '../../service/usuario';
 import GraficoPizza from '../graficoPizza/GraficoPizza';
 import styles from './rangeDate.module.css';
+import { div } from '@tensorflow/tfjs';
 
 export default function RangeDate() {
     const [usuarios, setUsuarios] = useState([]);
@@ -91,6 +92,8 @@ export default function RangeDate() {
     };
 
     return (
+        <div>
+        <img className={styles.img} src="https://i.imgur.com/gNZu3jD.png" alt="fedback" />
         <div className={styles.container}>
             <h1 className={styles.seletec}>Selecione o período</h1>
             <div className={styles.rangeContainer}>
@@ -122,6 +125,7 @@ export default function RangeDate() {
 
             {/* Componente para exibir os usuários filtrados */}
             <GraficoPizza usuarios={usuariosFiltrados} />
+        </div> 
         </div>
     );
 }
