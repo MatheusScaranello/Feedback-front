@@ -54,3 +54,19 @@
         width: 90%;
     }
 }
+
+.btnFlag{
+    padding: 10px 15px;
+    border: 1px solid red; 
+    background-color: white;
+    color: black;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 30px 5px;
+}
+
+.btnFlag:hover {
+    background-color: red;
+    color: white;
+}
+

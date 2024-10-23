@@ -23,7 +23,7 @@ export default function Admin() {
             <div className={styles.content}>
                 {flag ? <RangeDate /> : <ComentariosPage />}
             </div>
-                <button onClick={handleGrafico}>{flag ? 'Comentários' : 'Gráfico'}</button>
+                <button onClick={handleGrafico} className={styles.btnFlag}>{flag ? 'Comentários' : 'Gráfico'}</button>
             <Footer />
         </div>
         </div>

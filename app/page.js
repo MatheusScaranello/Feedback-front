@@ -3,10 +3,6 @@ import { useState, useEffect } from "react";
 import styles from "./page.module.css";
 import apiUsuarios from "./service/usuario";
 import Feedback from "./components/feedback/Feedback";
-import GraficoPizza from "./components/graficoPizza/GraficoPizza";
-import GraficoTempo from "./components/graficoTempo/GraficoTempo";
-import ComentariosPage from "./components/comentarios/comentariosPage";
-import RangeDate from "./components/rangeDate/RangeDate";
 import Header from "./components/header/Header";
 import Footer from "./components/footer/footerPage";
 
@@ -39,7 +35,7 @@ export default function Home() {
             </ul> */}
             <Header />
        
-           <GraficoPizza />     
+           <Feedback />     
             <Footer />
  
         </>
