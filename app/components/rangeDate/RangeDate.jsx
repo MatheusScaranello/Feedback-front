@@ -92,7 +92,7 @@ export default function RangeDate() {
 
     return (
         <div className={styles.container}>
-            <h1>Selecione o período</h1>
+            <h1 className={styles.seletec}>Selecione o período</h1>
             <div className={styles.rangeContainer}>
                 <span className={styles.label}>De:</span>
                 <input

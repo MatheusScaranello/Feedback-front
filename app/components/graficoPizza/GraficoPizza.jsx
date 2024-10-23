@@ -67,7 +67,7 @@ const PieChart = ({ usuarios, initialLocal }) => {
     const segmentDetails = selectedSegment !== null && (
         <div className={styles.details}>
             <h3>Detalhes do Segmento</h3>
-            <p>Segmento: {data.labels[selectedSegment]}</p>
+            <p >Segmento: {data.labels[selectedSegment]}</p>
             <p>Total: {data.datasets[0].data[selectedSegment]} usuários</p>
         </div>
     );
@@ -94,6 +94,7 @@ const PieChart = ({ usuarios, initialLocal }) => {
 
             {/* Campo de busca para filtrar os locais */}
             <input
+            
                 type="text"
                 placeholder="Buscar local..."
                 className={styles.searchInput}

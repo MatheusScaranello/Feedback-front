@@ -8,6 +8,7 @@ import Footer from "./components/footer/footerPage";
 
 export default function Home() {
     const [usuarios, setUsuarios] = useState([]);
+    const [nome, setNome] = useState("Pesquisa de Satisfação");
 
     useEffect(() => {
         async function fetchUsuarios() {
@@ -33,7 +34,7 @@ export default function Home() {
                     </li>
                 ))}
             </ul> */}
-            <Header />
+            <Header nome={nome} />
        
            <Feedback />     
             <Footer />

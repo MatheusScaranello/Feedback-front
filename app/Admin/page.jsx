@@ -9,6 +9,7 @@ import { div } from "@tensorflow/tfjs";
 
 export default function Admin() {
     const [flag, setFlag] = useState(false);
+    const [nome, setNome] = useState(" Página admistradora");
 
     const handleGrafico = () => {
         setFlag(!flag);
@@ -16,7 +17,7 @@ export default function Admin() {
 
     return (
         <div>
-   <Header />
+            <Header nome={nome} />
 
         <div className={styles.container}>
          
