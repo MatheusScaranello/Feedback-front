@@ -26,7 +26,9 @@ export default function Admin() {
                 <button onClick={handleGrafico} className={styles.btnFlag}>
                     {flag ? 'Comentários' : 'Gráfico'}
                 </button>
+                <div className={styles.footer}>
                 <Footer />
+                </div>
             </div>
         </div>
     );  
