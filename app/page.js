@@ -37,7 +37,7 @@ export default function Home() {
             </ul> */}
 
             <div className={styles.video}>
-                <VideoPage videoId="8cKGblRmzJY" />
+                <VideoPage videoId="bLvrvixKfuM" />
             </div>
             <Header nome={nome} />
             <Feedback />
