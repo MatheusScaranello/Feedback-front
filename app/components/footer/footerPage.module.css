@@ -10,15 +10,20 @@
   height: 15px; /* Altura do footer */
   text-align: center; /* Centraliza o texto */
   font-family: 'Inter', sans-serif; /* Define a fonte do texto */
-  position: fixed; /* Fixa o footer na parte inferior da tela */
-  padding: 20px 0; /* Adiciona um pouco de padding interno */
+  position:relative; /* Fixa o footer na parte inferior da tela */
+  padding: 30px 0; /* Adiciona um pouco de padding interno */
   z-index: 1500; /* Garante que o footer fique na frente dos outros elementos */
+  
   
 }
 
-.footer p {
+.footerp {
   color: white; /* Cor do texto */
   font-size: 14px; /* Tamanho da fonte */
   margin: 0; /* Remove a margem padrão */
-  margin-bottom: 20px; /* Adiciona um pouco de margem na parte inferior */
+  /*coloque o texto mais pra cima*/
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
