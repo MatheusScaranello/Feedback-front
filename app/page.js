@@ -9,6 +9,7 @@ import ComentariosPage from "./components/comentarios/comentariosPage";
 import RangeDate from "./components/rangeDate/RangeDate";
 import Header from "./components/header/Header";
 import Footer from "./components/footer/footerPage";
+import VideoPage from "./components/video/VideoPage";
 
 export default function Home() {
     const [usuarios, setUsuarios] = useState([]);
@@ -37,10 +38,15 @@ export default function Home() {
                     </li>
                 ))}
             </ul> */}
+            <div className={styles.video}>
+                <VideoPage videoId="8cKGblRmzJY" />
+            </div>
             <Header />
-       
-            <Feedback/>      
+            <Feedback />
             <Footer />
+            
+                 
+            
  
         </>
     );
