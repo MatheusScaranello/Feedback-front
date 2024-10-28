@@ -70,3 +70,13 @@
     color: white;
 }
 
+
+.fullPageBackground {
+    background-image: url('https://i.imgur.com/u5YXLL2.png');
+    background-size: cover; /* Faz a imagem cobrir toda a área */
+    background-position: center; /* Centraliza a imagem */
+    min-height: 100vh; /* Garante que ocupe toda a altura da viewport */
+    width: 100%; /* Ocupa toda a largura */
+    display: flex; /* Permite flexbox para centralizar conteúdos, se necessário */
+    flex-direction: column; /* Alinha itens na vertical, se necessário */
+}

@@ -16,19 +16,19 @@ export default function Admin() {
     }
 
     return (
-        <div>
+        <div className={flag ? '' : styles.fullPageBackground}>
             <Header nome={nome} />
-
-        <div className={styles.container}>
-         
-            <div className={styles.content}>
-                {flag ? <RangeDate /> : <ComentariosPage />}
+    
+            <div className={styles.container}>
+                <div className={styles.content}>
+                    {flag ? <RangeDate /> : <ComentariosPage />}
+                </div>
+                <button onClick={handleGrafico} className={styles.btnFlag}>
+                    {flag ? 'Comentários' : 'Gráfico'}
+                </button>
+                <Footer />
             </div>
-                <button onClick={handleGrafico} className={styles.btnFlag}>{flag ? 'Comentários' : 'Gráfico'}</button>
-            <Footer />
         </div>
-        </div>
-    );
-        
+    );  
     
 }
