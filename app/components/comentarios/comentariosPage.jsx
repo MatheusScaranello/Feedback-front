@@ -95,7 +95,8 @@ export default function ComentariosPage() {
   const currentUsuarios = filteredUsuarios.slice(indexOfFirstUsuario, indexOfLastUsuario);
 
   return (
-    <div>
+    <div className={styles.fundo}>
+
     <div className={styles.container}>
       
       <h1 className={styles.h1}>Comentários</h1>

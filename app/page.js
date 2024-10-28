@@ -3,16 +3,13 @@ import { useState, useEffect } from "react";
 import styles from "./page.module.css";
 import apiUsuarios from "./service/usuario";
 import Feedback from "./components/feedback/Feedback";
-import GraficoPizza from "./components/graficoPizza/GraficoPizza";
-import GraficoTempo from "./components/graficoTempo/GraficoTempo";
-import ComentariosPage from "./components/comentarios/comentariosPage";
-import RangeDate from "./components/rangeDate/RangeDate";
 import Header from "./components/header/Header";
 import Footer from "./components/footer/footerPage";
 import VideoPage from "./components/video/VideoPage";
 
 export default function Home() {
     const [usuarios, setUsuarios] = useState([]);
+    const [nome, setNome] = useState("Pesquisa de Satisfação");
 
     useEffect(() => {
         async function fetchUsuarios() {
@@ -38,11 +35,12 @@ export default function Home() {
                     </li>
                 ))}
             </ul> */}
+
             <div className={styles.video}>
                 <VideoPage videoId="8cKGblRmzJY" />
             </div>
-            <Header />
-            <Feedback />
+            <Header nome={nome} />
+
             <Footer />
             
                  

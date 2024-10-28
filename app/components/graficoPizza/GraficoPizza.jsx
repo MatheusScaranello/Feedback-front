@@ -4,6 +4,7 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import GaugeChart from 'react-gauge-chart';
 import styles from "./graficoPizza.module.css";
 import { format } from 'date-fns';
+import { he } from "date-fns/locale";
 
 // Registrar os elementos do Chart.js
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -67,7 +68,7 @@ const PieChart = ({ usuarios, initialLocal }) => {
     const segmentDetails = selectedSegment !== null && (
         <div className={styles.details}>
             <h3>Detalhes do Segmento</h3>
-            <p>Segmento: {data.labels[selectedSegment]}</p>
+            <p >Segmento: {data.labels[selectedSegment]}</p>
             <p>Total: {data.datasets[0].data[selectedSegment]} usuários</p>
         </div>
     );
@@ -94,6 +95,7 @@ const PieChart = ({ usuarios, initialLocal }) => {
 
             {/* Campo de busca para filtrar os locais */}
             <input
+            
                 type="text"
                 placeholder="Buscar local..."
                 className={styles.searchInput}
@@ -158,7 +160,7 @@ const PieChart = ({ usuarios, initialLocal }) => {
                 </div>
             </div>
 
-            <Pie data={data} options={options} />
+            <Pie data={data} options={options} style={{ width: '50%', maxWidth: '400px', margin: '0 auto' }}/>
             {segmentDetails}
             <button className={styles.exportButton} onClick={handleExportCSV}>
                 Exportar Dados para CSV
