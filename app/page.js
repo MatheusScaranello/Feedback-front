@@ -40,7 +40,7 @@ export default function Home() {
                 <VideoPage videoId="8cKGblRmzJY" />
             </div>
             <Header nome={nome} />
-
+            <Feedback />
             <Footer />
             
                  
