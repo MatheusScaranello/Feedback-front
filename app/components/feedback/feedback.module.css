@@ -9,10 +9,10 @@
     border-radius: 5px;
     text-align: center;
     max-width: 810px;
-    height: 610px;
+    height: 530px;
     margin: auto;
     background-color: rgba(255, 255, 255, 0.5); /* Meio branco, meio transparente */
-    margin-top: 170px;
+    margin-top: 35px;
 }
 
 .fundo {
@@ -56,7 +56,7 @@
     height: 55px;
     width: 55px;
     margin-left: 15px;
-    
+    font-size: larger;
 }
 .notSelected {
     font-size: 20px;
