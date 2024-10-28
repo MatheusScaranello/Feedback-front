@@ -10,24 +10,13 @@
     animation: fadeIn 0.5s ease-in-out;
     position: relative;
     overflow: hidden;
-    margin-left: 850px;
+    margin-left: 250px;
     margin-right: 680px;
     margin-bottom: 50px;
 
   }
 
-  .img {
-    width: 670px; /* Defina a largura desejada para a imagem */
-    height: 670px; /* Defina a altura desejada para a imagem */
-    float: left; /* Faz com que a imagem flutue à esquerda */
-    margin-top: 250px; /* Espaçamento entre a imagem e o conteúdo */
-    margin-left: 85px;
-}
 
-.img img {
-    width: 650px; /* Garante que a imagem ocupe toda a largura disponível */
-    height: auto; /* Para manter a proporção da imagem */
-}
 
   @keyframes fadeIn {
     from {
