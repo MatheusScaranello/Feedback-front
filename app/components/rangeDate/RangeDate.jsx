@@ -93,7 +93,6 @@ export default function RangeDate() {
 
     return (
         <div>
-        <img className={styles.img} src="https://i.imgur.com/gNZu3jD.png" alt="fedback" />
         <div className={styles.container}>
             <h1 className={styles.seletec}>Selecione o período</h1>
             <div className={styles.rangeContainer}>
