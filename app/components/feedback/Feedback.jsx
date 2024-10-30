@@ -24,6 +24,13 @@ const Feedback = (localParametro) => {
             console.error("Erro ao enviar feedback:", error.message);
             alert('Erro ao enviar feedback.');
         }
+
+        clearForm();
+    };
+
+    const clearForm = () => {  
+        setNota(0);
+        setObservacao('');
     };
 
     return (
