@@ -1,8 +1,6 @@
-"use client";
 import { useState, useEffect } from "react";
 import styles from "./comentarios.module.css";
 import apiUsuarios from "../../service/usuario";
-import { div } from "@tensorflow/tfjs";
 
 export default function ComentariosPage() {
   const [usuarios, setUsuarios] = useState([]);
@@ -47,14 +45,10 @@ export default function ComentariosPage() {
     setFilteredUsuarios(results);
   }, [searchTerm, usuarios, filterCriteria]);
 
-  //deixar apenas os usuarios que tem comentario
-    useEffect(() => {
-        const results = usuarios.filter((usuario) => {
-            return usuario.observacao !== '';
-        });
-        setFilteredUsuarios(results);
-    }, [usuarios]); 
-    
+  useEffect(() => {
+    const results = usuarios.filter((usuario) => usuario.observacao !== '');
+    setFilteredUsuarios(results);
+  }, [usuarios]); 
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
@@ -73,17 +67,17 @@ export default function ComentariosPage() {
     setCurrentPage(pageNumber);
   };
 
-  const handleFilterChange = (event) => {
-    const { name, value } = event.target;
-    setFilterCriteria((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleViewModeChange = (mode) => {
-    setViewMode(mode);
-  };
+const handleFilterChange = (event) => {
+  const { name, value } = event.target;
+  
+  if (name === "minNota" && (value < -1 || value > 10)) return;
+  if (name === "maxNota" && (value < 0 || value > 11)) return;
+  
+  setFilterCriteria((prev) => ({
+    ...prev,
+    [name]: value,
+  }));
+};
 
   const dataBonita = (data) => {
     const date = new Date(data);
@@ -96,79 +90,78 @@ export default function ComentariosPage() {
 
   return (
     <div className={styles.fundo}>
-
-    <div className={styles.container}>
-      
-      <h1 className={styles.h1}>Comentários</h1>
-      {error && <p className={styles.error}>{error}</p>}
-      <div className={styles.controls}>
-        <input
-          type="text"
-          placeholder="Pesquisar local..."
-          value={searchTerm}
-          onChange={handleSearchChange}
-          className={styles.search}
-        />
-        <button onClick={handleSort} className={styles.sortButton}>
-          Ordenar por Nota ({sortOrder})
-        </button>
-        <input
-          type="number"
-          name="minNota"
-          placeholder="Nota mínima"
-          value={filterCriteria.minNota || ""}
-          onChange={handleFilterChange}
-          className={styles.filter}
-        />
-        <input
-          type="number"
-          name="maxNota"
-          placeholder="Nota máxima"
-          value={filterCriteria.maxNota || ""}
-          onChange={handleFilterChange}
-          className={styles.filter}
-        />
-        <input
-          type="date"
-          name="start"
-          placeholder="Data início"
-          value={filterCriteria.dateRange.start || ""}
-          onChange={(e) => handleFilterChange({ target: { name: "dateRange.start", value: e.target.value } })}
-          className={styles.filter}
-        />
-        <input
-          type="date"
-          name="end"
-          placeholder="Data fim"
-          value={filterCriteria.dateRange.end || ""}
-          onChange={(e) => handleFilterChange({ target: { name: "dateRange.end", value: e.target.value } })}
-          className={styles.filter}
-        />
-      </div>
-      <div className={viewMode === "list" ? styles.listView : styles.gridView}>
-        {currentUsuarios.length > 0 ? (
-          currentUsuarios.map((usuario) => (
-            <div key={usuario.id} className={styles.item}>
-              <span className={styles.span}>
-                ID: {usuario.id} - Nota: {usuario.nota} - Local: {usuario.local} - Data: {dataBonita(usuario.data)} - Observação: {usuario.observacao}
-              </span>
-            </div>
-          ))
-        ) : (
-          <p className={styles.message}>Nenhum usuário encontrado.</p>
-        )}
-      </div>
-      <div className={styles.pagination}>
-        {Array.from({ length: Math.ceil(filteredUsuarios.length / usuariosPerPage) }, (_, i) => (
-          <button key={i} onClick={() => handlePageChange(i + 1)} className={styles.pageButton}>
-            {i + 1}
+      <div className={styles.container}>
+        <h1 className={styles.h1}>Comentários</h1>
+        {error && <p className={styles.error}>{error}</p>}
+        <div className={styles.controls}>
+          <input
+            type="text"
+            placeholder="Pesquisar local..."
+            value={searchTerm}
+            onChange={handleSearchChange}
+            className={styles.search}
+          />
+          <button onClick={handleSort} className={styles.sortButton}>
+            Ordenar por Nota ({sortOrder})
           </button>
-        ))}
+          <input
+            type="number"
+            name="minNota"
+            placeholder="Nota mínima"
+            value={filterCriteria.minNota || ""}
+            onChange={handleFilterChange}
+            className={styles.filter}
+          />
+          <input
+            type="number"
+            name="maxNota"
+            placeholder="Nota máxima"
+            value={filterCriteria.maxNota || ""}
+            onChange={handleFilterChange}
+            className={styles.filter}
+          />
+          <input
+            type="date"
+            name="start"
+            placeholder="Data início"
+            value={filterCriteria.dateRange.start || ""}
+            onChange={(e) => handleFilterChange({ target: { name: "dateRange.start", value: e.target.value } })}
+            className={styles.filter}
+          />
+          <input
+            type="date"
+            name="end"
+            placeholder="Data fim"
+            value={filterCriteria.dateRange.end || ""}
+            onChange={(e) => handleFilterChange({ target: { name: "dateRange.end", value: e.target.value } })}
+            className={styles.filter}
+          />
+        </div>
+        <div className={viewMode === "list" ? styles.listView : styles.gridView}>
+          {currentUsuarios.length > 0 ? (
+            currentUsuarios.map((usuario) => (
+              <div key={usuario.id} className={styles.item}>
+                <span className={styles.span}>
+                  ID: {usuario.id} - Nota: {usuario.nota} - Local: {usuario.local} - Data: {dataBonita(usuario.data)} - Observação: {usuario.observacao}
+                </span>
+              </div>
+            ))
+          ) : (
+            <p className={styles.message}>Nenhum usuário encontrado.</p>
+          )}
+        </div>
+        <div className={styles.pagination}>
+          {Array.from({ length: Math.ceil(filteredUsuarios.length / usuariosPerPage) }, (_, i) => (
+            <button
+              key={i}
+              onClick={() => handlePageChange(i + 1)}
+              className={`${styles.pageButton} ${currentPage === i + 1 ? styles.active : ""}`}
+            >
+              {i + 1}
+            </button>
+          ))}
+        </div>
       </div>
-
     </div>
-
-    </div>
-    
   );
 }

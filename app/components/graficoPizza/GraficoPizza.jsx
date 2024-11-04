@@ -32,9 +32,7 @@ const PieChart = ({ usuarios, initialLocal }) => {
         const satisfeitos = usuarios.filter(({ nota }) => nota >= 7 && nota <= 8).length;
         const muitoSatisfeitos = usuarios.filter(({ nota }) => nota >= 9 && nota <= 10).length;
         const totalRespondentes = usuarios.length;
-        const nps = totalRespondentes > 0 
-            ? (((muitoSatisfeitos - insatisfeitos) / totalRespondentes) * 100).toFixed(2) 
-            : 0;
+        const nps = ((muitoSatisfeitos / totalRespondentes) - (insatisfeitos / totalRespondentes)) * 100;
 
         return { insatisfeitos, satisfeitos, muitoSatisfeitos, totalRespondentes, nps };
     }, [usuarios]);

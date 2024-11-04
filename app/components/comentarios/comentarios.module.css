@@ -133,3 +133,8 @@
   background-color: red;
   color: white; 
 }
+
+.pageButton.active {
+  background-color: red;
+  color: white;
+}
