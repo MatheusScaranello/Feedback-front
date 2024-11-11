@@ -1,238 +1,258 @@
+/* Importa a fonte 'Inter' do Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+/* Estilo para o título principal */
 .title {
-  font-size: 25px;
-  text-align: center;
-  margin-bottom: 30px;
-  margin-top: 30px;
-  font-family: Arial, sans-serif;
-  color: #e60000;
-  font-weight: bold;
-  letter-spacing: 0.5px;
+  font-size: 25px; /* Tamanho da fonte */
+  text-align: center; /* Alinhamento centralizado */
+  margin-bottom: 30px; /* Margem inferior */
+  margin-top: 30px; /* Margem superior */
+  font-family: Arial, sans-serif; /* Fonte utilizada */
+  color: #e60000; /* Cor do texto */
+  font-weight: bold; /* Negrito */
+  letter-spacing: 0.5px; /* Espaçamento entre letras */
 }
 
-
+/* Estilos para seletores de local e inputs de data */
 .localSelector,
 .periodo input[type="date"] {
-  width: 100%;
-  padding: 10px;
-  font-size: 18px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  margin-bottom: 30px;
-  background: #f9f9f9;
-  transition: border-color 0.3s, background 0.3s;
+  width: 100%; /* Largura total */
+  padding: 10px; /* Espaçamento interno */
+  font-size: 18px; /* Tamanho da fonte */
+  border: 1px solid #ddd; /* Borda cinza clara */
+  border-radius: 6px; /* Bordas arredondadas */
+  margin-bottom: 30px; /* Margem inferior */
+  background: #f9f9f9; /* Cor de fundo */
+  transition: border-color 0.3s, background 0.3s; /* Efeito de transição nas bordas e fundo */
 }
-.searchInput{
-  width: 50%;
-  padding: 10px;
-  font-size: 18px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  margin-bottom: 30px;
-  margin-left: 25%;
-  background: #f9f9f9;
-  transition: border-color 0.3s, background 0.3s;
+
+/* Estilo para o campo de busca */
+.searchInput {
+  width: 50%; /* 50% da largura do contêiner pai */
+  padding: 10px; /* Espaçamento interno */
+  font-size: 18px; /* Tamanho da fonte */
+  border: 1px solid #ddd; /* Borda cinza clara */
+  border-radius: 6px; /* Bordas arredondadas */
+  margin-bottom: 30px; /* Margem inferior */
+  margin-left: 25%; /* Margem esquerda para centralizar */
+  background: #f9f9f9; /* Cor de fundo */
+  transition: border-color 0.3s, background 0.3s; /* Efeito de transição */
 }
+
+/* Estilos para foco nos seletores */
 .localSelector:focus,
 .periodo input[type="date"]:focus {
-  border-color: #e60000;
-  background: #fff;
-  box-shadow: 0 0 8px rgba(230, 0, 0, 0.2);
+  border-color: #e60000; /* Cor da borda em foco */
+  background: #fff; /* Fundo branco em foco */
+  box-shadow: 0 0 8px rgba(230, 0, 0, 0.2); /* Sombra leve ao redor */
 }
 
+/* Estilos para o contêiner de período */
 .periodo {
-  margin-bottom: 30px;
+  margin-bottom: 30px; /* Margem inferior */
 }
 
+/* Estilo para os rótulos do período */
 .periodo label {
-  font-size: 20px;
-  font-weight: bold;
-  display: block;
-  margin-bottom: 10px;
-  color: #e60000;
+  font-size: 20px; /* Tamanho da fonte */
+  font-weight: bold; /* Negrito */
+  display: block; /* Exibe como bloco */
+  margin-bottom: 10px; /* Margem inferior */
+  color: #e60000; /* Cor do texto */
 }
 
-/* Slider container */
-
+/* Estilos para o contêiner do slider */
 .sliderContainer {
-  margin-top: 15px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  --slider-bg: #e0e0e0;
-  --slider-bg-hover: #d0d0d0;
-  --slider-thumb-bg: #e60000;
-  --slider-thumb-bg-hover: #b30000;
-  --slider-thumb-bg-focus: #ff1a1a;
-  --slider-thumb-shadow: rgba(0, 0, 0, 0.3);
+  margin-top: 15px; /* Margem superior */
+  display: flex; /* Flexbox para layout */
+  align-items: center; /* Alinha itens no centro verticalmente */
+  justify-content: space-between; /* Espaçamento entre itens */
+  --slider-bg: #e0e0e0; /* Cor de fundo do slider */
+  --slider-bg-hover: #d0d0d0; /* Cor de fundo ao passar o mouse */
+  --slider-thumb-bg: #e60000; /* Cor do botão do slider */
+  --slider-thumb-bg-hover: #b30000; /* Cor do botão ao passar o mouse */
+  --slider-thumb-bg-focus: #ff1a1a; /* Cor do botão em foco */
+  --slider-thumb-shadow: rgba(0, 0, 0, 0.3); /* Sombra do botão */
 }
 
+/* Estilos para o input do slider */
 .sliderContainer input[type="range"] {
-  -webkit-appearance: none;
-  width: 100%;
-  height: 10px;
-  border-radius: 5px;
-  background: var(--slider-bg);
-  outline: none;
-  transition: background 0.4s ease;
+  -webkit-appearance: none; /* Remove estilo padrão do navegador */
+  width: 100%; /* Largura total */
+  height: 10px; /* Altura do slider */
+  border-radius: 5px; /* Bordas arredondadas */
+  background: var(--slider-bg); /* Cor de fundo do slider */
+  outline: none; /* Remove contorno ao focar */
+  transition: background 0.4s ease; /* Transição suave de fundo */
 }
 
+/* Estilo para o botão do slider */
 .sliderContainer input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  background: var(--slider-thumb-bg);
-  cursor: pointer;
-  box-shadow: 0 4px 10px var(--slider-thumb-shadow);
-  transition: background-color 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
+  -webkit-appearance: none; /* Remove estilo padrão do navegador */
+  appearance: none; /* Remove estilo padrão do navegador */
+  width: 26px; /* Largura do botão */
+  height: 26px; /* Altura do botão */
+  border-radius: 50%; /* Botão redondo */
+  background: var(--slider-thumb-bg); /* Cor de fundo do botão */
+  cursor: pointer; /* Muda o cursor ao passar por cima */
+  box-shadow: 0 4px 10px var(--slider-thumb-shadow); /* Sombra do botão */
+  transition: background-color 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease; /* Transições suaves */
 }
 
+/* Efeitos de hover e foco para o botão do slider */
 .sliderContainer input[type="range"]::-webkit-slider-thumb:hover {
-  background-color: var(--slider-thumb-bg-hover);
-  transform: scale(1.15);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+  background-color: var(--slider-thumb-bg-hover); /* Cor ao passar o mouse */
+  transform: scale(1.15); /* Aumenta o tamanho ao passar o mouse */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5); /* Sombra mais intensa ao passar o mouse */
 }
 
 .sliderContainer input[type="range"]:focus::-webkit-slider-thumb {
-  background-color: var(--slider-thumb-bg-focus);
-  box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
+  background-color: var(--slider-thumb-bg-focus); /* Cor do botão em foco */
+  box-shadow: 0 0 20px rgba(255, 0, 0, 0.6); /* Sombra intensa ao focar */
 }
 
 .sliderContainer input[type="range"]:active::-webkit-slider-thumb {
-  transform: scale(1.25);
-  background-color: #cc0000;
+  transform: scale(1.25); /* Aumenta o tamanho ao clicar */
+  background-color: #cc0000; /* Cor do botão ao clicar */
 }
 
+/* Estilos para o contêiner de métricas */
 .metrics {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 30px;
-  margin-top: 30px;
-  gap: 10px;
-  flex-wrap: wrap;
+  display: flex; /* Flexbox para layout */
+  justify-content: space-between; /* Espaçamento entre itens */
+  margin-bottom: 30px; /* Margem inferior */
+  margin-top: 30px; /* Margem superior */
+  gap: 10px; /* Espaçamento entre itens */
+  flex-wrap: wrap; /* Permite quebra de linha */
 }
 
+/* Estilos para cada métrica */
 .metric {
-  flex: 1 1 calc(25% - 20px);
-  text-align: center;
-  background-color: #ffffff;
-  padding: 15px;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s, box-shadow 0.3s;
-  margin: 10px 0;
+  flex: 1 1 calc(25% - 20px); /* Largura variável com base no espaço disponível */
+  text-align: center; /* Alinhamento centralizado */
+  background-color: #ffffff; /* Fundo branco */
+  padding: 15px; /* Espaçamento interno */
+  border-radius: 12px; /* Bordas arredondadas */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra leve */
+  transition: transform 0.3s, box-shadow 0.3s; /* Transições suaves */
+  margin: 10px 0; /* Margem vertical */
 }
 
-
-
+/* Estilo para o título de cada métrica */
 .metric h3 {
-  font-size: 16px;
-  margin-bottom: 10px;
-  color: #e60000;
-  margin-top: 10px;
-  text-transform: uppercase;
+  font-size: 16px; /* Tamanho da fonte */
+  margin-bottom: 10px; /* Margem inferior */
+  color: #e60000; /* Cor do texto */
+  margin-top: 10px; /* Margem superior */
+  text-transform: uppercase; /* Texto em maiúsculas */
 }
 
+/* Estilo para o parágrafo de cada métrica */
 .metric p {
-  font-size: 16px;
-  color: #666;
+  font-size: 16px; /* Tamanho da fonte */
+  color: #666; /* Cor do texto */
 }
 
+/* Estilo para o botão de exportação */
 .exportButton {
-  display: block;
-  width: 45%;
-  padding: 12px;
-  background-color: #e60000;
-  color: #ffffff;
-  text-align: center;
-  font-size: 18px;
-  margin-left: 27%;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.3s;
-  margin-top: 20px;
+  display: block; /* Exibe como bloco */
+  width: 45%; /* Largura do botão */
+  padding: 12px; /* Espaçamento interno */
+  background-color: #e60000; /* Cor de fundo */
+  color: #ffffff; /* Cor do texto */
+  text-align: center; /* Alinhamento centralizado */
+  font-size: 18px; /* Tamanho da fonte */
+  margin-left: 27%; /* Margem esquerda para centralizar */
+  border-radius: 5px; /* Bordas arredondadas */
+  cursor: pointer; /* Cursor de mão ao passar por cima */
+  transition: background-color 0.3s, transform 0.3s; /* Transições suaves */
+  margin-top: 20px; /* Margem superior */
 }
 
+/* Efeito de hover para o botão de exportação */
 .exportButton:hover {
-  background-color: #b30000;
-  transform: translateY(-3px);
+  background-color: #b30000; /* Cor ao passar o mouse */
+  transform: translateY(-3px); /* Eleva o botão ao passar o mouse */
 }
 
+/* Estilos para o contêiner do gauge */
 .gaugeContainer {
-  margin: 20px auto; 
-  text-align: center;
-  background: #ffffff; 
-  border: 2px solid #e60000; 
-  border-radius: 10px; 
-  padding: 20px; 
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-  transition: all 0.3s ease;
-  max-width: 550px; 
-  width: 90%; 
-
+  margin: 20px auto; /* Margens automáticas para centralizar */
+  text-align: center; /* Alinhamento centralizado */
+  background: #ffffff; /* Fundo branco */
+  border: 2px solid #e60000; /* Borda vermelha */
+  border-radius: 10px; /* Bordas arredondadas */
+  padding: 20px; /* Espaçamento interno */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra leve */
+  transition: all 0.3s ease; /* Transição suave para todos os efeitos */
+  max-width: 550px; /* Largura máxima */
+  width: 90%; /* Largura de 90% */
 }
 
+/* Estilo para o título do gauge */
 .gaugeContainer h3 {
-  margin-bottom: 12px; 
-  font-size: 18px;
-  color: #e60000; 
-  font-weight: bold;
-  text-transform: uppercase;
-  letter-spacing: 1px;
+  margin-bottom: 12px; /* Margem inferior */
+  font-size: 18px; /* Tamanho da fonte */
+  color: #e60000; /* Cor do texto */
+  font-weight: bold; /* Negrito */
+  text-transform: uppercase; /* Texto em maiúsculas */
+  letter-spacing: 1px; /* Espaçamento entre letras */
 }
 
-
+/* Estilo para o parágrafo dentro do gauge */
 .gaugeContainer p {
-  font-size: 14px; 
-  color: #666; 
-  margin-top: 5px; 
+  font-size: 14px; /* Tamanho da fonte */
+  color: #666; /* Cor do texto */
+  margin-top: 5px; /* Margem superior */
 }
 
+/* Estilo para a linha abaixo de cada métrica */
 .metric::after {
-  content: '';
-  display: block;
-  width: 50px;
-  height: 4px;
-  background: #e60000;
-  margin: 10px auto 0;
+  content: ''; /* Cria um conteúdo vazio */
+  display: block; /* Exibe como bloco */
+  width: 50px; /* Largura da linha */
+  height: 4px; /* Altura da linha */
+  background: #e60000; /* Cor da linha */
+  margin: 10px auto 0; /* Margens automáticas para centralizar */
 }
 
+/* Estilos para a contagem do gráfico */
 .chartContainer::before {
-  content: '';
-  display: block;
-  width: 80px;
-  height: 4px;
-  background: #e60000;
-  margin: 0 auto 20px;
+  content: ''; /* Cria um conteúdo vazio */
+  display: block; /* Exibe como bloco */
+  width: 80px; /* Largura da linha */
+  height: 4px; /* Altura da linha */
+  background: #e60000; /* Cor da linha */
+  margin: 0 auto 20px; /* Margens automáticas para centralizar */
 }
 
+/* Efeito de sobreposição no gráfico */
 .chartContainer::after {
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.5s ease;
+  content: ''; /* Cria um conteúdo vazio */
+  position: absolute; /* Posição absoluta */
+  width: 100%; /* Largura total */
+  height: 100%; /* Altura total */
+  top: 0; /* Alinhado ao topo */
+  left: 0; /* Alinhado à esquerda */
+  pointer-events: none; /* Desabilita interações */
+  opacity: 0; /* Opacidade inicial */
+  transition: opacity 0.5s ease; /* Transição suave para opacidade */
 }
 
+/* Efeito ao passar o mouse sobre o gráfico */
 .chartContainer:hover::after {
-  opacity: 1;
+  opacity: 1; /* Aumenta a opacidade ao passar o mouse */
 }
 
-.details{
-  margin-top: 20px;
-  font-size: 15px;
-  color: #000000;
-  font-family: "Inter", sans-serif;
+/* Estilo para detalhes */
+.details {
+  margin-top: 20px; /* Margem superior */
+  font-size: 15px; /* Tamanho da fonte */
+  color: #000000; /* Cor do texto */
+  font-family: "Inter", sans-serif; /* Fonte utilizada */
 }
 
+/* Estilo para parágrafos dentro de detalhes */
 .details p {
-   margin-top: 5px;
+   margin-top: 5px; /* Margem superior */
 }
-

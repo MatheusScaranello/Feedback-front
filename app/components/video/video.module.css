@@ -1,29 +1,29 @@
 .videoWrapper {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-    pointer-events: none; /* Impede qualquer interação direta com o vídeo */
+    position: fixed; /* Mantém o contêiner do vídeo fixo na viewport, mesmo ao rolar a página */
+    top: 0; /* Alinha o contêiner ao topo da página */
+    left: 0; /* Alinha o contêiner à esquerda da página */
+    width: 100vw; /* Define a largura do contêiner como 100% da largura da viewport */
+    height: 100vh; /* Define a altura do contêiner como 100% da altura da viewport */
+    display: flex; /* Usa flexbox para organizar o conteúdo interno */
+    justify-content: center; /* Centraliza o conteúdo horizontalmente */
+    align-items: center; /* Centraliza o conteúdo verticalmente */
+    z-index: 9999; /* Define um índice z alto para garantir que o contêiner fique acima de outros elementos na página */
+    pointer-events: none; /* Impede qualquer interação direta com o vídeo, permitindo que eventos de mouse passem pelo contêiner */
 }
 
 .video {
-    width: 100%;
-    height: 100%;
-    pointer-events: none; /* Impede qualquer interação direta com o vídeo */
+    width: 100%; /* Define a largura do vídeo como 100% do contêiner pai */
+    height: 100%; /* Define a altura do vídeo como 100% do contêiner pai */
+    pointer-events: none; /* Impede qualquer interação direta com o vídeo, como pausar ou tocar */
 }
 
 .clickOverlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    cursor: pointer;
-    background: transparent;
-    pointer-events: auto; /* Permite cliques na overlay */
+    position: absolute; /* Posiciona a sobreposição em relação ao contêiner pai */
+    top: 0; /* Alinha a sobreposição ao topo do pai */
+    left: 0; /* Alinha a sobreposição à esquerda do pai */
+    width: 100%; /* Define a largura da sobreposição como 100% do pai */
+    height: 100%; /* Define a altura da sobreposição como 100% do pai */
+    cursor: pointer; /* Muda o cursor para indicar que a sobreposição é clicável */
+    background: transparent; /* Define um fundo transparente, permitindo que o vídeo seja visto por trás */
+    pointer-events: auto; /* Permite interações com a sobreposição, como cliques */
 }

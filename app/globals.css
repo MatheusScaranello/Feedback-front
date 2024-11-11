@@ -1,5 +1,10 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* 
+Este seletor universal (*) aplica estilos a todos os elementos da página. 
+As regras definidas aqui são úteis para garantir uma aparência consistente e previsível em toda a aplicação.
+*/
+
+* {
+    margin: 0; /* Remove a margem padrão de todos os elementos, garantindo que não haja espaços indesejados ao redor */
+    padding: 0; /* Remove o preenchimento padrão de todos os elementos, evitando espaçamentos extras */
+    box-sizing: border-box; /* Define o modelo de caixa para incluir bordas e preenchimentos nas dimensões totais do elemento */
 }

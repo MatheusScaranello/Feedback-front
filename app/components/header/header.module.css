@@ -1,50 +1,50 @@
 .header {
-    display: flex;
-    align-items: center;
+    display: flex; /* Usa flexbox para layout do cabeçalho */
+    align-items: center; /* Alinha itens verticalmente ao centro */
     justify-content: center; /* Centraliza os itens horizontalmente */
-    border-top: 35px solid red; /* Linha vermelha na parte superior */
-    background-color: #f5f5f5;
-    height: 100px; /* Altura do cabeçalho */
+    border-top: 35px solid red; /* Linha vermelha na parte superior para destaque */
+    background-color: #f5f5f5; /* Cor de fundo clara para o cabeçalho */
+    height: 100px; /* Define a altura do cabeçalho */
 }
 
 .leftSide, .rightSide {
-    display: flex;
-    align-items: center;
-    justify-content: center; /* Centraliza os itens dentro de cada lado */
+    display: flex; /* Usa flexbox para layout em ambos os lados */
+    align-items: center; /* Alinha itens verticalmente ao centro */
+    justify-content: center; /* Centraliza itens dentro de cada lado */
 }
 
 .leftSide {
-    flex: 1; /* A imagem ocupa uma parte do espaço */
-    margin-top: 10px;
-    margin-left: 250px;
+    flex: 1; /* A imagem ocupa uma parte do espaço disponível */
+    margin-top: 10px; /* Margem superior para espaçamento */
+    margin-left: 250px; /* Margem à esquerda para afastar do lado da tela */
 }
 
 .rightSide {
-    flex: 2; /* O texto ocupa uma parte maior do espaço */
-    text-align: center; /* Centraliza o texto */
-    margin-top: 10px;
+    flex: 2; /* O texto ocupa uma parte maior do espaço disponível */
+    text-align: center; /* Centraliza o texto dentro do lado direito */
+    margin-top: 10px; /* Margem superior para espaçamento */
 }
 
 .img {
-    width: 250px; /* Largura da imagem */
-    margin-left: 550px;
-    height: auto; /* Mantém a proporção da imagem */
-    margin: 0; /* Remove margens para centralizar melhor */
+    width: 250px; /* Define a largura da imagem */
+    margin-left: 550px; /* Margem à esquerda para posicionar a imagem */
+    height: auto; /* Mantém a proporção da imagem ao redimensionar */
+    margin: 0; /* Remove margens padrão para centralização */
 }
 
 .h1 {
-    font-size: 25px;
-    color: #333;
-    margin: 0;
-    margin-right: 190px;
-    font-family: Arial, sans-serif;
-    text-align: center; /* Centraliza o texto */
+    font-size: 25px; /* Tamanho da fonte do título */
+    color: #333; /* Cor do texto (um cinza escuro) */
+    margin: 0; /* Remove margens para evitar espaçamento indesejado */
+    margin-right: 190px; /* Margem direita para afastar do lado da tela */
+    font-family: Arial, sans-serif; /* Define a fonte do título */
+    text-align: center; /* Centraliza o texto do título */
 }
 
 .divider {
-    width: 1px;
+    width: 1px; /* Largura da linha divisória */
     height: 50px; /* Altura da linha divisória */
-    background-color: #ff0000; /* Cor da divisória */
-    margin: 0 20px; /* Espaçamento entre a imagem e o texto */
-    margin-right: 30px;
+    background-color: #ff0000; /* Cor vermelha para a divisória */
+    margin: 0 20px; /* Espaçamento horizontal ao redor da divisória */
+    margin-right: 30px; /* Margem direita adicional para espaçamento */
 }

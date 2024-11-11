@@ -1,141 +1,138 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+/* Importação da fonte Inter do Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
-
+/* Estilo para o cartão principal */
 .card {
-    padding: 20px;
-    border: 1px solid #000000;
-    border-radius: 5px;
-    text-align: center;
-    max-width: 810px;
-    height: 530px;
-    margin: auto;
-    background-color: rgba(255, 255, 255, 0.5); /* Meio branco, meio transparente */
-    margin-top: 35px;
+    padding: 20px; /* Espaçamento interno do cartão */
+    border: 1px solid #000000; /* Borda preta ao redor do cartão */
+    border-radius: 5px; /* Cantos arredondados */
+    text-align: center; /* Centraliza o texto dentro do cartão */
+    max-width: 810px; /* Largura máxima do cartão */
+    height: 530px; /* Altura fixa do cartão */
+    margin: auto; /* Centraliza o cartão horizontalmente */
+    background-color: rgba(255, 255, 255, 0.5); /* Fundo branco com transparência */
+    margin-top: 35px; /* Espaço acima do cartão */
 }
 
+/* Estilo do fundo da página */
 .fundo {
-
-    background-image: url('https://i.imgur.com/u5YXLL2.png');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: top center;
-    height: 85vh;
-    width: 100%;
-    background-color: black;
-    overflow-x: hidden;
-
+    background-image: url('https://i.imgur.com/u5YXLL2.png'); /* Imagem de fundo */
+    background-repeat: no-repeat; /* Não repete a imagem */
+    background-size: cover; /* Cobre toda a área do fundo */
+    background-position: top center; /* Posiciona a imagem no topo e centraliza */
+    height: 85vh; /* Altura de 85% da viewport */
+    width: 100%; /* Largura total */
+    background-color: black; /* Fundo preto como fallback */
+    overflow-x: hidden; /* Esconde o transbordamento horizontal */
 }
-  
+
+/* Estilo para a seção de botões */
 .scale {
-    display: flex;
-    justify-content: center;
-    margin: 50px 0;
-    border-radius: 5px;
-    
+    display: flex; /* Utiliza Flexbox para layout */
+    justify-content: center; /* Centraliza os itens */
+    margin: 50px 0; /* Margem vertical */
+    border-radius: 5px; /* Cantos arredondados */
 }
 
+/* Estilo dos botões */
 .button {
-    margin: 0 5px;
-    padding: 10px;
-    border: 1px solid #b31f1f;
-    border-radius: 5px;
-    background-color: white;
-    cursor: pointer;
-    font-family: "Inter", sans-serif;
-    
- 
-   
+    margin: 0 5px; /* Espaçamento lateral entre os botões */
+    padding: 10px; /* Espaçamento interno do botão */
+    border: 1px solid #b31f1f; /* Borda vermelha */
+    border-radius: 5px; /* Cantos arredondados */
+    background-color: white; /* Fundo branco */
+    cursor: pointer; /* Cursor de ponteiro ao passar o mouse */
+    font-family: "Inter", sans-serif; /* Fonte definida como Inter */
 }
 
+/* Estilo para o botão selecionado */
 .selected {
-    background-color: #ff0000;
-    color: white;
-    border-radius: 5px;
-    height: 55px;
-    width: 55px;
-    margin-left: 15px;
-    font-size: larger;
+    background-color: #ff0000; /* Fundo vermelho */
+    color: white; /* Texto branco */
+    border-radius: 5px; /* Cantos arredondados */
+    height: 55px; /* Altura do botão */
+    width: 55px; /* Largura do botão */
+    margin-left: 15px; /* Margem à esquerda */
+    font-size: larger; /* Aumenta o tamanho da fonte */
 }
+
+/* Estilo para botões não selecionados */
 .notSelected {
-    font-size: 20px;
-    margin-top: 10px;
-    margin-left: 15px;
-    background-color: rgb(255, 255, 255);
-    border-radius: 5px;
-    border-color: #ff0000;
-    height: 50px;
-    width: 55px;
-   
+    font-size: 20px; /* Tamanho da fonte */
+    margin-top: 10px; /* Margem superior */
+    margin-left: 15px; /* Margem à esquerda */
+    background-color: rgb(255, 255, 255); /* Fundo branco */
+    border-radius: 5px; /* Cantos arredondados */
+    border-color: #ff0000; /* Cor da borda vermelha */
+    height: 50px; /* Altura do botão */
+    width: 55px; /* Largura do botão */
 }
 
+/* Estilo para a área de texto */
 .textarea {
-    width: 650px; /* 100% da largura do container pai */
-    height: 100px; /* Aumenta a altura */
-    padding: 10px;
-    border-radius: 4px;
-    border: 1px solid #000000; /* Adiciona uma borda para melhor visualização */
+    width: 650px; /* Largura fixa */
+    height: 100px; /* Altura fixa */
+    padding: 10px; /* Espaçamento interno */
+    border-radius: 4px; /* Cantos arredondados */
+    border: 1px solid #000000; /* Borda preta */
     resize: none; /* Impede o redimensionamento manual */
-    
 }
 
+/* Estilo do botão de envio */
 .submit {
-    background-color: #ff0000;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 2px;
-    cursor: pointer;
-   margin-top:25px;
-   height: 50px; 
-   width: 228px;
+    background-color: #ff0000; /* Fundo vermelho */
+    color: white; /* Texto branco */
+    padding: 10px 20px; /* Espaçamento interno */
+    border: none; /* Sem borda */
+    border-radius: 2px; /* Cantos arredondados */
+    cursor: pointer; /* Cursor de ponteiro ao passar o mouse */
+    margin-top: 25px; /* Margem superior */
+    height: 50px; /* Altura do botão */
+    width: 228px; /* Largura do botão */
 }
 
-
-/* Flexbox para os itens .avali ficarem lado a lado */
+/* Estilo para o container de avaliações */
 .avaliContainer {
-    display: flex;
-    justify-content: space-between; /* Isso garante que os elementos fiquem nas extremidades */
-    margin: 30px 0; /* Espaçamento vertical */
+    display: flex; /* Utiliza Flexbox para layout */
+    justify-content: space-between; /* Espaça os itens uniformemente */
+    margin: 30px 0; /* Margem vertical */
 }
 
+/* Estilo para cada item de avaliação */
 .avali {
-    flex: 1; /* Faz com que cada item ocupe espaço igual */
+    flex: 1; /* Cada item ocupa espaço igual */
     text-align: center; /* Centraliza o texto */
     padding: 10px; /* Espaçamento interno */
-    margin: -35px 0; /* Espaçamento vertical */
-    font-family: "Inter", sans-serif;
-    margin-right: -40px;
-    margin-left: 200px;
-   
+    margin: -35px 0; /* Margem negativa para ajuste */
+    font-family: "Inter", sans-serif; /* Fonte definida como Inter */
+    margin-right: -40px; /* Margem negativa à direita */
+    margin-left: 200px; /* Margem à esquerda */
 }
 
+/* Estilo específico para a primeira avaliação */
 .avali01 {
-    flex: 1; /* Faz com que cada item ocupe espaço igual */
+    flex: 1; /* Cada item ocupa espaço igual */
     text-align: center; /* Centraliza o texto */
     padding: 10px; /* Espaçamento interno */
-    margin: -35px 0; /* Espaçamento vertical */
-    font-family: "Inter", sans-serif;
-    margin-right: 300px;
-    font-size: 15px;
- 
+    margin: -35px 0; /* Margem vertical */
+    font-family: "Inter", sans-serif; /* Fonte definida como Inter */
+    margin-right: 300px; /* Margem à direita */
+    font-size: 15px; /* Tamanho da fonte */
 }
 
-.text{
-    
-  font-family: "Inter", sans-serif;
-  font-size: 20px;
-  margin-top: 50px;
-
+/* Estilo para o texto geral */
+.text {
+    font-family: "Inter", sans-serif; /* Fonte definida como Inter */
+    font-size: 20px; /* Tamanho da fonte */
+    margin-top: 50px; /* Margem superior */
 }
 
-.text02{
-   
-  font-style: italic;
-  font-family: "Inter", sans-serif;
-  font-size: 17px;
-  margin-top: 10px;
-  margin-right: 320px;
-
+/* Estilo para o texto em itálico */
+.text02 {
+    font-style: italic; /* Estilo itálico */
+    font-family: "Inter", sans-serif; /* Fonte definida como Inter */
+    font-size: 17px; /* Tamanho da fonte */
+    margin-top: 10px; /* Margem superior */
+    margin-right: 320px; /* Margem à direita */
 }

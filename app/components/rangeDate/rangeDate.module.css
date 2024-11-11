@@ -1,217 +1,216 @@
 /* Estilos gerais */
 .container {
-    width: 100%;
-    max-width: 900px;
-    margin: 40px auto;
-    background-color: #ffffff;
-    padding: 30px;
-    border-radius: 10px; 
-    border: 2px solid #000; 
-    animation: fadeIn 0.5s ease-in-out;
-    position: relative;
-    overflow: hidden;
-    margin-bottom: 50px;
+    width: 100%; /* Define a largura total do contêiner */
+    max-width: 900px; /* Limita a largura máxima a 900px */
+    margin: 40px auto; /* Centraliza o contêiner com margem superior de 40px e margem horizontal automática */
+    background-color: #ffffff; /* Define a cor de fundo como branca */
+    padding: 30px; /* Adiciona 30px de preenchimento interno */
+    border-radius: 10px; /* Arredonda os cantos do contêiner */
+    border: 2px solid #000; /* Adiciona uma borda preta de 2px */
+    animation: fadeIn 0.5s ease-in-out; /* Aplica uma animação de desvanecimento ao aparecer */
+    position: relative; /* Define a posição como relativa para elementos filhos */
+    overflow: hidden; /* Oculta qualquer conteúdo que extrapole o contêiner */
+    margin-bottom: 50px; /* Adiciona margem inferior de 50px */
+}
 
-  }
-
-
-  @keyframes fadeIn {
+/* Animação de desvanecimento */
+@keyframes fadeIn {
     from {
-      opacity: 0;
-      transform: translateY(-20px);
+        opacity: 0; /* Começa invisível */
+        transform: translateY(-20px); /* Move para cima durante a animação */
     }
     to {
-      opacity: 1;
-      transform: translateY(0);
+        opacity: 1; /* Termina visível */
+        transform: translateY(0); /* Retorna à posição original */
     }
-  }
+}
+
 .rangeContainer {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 20px;
+    display: flex; /* Usa flexbox para organizar os itens horizontalmente */
+    align-items: center; /* Alinha itens verticalmente ao centro */
+    gap: 10px; /* Adiciona espaço entre os itens */
+    margin-bottom: 20px; /* Adiciona margem inferior de 20px */
 }
 
 .label {
-    font-weight: bold;
-    color: #333;
-    margin-top: 15px;
+    font-weight: bold; /* Define o texto como negrito */
+    color: #333; /* Define a cor do texto como cinza escuro */
+    margin-top: 15px; /* Adiciona margem superior de 15px */
 }
 
 .dateInput {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    transition: border-color 0.3s ease;
-    margin-top: 15px;
+    width: 100%; /* Define a largura do input como 100% */
+    padding: 8px; /* Adiciona 8px de preenchimento interno */
+    border: 1px solid #ccc; /* Borda cinza clara */
+    border-radius: 4px; /* Arredonda os cantos do input */
+    transition: border-color 0.3s ease; /* Transição suave para a cor da borda ao focar */
+    margin-top: 15px; /* Adiciona margem superior de 15px */
 }
 
 .dateInput:focus {
-    outline: none;
-    border-color: #007bff;
+    outline: none; /* Remove o contorno padrão ao focar */
+    border-color: #007bff; /* Muda a cor da borda para azul ao focar */
 }
 
 /* Estilos para o Slider */
 .slider {
-    width: 100%;
-    margin-top: 20px;
+    width: 100%; /* Define a largura do slider como 100% */
+    margin-top: 20px; /* Adiciona margem superior de 20px */
 }
 
 .thumb {
-    background-color: #007bff;
-    color: white;
-    padding: 8px;
-    border-radius: 50%;
+    background-color: #007bff; /* Cor de fundo do polegar do slider */
+    color: white; /* Cor do texto no polegar */
+    padding: 8px; /* Adiciona preenchimento ao polegar */
+    border-radius: 50%; /* Arredonda o polegar em forma de círculo */
 }
 
 .track {
-    height: 4px;
-    background-color: #e0e0e0;
-    border-radius: 2px;
+    height: 4px; /* Define a altura da trilha do slider */
+    background-color: #e0e0e0; /* Cor de fundo da trilha */
+    border-radius: 2px; /* Arredonda as bordas da trilha */
 }
 
 /* Estilos para o período selecionado */
 .periodo-selecionado {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    margin-top: 20px;
+    display: flex; /* Usa flexbox para organizar os itens */
+    justify-content: space-between; /* Espaça os itens igualmente entre as extremidades */
+    align-items: center; /* Alinha itens verticalmente ao centro */
+    margin-bottom: 20px; /* Adiciona margem inferior de 20px */
+    margin-top: 20px; /* Adiciona margem superior de 20px */
 }
 
 .periodo-selecionado span {
-    font-weight: bold;
-    color: #333;
+    font-weight: bold; /* Define o texto como negrito */
+    color: #333; /* Define a cor do texto como cinza escuro */
 }
 
 /* Estilos para o botão de reset */
 .reset-button {
-    display: inline-block;
-    background-color: #007bff;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    display: inline-block; /* Exibe como um bloco em linha */
+    background-color: #007bff; /* Cor de fundo azul */
+    color: white; /* Cor do texto branco */
+    padding: 10px 20px; /* Adiciona preenchimento interno */
+    border: none; /* Remove a borda padrão */
+    border-radius: 4px; /* Arredonda os cantos do botão */
+    cursor: pointer; /* Muda o cursor para indicar que é clicável */
+    transition: background-color 0.3s ease; /* Transição suave para a cor de fundo ao passar o mouse */
 }
 
 .reset-button:hover {
-    background-color: #0056b3;
+    background-color: #0056b3; /* Muda a cor de fundo ao passar o mouse */
 }
 
 /* Estilos para o período selecionado quando não há usuários */
 .sem-usuarios {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 200px;
-    font-size: 18px;
-    color: #999;
+    display: flex; /* Usa flexbox para centralizar o conteúdo */
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+    height: 200px; /* Define a altura para centralização */
+    font-size: 18px; /* Define o tamanho da fonte */
+    color: #999; /* Cor do texto cinza claro */
 }
 
 /* Estilos para o período selecionado quando há usuários */
 .periodo-selecionado-com-usuarios {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
+    display: flex; /* Usa flexbox para organizar os itens */
+    justify-content: space-between; /* Espaça os itens igualmente entre as extremidades */
+    align-items: center; /* Alinha itens verticalmente ao centro */
+    margin-bottom: 15px; /* Adiciona margem inferior de 15px */
 }
 
 .periodo-selecionado-com-usuarios span {
-    font-weight: bold;
-    color: #333;
+    font-weight: bold; /* Define o texto como negrito */
+    color: #333; /* Define a cor do texto como cinza escuro */
 }
 
 /* Estilos para o gráfico de barras */
 .grafico-barras {
-    width: 100%;
-    height: 300px;
-    margin-top: 30px;
+    width: 100%; /* Define a largura do gráfico como 100% */
+    height: 300px; /* Define a altura do gráfico */
+    margin-top: 30px; /* Adiciona margem superior de 30px */
 }
 
 .grafico-barras canvas {
-    max-width: 100%;
-    max-height: 100%;
+    max-width: 100%; /* Limita a largura máxima do canvas */
+    max-height: 100%; /* Limita a altura máxima do canvas */
 }
 
 /* Estilos para os dados detalhados */
 .detalhes-dados {
-    margin-top: 40px;
+    margin-top: 40px; /* Adiciona margem superior de 40px */
 }
 
 .detalhes-dados table {
-    width: 100%;
-    border-collapse: collapse;
-    border-spacing: 0;
+    width: 100%; /* Define a largura da tabela como 100% */
+    border-collapse: collapse; /* Remove espaçamento entre as células */
+    border-spacing: 0; /* Remove espaçamento extra */
 }
 
 .detalhes-dados th,
 .detalhes-dados td {
-    padding: 8px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
+    padding: 8px; /* Adiciona preenchimento interno às células */
+    text-align: left; /* Alinha o texto à esquerda */
+    border-bottom: 1px solid #ddd; /* Adiciona uma borda inferior leve */
 }
 
 .detalhes-dados tr:nth-child(even) {
-    background-color: #f2f2f2;
+    background-color: #f2f2f2; /* Adiciona fundo cinza claro para linhas pares */
 }
 
 /* Estilos para o cabeçalho da página */
 .cabecalho-pagina {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-    background-color: rgba(255, 255, 255, 0.95);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    position: fixed; /* Fixa o cabeçalho na parte superior da página */
+    top: 0; /* Posiciona no topo */
+    left: 0; /* Posiciona à esquerda */
+    right: 0; /* Posiciona à direita */
+    z-index: 1000; /* Mantém o cabeçalho acima de outros elementos */
+    background-color: rgba(255, 255, 255, 0.95); /* Fundo branco com leve transparência */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Adiciona sombra para destaque */
+    padding: 10px; /* Adiciona preenchimento interno */
+    display: flex; /* Usa flexbox para organizar itens no cabeçalho */
+    justify-content: space-between; /* Espaça itens igualmente entre as extremidades */
+    align-items: center; /* Alinha itens verticalmente ao centro */
 }
 
 .cabecalho-pagina h1 {
-    margin: 0;
+    margin: 0; /* Remove margens do título */
 }
 
 /* Estilos para o menu lateral */
 .menu-lateral {
-    position: fixed;
-    top: 50px;
-    left: 0;
-    bottom: 0;
-    width: 250px;
-    background-color: #f8f9fa;
-    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
-    overflow-y: auto;
-
+    position: fixed; /* Fixa o menu lateral */
+    top: 50px; /* Distância do topo */
+    left: 0; /* Alinha à esquerda */
+    bottom: 0; /* Alinha à parte inferior */
+    width: 250px; /* Define a largura do menu lateral */
+    background-color: #f8f9fa; /* Cor de fundo clara */
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1); /* Adiciona sombra ao lado direito */
+    overflow-y: auto; /* Permite rolagem vertical se o conteúdo exceder a altura */
 }
 
 .menu-lateral ul {
-    list-style-type: none;
-    padding-left: 0;
+    list-style-type: none; /* Remove os marcadores da lista */
+    padding-left: 0; /* Remove preenchimento à esquerda */
 }
 
 .menu-lateral li {
-    padding: 12px;
-    border-bottom: 1px solid #e0e0e0;
+    padding: 12px; /* Adiciona preenchimento interno aos itens da lista */
+    border-bottom: 1px solid #e0e0e0; /* Adiciona uma borda inferior leve */
 }
 
 .menu-lateral a {
-    color: #333;
-    text-decoration: none;
+    color: #333; /* Cor do texto dos links */
+    text-decoration: none; /* Remove sublinhado dos links */
 }
 
 .menu-lateral a:hover {
-    color: #0066cc;
+    color: #0066cc; /* Muda a cor do link ao passar o mouse */
 }
 
-.seletec{
-    text-align: center;
-    margin-top: 25px;
-    font-size: 25px;
-    color: #333;
+.seletec {
+    text-align: center; /* Centraliza o texto */
+    margin-top: 25px; /* Adiciona margem superior de 25px */
+    font-size: 25px; /* Tamanho da fonte */
+    color: #333; /* Cor do texto */
 }
