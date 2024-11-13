@@ -1,3 +1,4 @@
+"use client";
 import React, { useState, useMemo } from "react"; // Importa React e hooks useState e useMemo
 import { Pie } from 'react-chartjs-2'; // Importa o componente de gráfico de pizza
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'; // Importa elementos do Chart.js

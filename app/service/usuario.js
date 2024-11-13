@@ -1,3 +1,4 @@
+"use client"; // Indica que este componente deve ser renderizado no lado do cliente
 import axios from "axios"; // Importa a biblioteca Axios para fazer requisições HTTP
 
 // Define a URL base da API

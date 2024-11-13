@@ -1,3 +1,4 @@
+"use client"; // Indica que este componente deve ser renderizado no lado do cliente
 import styles from './feedback.module.css'; // Importa o arquivo de estilos CSS para o componente
 import { useState } from 'react'; // Importa o hook useState do React para gerenciar estado
 import apiUsuarios from '../../service/usuario'; // Importa o serviço de API para interagir com os dados dos usuários

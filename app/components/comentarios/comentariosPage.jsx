@@ -1,3 +1,4 @@
+"use client";
 import { useState, useEffect } from "react"; // Importa hooks do React para gerenciar estado e efeitos colaterais
 import styles from "./comentarios.module.css"; // Importa o arquivo de estilos CSS específico para este componente
 import apiUsuarios from "../../service/usuario"; // Importa o serviço de API para interagir com os dados dos usuários
