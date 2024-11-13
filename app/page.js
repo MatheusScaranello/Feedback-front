@@ -41,7 +41,7 @@ export default function Home() {
 
             {/* Renderiza um componente de vídeo passado um ID específico */}
             <div className={styles.video}>
-                <VideoPage videoId="bLvrvixKfuM" />
+                <VideoPage />
             </div>
             <Header nome={nome} /> {/* Renderiza o cabeçalho com o título */}
             <Feedback /> {/* Renderiza o componente de feedback */}
