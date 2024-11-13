@@ -83,22 +83,20 @@ const VideoLink = () => {
     };
 
     // Função que salva as alterações no servidor
-    const saveVideoChanges = async () => {
+    const saveVideoChanges = async (e) => {
         setIsSaving(true);
+        setError(null);
         try {
-            const video = {
-                url: newUrl,
-                idVideo: videoId,
-            };
-            await apiVideo.editVideo(video); // Chama o método da API
-            setError(null); // Limpa o erro
+            await apiVideo.editVideo({ url: newUrl, idVideo: videoId });
             setShowConfirmSave(true);
         } catch (err) {
-            console.error("Erro ao editar o vídeo no servidor: ", err);
-            setError("Erro ao editar o vídeo. Tente novamente.");
+            console.error("Erro ao salvar o vídeo: ", err);
+            setError(err.message || "Erro ao salvar o vídeo.");
         } finally {
             setIsSaving(false);
         }
+
+        return false;
     };
 
     // Função para recarregar o vídeo em caso de erro
@@ -132,8 +130,6 @@ const VideoLink = () => {
                         <div>
                             <h2>Vídeo Atual</h2>
                             <VideoIframe videoId={videoId} />
-                            <p>Link do Vídeo: {url}</p>
-                            <p>ID do Vídeo: {videoId}</p>
                             <button onClick={handleEditClick} style={styles.button}>
                                 Editar Link
                             </button>

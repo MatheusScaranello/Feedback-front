@@ -43,6 +43,12 @@
     margin: 20px 0;
 }
 
+.buttons {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
 @media (max-width: 600px) {
     .titulo {
         font-size: 1.5rem;
