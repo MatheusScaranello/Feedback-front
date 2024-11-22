@@ -2,7 +2,7 @@
 import axios from "axios"; // Importa a biblioteca Axios para fazer requisições HTTP
 
 // Define a URL base da API
-const API_URL = "http://localhost:4000/";
+const API_URL = "https://feedback-back-eight.vercel.app/";
 
 // Cria uma instância do Axios com a URL base definida
 const api = axios.create({
