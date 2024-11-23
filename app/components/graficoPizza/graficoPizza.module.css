@@ -268,6 +268,43 @@
     width: 80%;
     margin-left: 10%;
   }
+.localSelector   {
+  width: 80%;
+  margin-left: 10%;
+}
+ 
+.periodo input[type="date"] {
+  width: 60%;
+  margin-left: 10%;
+  padding: 10px;
+  border: none
+}
+
+.sliderContainer {
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  --slider-bg: #e0e0e0;
+  --slider-bg-hover: #d0d0d0;
+  --slider-thumb-bg: #e60000;
+  --slider-thumb-bg-hover: #b30000;
+  --slider-thumb-bg-focus: #ff1a1a;
+  --slider-thumb-shadow: rgba(0, 0, 0, 0.3);
+  --slider-thumb-size: 20px;
+  --slider-thumb-radius: 50%;
+  --slider-track-size: 10px;
+  --slider-track-height: 2px;
+  --slider-thumb-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+ 
+.sliderContainer input[type="range"] {
+  width: 80%;
+  margin-left: 10%;
+  padding: 10px;
+  
+}
+
 }
 
 /* Responsividade para telas ainda menores (como smartphones) */
