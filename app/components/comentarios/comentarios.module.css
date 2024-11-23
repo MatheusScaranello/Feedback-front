@@ -11,7 +11,11 @@
   background-color: rgba(255, 255, 255, 0.5); /* Define a cor de fundo com transparência */
   border: 1px solid black; /* Adiciona uma borda preta ao contêiner */
   transition: transform 0.3s, box-shadow 0.3s; /* Suaviza as transições de transformação e sombra */
+  
 }
+
+
+
 
 /* Estilo para o título principal */
 .h1 {
@@ -155,3 +159,4 @@
   background-color: red; /* Cor de fundo do botão ativo */
   color: white; /* Cor do texto do botão ativo */
 }
+

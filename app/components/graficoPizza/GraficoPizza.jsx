@@ -22,7 +22,7 @@ const PieChart = ({ usuarios = [], initialLocal }) => {
 
     // Filtrar os locais com base no termo de busca
     const filteredLocals = useMemo(() => {
-        return uniqueLocals.filter(local => 
+        return uniqueLocals.filter(local =>
             local.toLowerCase().includes(searchTerm.toLowerCase())
         );
     }, [searchTerm, uniqueLocals]);
@@ -131,9 +131,11 @@ const PieChart = ({ usuarios = [], initialLocal }) => {
                     needleColor="#5a6268"
                     needleBaseColor="#5a6268"
                     textColor="#212529"
+                    borderColor="#007bff"  // Mudança aqui para a cor desejada
                     formatTextValue={(value) => `${value}%`}
                     style={{ width: '85%', maxWidth: '400px', margin: '0 auto' }}
                 />
+
             </div>
 
             <div className={styles.metrics}>
@@ -161,7 +163,7 @@ const PieChart = ({ usuarios = [], initialLocal }) => {
                 </div>
             </div>
 
-            <Pie data={data} options={options} style={{ width: '50%', maxWidth: '400px', margin: '0 auto' }}/>
+            <Pie data={data} options={options} style={{ width: '50%', maxWidth: '400px', margin: '0 auto' }} />
             {segmentDetails}
             <button className={styles.exportButton} onClick={handleExportCSV}>
                 Exportar Dados para CSV

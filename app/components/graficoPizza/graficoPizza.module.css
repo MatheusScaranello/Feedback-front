@@ -7,10 +7,26 @@
   text-align: center; /* Alinhamento centralizado */
   margin-bottom: 30px; /* Margem inferior */
   margin-top: 30px; /* Margem superior */
-  font-family: Arial, sans-serif; /* Fonte utilizada */
+  font-family: 'Inter', Arial, sans-serif; /* Fonte utilizada */
   color: #e60000; /* Cor do texto */
   font-weight: bold; /* Negrito */
   letter-spacing: 0.5px; /* Espaçamento entre letras */
+}
+
+/* Estilo para o contêiner principal */
+.chartContainer{
+  max-width: 800px; /* Largura máxima */
+  margin: 0 auto; /* Centraliza o contêiner */
+  padding: 20px; /* Espaçamento interno */
+  font-family: 'Inter', Arial, sans-serif; /* Fonte utilizada */
+  border-radius: 6px; /* Bordas arredondadas */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra leve */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adiciona sombra ao contêiner para profundidade */
+  background-color: rgba(255, 255, 255, 0.5); /* Define a cor de fundo com transparência */
+  border: 1px solid black; /* Adiciona uma borda preta ao contêiner */
+  margin-top: 50px; /* Margem superior */
+ 
+  
 }
 
 /* Estilos para seletores de local e inputs de data */
@@ -136,6 +152,8 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra leve */
   transition: transform 0.3s, box-shadow 0.3s; /* Transições suaves */
   margin: 10px 0; /* Margem vertical */
+  border: 1px solid black; /* Adiciona uma borda preta ao contêiner */
+  margin-top: 50px; /* Margem superior */
 }
 
 /* Estilo para o título de cada métrica */
@@ -204,55 +222,4 @@
   font-size: 14px; /* Tamanho da fonte */
   color: #666; /* Cor do texto */
   margin-top: 5px; /* Margem superior */
-}
-
-/* Estilo para a linha abaixo de cada métrica */
-.metric::after {
-  content: ''; /* Cria um conteúdo vazio */
-  display: block; /* Exibe como bloco */
-  width: 50px; /* Largura da linha */
-  height: 4px; /* Altura da linha */
-  background: #e60000; /* Cor da linha */
-  margin: 10px auto 0; /* Margens automáticas para centralizar */
-}
-
-/* Estilos para a contagem do gráfico */
-.chartContainer::before {
-  content: ''; /* Cria um conteúdo vazio */
-  display: block; /* Exibe como bloco */
-  width: 80px; /* Largura da linha */
-  height: 4px; /* Altura da linha */
-  background: #e60000; /* Cor da linha */
-  margin: 0 auto 20px; /* Margens automáticas para centralizar */
-}
-
-/* Efeito de sobreposição no gráfico */
-.chartContainer::after {
-  content: ''; /* Cria um conteúdo vazio */
-  position: absolute; /* Posição absoluta */
-  width: 100%; /* Largura total */
-  height: 100%; /* Altura total */
-  top: 0; /* Alinhado ao topo */
-  left: 0; /* Alinhado à esquerda */
-  pointer-events: none; /* Desabilita interações */
-  opacity: 0; /* Opacidade inicial */
-  transition: opacity 0.5s ease; /* Transição suave para opacidade */
-}
-
-/* Efeito ao passar o mouse sobre o gráfico */
-.chartContainer:hover::after {
-  opacity: 1; /* Aumenta a opacidade ao passar o mouse */
-}
-
-/* Estilo para detalhes */
-.details {
-  margin-top: 20px; /* Margem superior */
-  font-size: 15px; /* Tamanho da fonte */
-  color: #000000; /* Cor do texto */
-  font-family: "Inter", sans-serif; /* Fonte utilizada */
-}
-
-/* Estilo para parágrafos dentro de detalhes */
-.details p {
-   margin-top: 5px; /* Margem superior */
 }
