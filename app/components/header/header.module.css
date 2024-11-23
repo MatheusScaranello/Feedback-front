@@ -48,3 +48,23 @@
     margin: 0 20px; /* Espaçamento horizontal ao redor da divisória */
     margin-right: 30px; /* Margem direita adicional para espaçamento */
 }
+
+@media (max-width: 768px) {
+    .leftSide, .rightSide {
+        flex-direction: column; /* Alinha itens verticalmente em telas menores */
+        align-items: center; /* Centraliza itens verticalmente */
+        margin-left: 0; /* Remove margem à esquerda */
+    }
+
+    .img {
+        margin-left: 0; /* Remove margem à esquerda */
+        height: 150px; /* Reduz a altura da imagem */    
+        width: auto; /* Redimensiona a imagem para manter a proporção */
+    }
+    
+    .h1 {
+        margin-right: 0; /* Remove margem à direita */
+        font-size: 15px; /* Reduz o tamanho da fonte do título */
+    }
+    
+}
