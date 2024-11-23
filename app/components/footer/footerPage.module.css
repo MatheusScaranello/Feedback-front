@@ -1,28 +1,73 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
-/* A regra abaixo define o estilo do rodapé (footer) */
+/* Estilo do rodapé (footer) */
 .footer {
   background-color: red; /* Define a cor de fundo do footer como vermelho */
-  bottom: 0; /* Fixa o footer na parte inferior da tela */
-  left: 0; /* Alinha o footer à esquerda da tela */
   width: 100%; /* Ocupará toda a largura da tela */
-  height: 15px; /* Define a altura do footer como 15 pixels */
-  text-align: center; /* Centraliza o texto contido no footer */
-  font-family: 'Inter', sans-serif; /* Define a fonte do texto como 'Inter', com uma fonte alternativa sans-serif */
-  position: relative; /* Define a posição relativa para posicionamento interno do conteúdo */
-  padding: 30px 0; /* Adiciona padding interno de 30 pixels na parte superior e inferior */
-  z-index: 1500; /* Garante que o footer fique acima de outros elementos na pilha de empilhamento */
+  min-height: 60px; /* Garante que o footer tenha altura mínima */
+  text-align: center; /* Centraliza o conteúdo */
+  font-family: 'Inter', sans-serif; /* Define a fonte */
+  position: relative; /* Define a posição relativa para posicionamento do conteúdo */
+  padding: 2vh 0; /* Padding ajustado com unidades relativas à altura da tela */
+  z-index: 1500; /* Garante que o footer fique acima de outros elementos */
+  display: flex; /* Usando flexbox para centralizar o conteúdo */
+  justify-content: center; /* Centraliza horizontalmente */
+  align-items: center; /* Centraliza verticalmente */
 }
 
-/* A regra abaixo define o estilo do parágrafo dentro do footer */
+/* Estilo do parágrafo dentro do footer */
 .footerp {
-  color: white; /* Define a cor do texto como branco */
-  font-size: 14px; /* Define o tamanho da fonte como 14 pixels */
-  margin: 0; /* Remove a margem padrão do parágrafo */
-  /* O texto é posicionado no centro do footer */
-  position: absolute; /* Permite posicionamento absoluto em relação ao footer */
-  top: 50%; /* Posiciona o topo do texto a 50% da altura do footer */
-  left: 50%; /* Posiciona a esquerda do texto a 50% da largura do footer */
-  transform: translate(-50%, -50%); /* Move o texto para o centro, ajustando pela metade da sua largura e altura */
+  color: white; /* Cor do texto como branco */
+  font-size: 2vw; /* Usando unidades relativas à largura da tela */
+  margin: 0; /* Remove margens extras */
+  text-align: center; /* Garante que o texto fique centralizado */
+  line-height: 1.5; /* Ajusta o espaçamento entre as linhas */
+}
+
+/* Responsividade para telas médias (tablets) */
+@media (max-width: 1024px) {
+  .footer {
+    min-height: 50px; /* Reduz a altura em telas médias */
+    padding: 3vh 0; /* Ajuste de padding para tablets */
+  }
+
+  .footerp {
+    font-size: 3vw; /* Ajusta o tamanho da fonte para tablets */
+  }
+}
+
+/* Responsividade para telas menores (smartphones) */
+@media (max-width: 768px) {
+  .footer {
+    min-height: 45px; /* Altura do footer em dispositivos móveis */
+    padding: 4vh 0; /* Mais padding em smartphones */
+  }
+
+  .footerp {
+    font-size: 4vw; /* Ajuste da fonte para telas menores */
+  }
+}
+
+/* Responsividade para telas muito pequenas (smartphones pequenos) */
+@media (max-width: 480px) {
+  .footer {
+    min-height: 40px; /* Ajuste de altura para smartphones pequenos */
+    padding: 5vh 0; /* Padding ajustado para dispositivos pequenos */
+  }
+
+  .footerp {
+    font-size: 5vw; /* Ajuste de tamanho da fonte para telas muito pequenas */
+  }
+}
+
+/* Responsividade para grandes telas de desktop */
+@media (min-width: 1280px) {
+  .footer {
+    min-height: 70px; /* Aumenta a altura para telas grandes */
+    padding: 1vh 0; /* Padding ajustado para telas maiores */
+  }
+
+  .footerp {
+    font-size: 1.5vw; /* Ajuste do tamanho da fonte para telas grandes */
+  }
 }

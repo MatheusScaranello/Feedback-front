@@ -6,6 +6,7 @@ import GaugeChart from 'react-gauge-chart';
 import styles from "./graficoPizza.module.css";
 import { format } from 'date-fns';
 
+
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const PieChart = ({ usuarios = [], initialLocal }) => {

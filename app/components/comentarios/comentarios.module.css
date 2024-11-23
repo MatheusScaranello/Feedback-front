@@ -1,162 +1,220 @@
-/* comentarios.module.css */
+/* comentários.module.css */
 
 /* Estilo para o contêiner principal */
 .container {
-  max-width: 1200px; /* Define a largura máxima do contêiner */
-  margin: 50px auto 45px; /* Centraliza o contêiner com margens superior e inferior */
-  padding: 20px; /* Adiciona preenchimento interno */
-  font-family: Arial, sans-serif; /* Define a fonte utilizada no contêiner */
-  border-radius: 4px; /* Arredonda os cantos do contêiner */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adiciona sombra ao contêiner para profundidade */
-  background-color: rgba(255, 255, 255, 0.5); /* Define a cor de fundo com transparência */
-  border: 1px solid black; /* Adiciona uma borda preta ao contêiner */
-  transition: transform 0.3s, box-shadow 0.3s; /* Suaviza as transições de transformação e sombra */
-  
+  max-width: 1200px; 
+  margin: 50px auto 45px;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.5);
+  border: 1px solid black;
+  transition: transform 0.3s, box-shadow 0.3s;
+  width: 100%;
+  box-sizing: border-box;
 }
-
-
-
 
 /* Estilo para o título principal */
 .h1 {
-  font-size: 40px; /* Define o tamanho da fonte do título */
-  color: black; /* Define a cor do texto como preto */
-  margin: 30px 0; /* Margens superior e inferior */
-  border-bottom: 3px solid black; /* Adiciona uma borda inferior ao título */
-  padding-bottom: 10px; /* Adiciona preenchimento inferior */
-  text-align: center; /* Centraliza o texto */
+  font-size: 4vw;
+  color: black;
+  margin: 30px 0;
+  border-bottom: 3px solid black;
+  padding-bottom: 10px;
+  text-align: center;
 }
 
 /* Estilo para um título secundário */
 .title {
-  text-align: center; /* Centraliza o texto */
-  margin-bottom: 20px; /* Margem inferior */
-  font-size: 24px; /* Tamanho da fonte */
-  color: red; /* Cor do texto */
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 5vw;
+  color: red;
 }
 
 /* Estilos para mensagens de erro */
 .error {
-  color: red; /* Cor do texto de erro */
-  text-align: center; /* Centraliza o texto */
-  margin-top: 20px; /* Margem superior */
+  color: red;
+  text-align: center;
+  margin-top: 20px;
 }
 
 /* Estilo para o contêiner de controles */
 .controls {
-  display: flex; /* Utiliza flexbox para layout */
-  flex-wrap: wrap; /* Permite que os itens se movam para a próxima linha se necessário */
-  justify-content: center; /* Centraliza os itens no contêiner */
-  margin-bottom: 20px; /* Margem inferior */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 20px;
 }
 
 /* Estilo para campos de pesquisa e filtro */
 .search,
 .filter {
-  margin: 5px; /* Margem ao redor dos campos */
-  padding: 10px; /* Preenchimento interno */
-  border: 1px solid #ccc; /* Borda cinza clara */
-  border-radius: 4px; /* Arredondamento das bordas */
-  width: 200px; /* Largura fixa */
-  max-width: 100%; /* Largura máxima de 100% */
+  margin: 5px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 200px;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 /* Estilo para botões de ordenação */
 .sortButton {
-  margin: 5px; /* Margem ao redor do botão */
-  padding: 10px 15px; /* Preenchimento interno do botão */
-  border: none; /* Remove a borda padrão */
-  background-color: red; /* Cor de fundo do botão */
-  color: white; /* Cor do texto */
-  border-radius: 4px; /* Arredondamento das bordas do botão */
-  cursor: pointer; /* Muda o cursor ao passar sobre o botão */
-  transition: background-color 0.3s; /* Suaviza a transição da cor de fundo */
+  margin: 5px;
+  padding: 10px 15px;
+  border: none;
+  background-color: red;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .sortButton:hover {
-  background-color: darkred; /* Muda a cor de fundo ao passar o mouse */
+  background-color: darkred;
 }
 
 /* Estilo para a visualização em lista */
 .listView {
-  display: block; /* Exibe os itens como um bloco */
+  display: block;
 }
 
 /* Estilo para a visualização em grade */
 .gridView {
-  display: grid; /* Utiliza grid para layout */
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Define as colunas do grid */
-  gap: 15px; /* Espaçamento entre os itens do grid */
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 5px;
 }
 
 /* Estilo para cada item na lista */
 .item {
-  background-color: white; /* Cor de fundo do item */
-  padding: 20px; /* Preenchimento interno do item */
-  border-radius: 4px; /* Arredondamento das bordas do item */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para profundidade */
-  transition: transform 0.3s, box-shadow 0.3s; /* Suaviza transições de transformação e sombra */
-  margin: 10px; /* Margem ao redor do item */
-  width: calc(33.33% - 20px); /* Largura do item, considerando margens */
-  height: 150px; /* Altura fixa do item */
-  text-align: center; /* Centraliza o texto dentro do item */
-  border: 1px solid black; /* Borda preta ao redor do item */
-  display: inline-table; /* Exibe o item como uma tabela inline */
-  flex-direction: column; /* Define a direção do layout dos filhos */
-  justify-content: center; /* Centraliza os filhos verticalmente */
+  background-color: white;
+  padding: 20px;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+  margin: 10px;
+  width: calc(33.33% - 20px);
+  height: 150px;
+  text-align: center;
+  border: 1px solid black;
+  display: inline-table;
+  flex-direction: column;
+  justify-content: center;
 }
 
 /* Estilo para textos dentro dos itens */
 .span {
-  font-size: 17px; /* Tamanho da fonte */
-  color: black; /* Cor do texto */
-  font-family: Arial, sans-serif; /* Fonte utilizada */
-  display: block; /* Exibe como bloco */
-  text-align: center; /* Centraliza o texto */
-  margin: 0; /* Remove margens */
-  margin-bottom: 20px; /* Margem inferior */
-  margin-top: 20px; /* Margem superior */
+  font-size: 17px;
+  color: black;
+  font-family: Arial, sans-serif;
+  display: block;
+  text-align: center;
+  margin: 0;
+  margin-bottom: 20px;
+  margin-top: 20px;
 }
 
 /* Efeito hover para itens */
 .item:hover {
-  transform: translateY(-10px); /* Move o item para cima ao passar o mouse */
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Aumenta a sombra ao passar o mouse */
+  transform: translateY(-10px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 /* Estilo para mensagens gerais */
 .message {
-  text-align: center; /* Centraliza o texto */
-  color: #555; /* Cor do texto (cinza) */
+  text-align: center;
+  color: #555;
 }
 
 /* Estilo para a paginação */
 .pagination {
-  display: flex; /* Utiliza flexbox para layout */
-  justify-content: center; /* Centraliza os botões de paginação */
-  margin-top: 20px; /* Margem superior */
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
 }
 
 /* Estilo para botões de página */
 .pageButton {
-  padding: 10px 15px; /* Preenchimento interno do botão */
-  border: 1px solid red; /* Borda vermelha */
-  background-color: white; /* Cor de fundo do botão */
-  color: black; /* Cor do texto */
-  border-radius: 4px; /* Arredondamento das bordas */
-  cursor: pointer; /* Muda o cursor ao passar sobre o botão */
-  margin: 30px 5px; /* Margens ao redor do botão */
+  padding: 10px 15px;
+  border: 1px solid red;
+  background-color: white;
+  color: black;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 30px 5px;
 }
 
 /* Efeito hover para botões de página */
 .pageButton:hover {
-  background-color: red; /* Muda a cor de fundo ao passar o mouse */
-  color: white; /* Muda a cor do texto ao passar o mouse */
+  background-color: red;
+  color: white;
 }
 
 /* Estilo para o botão de página ativo */
 .pageButton.active {
-  background-color: red; /* Cor de fundo do botão ativo */
-  color: white; /* Cor do texto do botão ativo */
+  background-color: red;
+  color: white;
 }
 
+/* Responsividade para telas menores */
+@media (max-width: 1200px) {
+  .container {
+    padding: 15px; 
+    height: 90%;
+    width: 95%;
+  }
+  .h1 {
+    font-size: 5vw;
+  }
+  .title {
+    font-size: 6vw;
+  }
+  .search,
+  .filter {
+    width: 80%;
+    margin: 10px 0;
+  }
+   
+  .item {
+    width: calc(50% - 20px); /* Cards ocupam 50% da largura em telas menores */
+  }
+
+  .pagination {
+    margin-top: 30px;
+  }
+
+  .gridView {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); 
+  }
+}
+
+/* Responsividade para telas pequenas */
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+     height: 80%;
+     width: 90%;
+  }
+  .h1 {
+    font-size: 6vw;
+  }
+  .title {
+    font-size: 7vw;
+  }
+  .controls {
+    flex-direction: column;
+  }
+  .sortButton {
+    width: 80%;
+    text-align: center;
+    
+  }
+  .item {
+    width: 80%; /* Cards ocupam 100% da largura em telas muito pequenas */
+    height: auto; /* Ajusta a altura automaticamente */
+    text-align: center;
+  }
+}
