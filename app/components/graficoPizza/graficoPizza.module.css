@@ -3,61 +3,92 @@
 
 /* Estilo para o título principal */
 .title {
-  font-size: 25px;
+  font-size: 32px;
   text-align: center;
-  margin-bottom: 30px;
-  margin-top: 30px;
+  margin: 20px 0; /* Diminui a margem superior e inferior */
   font-family: 'Inter', Arial, sans-serif;
   color: #e60000;
   font-weight: bold;
-  letter-spacing: 0.5px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.img {
+  display: block;
+  margin-bottom: 5px; /* Diminui a margem inferior para aproximar da imagem */
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0; /* Remove a margem superior para encostar no título */
+  width: 30px;
+  height: 30px;
+  display: block;
+}
+
+
+.img{
+    display: block;     
+    margin-Bottom: 10px;
+    margin-Left: auto;   
+    margin-Right: auto;
+    margin-Top: 0;     
+    margin: 20px auto;  
+    width: 30px;   
+    height: 30px;        
+    display: block;    
+}
+
+.title:hover {
+  color: #b30000;
+  text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.3);
 }
 
 /* Estilo para o contêiner principal */
 .chartContainer {
-  max-width: 800px;
+  max-width: 900px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 40px;
   font-family: 'Inter', Arial, sans-serif;
-  border-radius: 6px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background-color: rgba(255, 255, 255, 0.5);
-  border: 1px solid black;
-  margin-top: 50px;
+  border-radius: 12px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 1px solid #ddd;
+  margin-top: 60px;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.chartContainer:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.2);
 }
 
 /* Estilos para seletores de local e inputs de data */
 .localSelector,
-.periodo input[type="date"] {
+.periodo input[type="date"],
+.searchInput {
   width: 100%;
-  padding: 10px;
+  padding: 14px;
   font-size: 18px;
   border: 1px solid #ddd;
-  border-radius: 6px;
-  margin-bottom: 30px;
+  border-radius: 8px;
   background: #f9f9f9;
-  transition: border-color 0.3s, background 0.3s;
+  transition: border-color 0.3s ease, background 0.3s ease;
+  margin-bottom: 22px;
+  box-sizing: border-box;
 }
 
-/* Estilo para o campo de busca */
 .searchInput {
-  width: 50%;
-  padding: 10px;
-  font-size: 18px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  margin-bottom: 30px;
-  margin-left: 25%;
-  background: #f9f9f9;
-  transition: border-color 0.3s, background 0.3s;
+  width: 60%;
+  margin-left: 20%;
 }
 
 /* Estilos para foco nos seletores */
 .localSelector:focus,
-.periodo input[type="date"]:focus {
-  border-color: #e60000;
+.periodo input[type="date"]:focus,
+.searchInput:focus {
+  border-color: black;
   background: #fff;
-  box-shadow: 0 0 8px rgba(230, 0, 0, 0.2);
 }
 
 /* Estilos para o contêiner de período */
@@ -67,33 +98,33 @@
 
 /* Estilo para os rótulos do período */
 .periodo label {
-  font-size: 20px;
+  font-size: 22px;
   font-weight: bold;
   display: block;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   color: #e60000;
 }
 
 /* Estilos para o contêiner do slider */
 .sliderContainer {
-  margin-top: 15px;
+  margin-top: 25px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   --slider-bg: #e0e0e0;
-  --slider-bg-hover: #d0d0d0;
   --slider-thumb-bg: #e60000;
   --slider-thumb-bg-hover: #b30000;
   --slider-thumb-bg-focus: #ff1a1a;
   --slider-thumb-shadow: rgba(0, 0, 0, 0.3);
+  width: 100%;
 }
 
 /* Estilos para o input do slider */
 .sliderContainer input[type="range"] {
-  -webkit-appearance: none;
-  width: 100%;
-  height: 10px;
-  border-radius: 5px;
+ 
+  width: 80%;
+  height: 14px;
+  border-radius: 12px;
   background: var(--slider-bg);
   outline: none;
   transition: background 0.4s ease;
@@ -103,29 +134,29 @@
 .sliderContainer input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 26px;
-  height: 26px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
   background: var(--slider-thumb-bg);
   cursor: pointer;
-  box-shadow: 0 4px 10px var(--slider-thumb-shadow);
-  transition: background-color 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
+  box-shadow: 0 6px 18px var(--slider-thumb-shadow);
+  transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
 }
 
 /* Efeitos de hover e foco para o botão do slider */
 .sliderContainer input[type="range"]::-webkit-slider-thumb:hover {
   background-color: var(--slider-thumb-bg-hover);
-  transform: scale(1.15);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+  transform: scale(1.2);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
 }
 
 .sliderContainer input[type="range"]:focus::-webkit-slider-thumb {
   background-color: var(--slider-thumb-bg-focus);
-  box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
+  box-shadow: 0 0 30px rgba(255, 0, 0, 0.5);
 }
 
 .sliderContainer input[type="range"]:active::-webkit-slider-thumb {
-  transform: scale(1.25);
+  transform: scale(1.3);
   background-color: #cc0000;
 }
 
@@ -133,10 +164,10 @@
 .metrics {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 30px;
-  margin-top: 30px;
-  gap: 5px;
+  margin-bottom: 45px;
+  gap: 20px;
   flex-wrap: wrap;
+  margin-top: 35px;
 }
 
 /* Estilos para cada métrica */
@@ -144,70 +175,76 @@
   flex: 1 1 calc(25% - 20px);
   text-align: center;
   background-color: #ffffff;
-  padding: 15px;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s, box-shadow 0.3s;
-  margin: 10px 0;
-  border: 1px solid black;
-  margin-top: 50px;
+  padding: 22px;
+  border-radius: 14px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  transition: transform 0.3s, box-shadow 0.3s ease-in-out;
+  margin: 12px 0;
+  border: 1px solid #ddd;
 }
 
-/* Estilo para o título de cada métrica */
+.metric:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.18);
+}
+
 .metric h3 {
-  font-size: 16px;
-  margin-bottom: 10px;
+  font-size: 20px;
+  margin-bottom: 12px;
   color: #e60000;
-  margin-top: 10px;
   text-transform: uppercase;
 }
 
-/* Estilo para o parágrafo de cada métrica */
 .metric p {
-  font-size: 16px;
-  color: #666;
+  font-size: 18px;
+  color: #555;
 }
 
 /* Estilo para o botão de exportação */
 .exportButton {
   display: block;
-  width: 45%;
-  padding: 12px;
+  width: 50%;
+  padding: 16px;
   background-color: #e60000;
   color: #ffffff;
   text-align: center;
-  font-size: 18px;
-  margin-left: 27%;
-  border-radius: 5px;
+  font-size: 22px;
+  margin-left: 25%;
+  border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s, transform 0.3s;
-  margin-top: 20px;
+  margin-top: 25px;
+  letter-spacing: 1px;
 }
 
-/* Efeito de hover para o botão de exportação */
 .exportButton:hover {
   background-color: #b30000;
-  transform: translateY(-3px);
+  transform: translateY(-6px);
 }
 
 /* Estilos para o contêiner do gauge */
 .gaugeContainer {
-  margin: 20px auto;
+  margin: 25px auto;
   text-align: center;
   background: #ffffff;
-  border: 2px solid #e60000;
-  border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 3px solid #e60000;
+  border-radius: 14px;
+  padding: 30px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease;
-  max-width: 550px;
+  max-width: 600px;
   width: 90%;
+}
+
+.gaugeContainer:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.25);
 }
 
 /* Estilo para o título do gauge */
 .gaugeContainer h3 {
-  margin-bottom: 12px;
-  font-size: 18px;
+  margin-bottom: 18px;
+  font-size: 22px;
   color: #e60000;
   font-weight: bold;
   text-transform: uppercase;
@@ -216,101 +253,75 @@
 
 /* Estilo para o parágrafo dentro do gauge */
 .gaugeContainer p {
-  font-size: 14px;
+  font-size: 16px;
   color: #666;
-  margin-top: 5px;
+  margin-top: 6px;
 }
 
 /* Responsividade para telas menores */
 @media (max-width: 768px) {
   .title {
-    font-size: 22px;
+    font-size: 26px;
   }
 
   .searchInput {
-    width: 60%;
-    margin-left: 20%;
+    width: 70%;
+    margin-left: 15%;
   }
 
   .metric {
-    flex: 1 1 calc(48% - 10px); /* Duas métricas por linha */
-    font-size: 14px;
+    flex: 1 1 calc(48% - 20px); /* Duas métricas por linha */
   }
 
   .metrics {
-    margin-top: 10px;
     display: flex;
-    flex-wrap: wrap; /* Permite que as métricas se ajustem em várias linhas */
-    justify-content: space-between; /* Espaço entre as métricas */
+    flex-wrap: wrap;
+    justify-content: space-between;
   }
 
   .exportButton {
-    width: 60%;
-    margin-left: 20%;
+    width: 70%;
+    margin-left: 15%;
   }
 
   .chartContainer {
-    margin-top: 20px;
-    height: 80%;
-    width: 90%;
+    margin-top: 25px;
   }
 
   .searchInput {
-    width: 80%;
-    margin-left: 10%;
+    width: 85%;
+    margin-left: 7.5%;
   }
 
   .metric {
-    flex: 1 1 calc(48% - 10px); /* Duas métricas por linha */
+    flex: 1 1 calc(48% - 15px); /* Duas métricas por linha */
   }
 
   .exportButton {
     width: 80%;
     margin-left: 10%;
   }
-.localSelector   {
-  width: 80%;
-  margin-left: 10%;
-}
- 
-.periodo input[type="date"] {
-  width: 60%;
-  margin-left: 10%;
-  padding: 10px;
-  border: none
-}
 
-.sliderContainer {
-  margin-top: 15px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  --slider-bg: #e0e0e0;
-  --slider-bg-hover: #d0d0d0;
-  --slider-thumb-bg: #e60000;
-  --slider-thumb-bg-hover: #b30000;
-  --slider-thumb-bg-focus: #ff1a1a;
-  --slider-thumb-shadow: rgba(0, 0, 0, 0.3);
-  --slider-thumb-size: 20px;
-  --slider-thumb-radius: 50%;
-  --slider-track-size: 10px;
-  --slider-track-height: 2px;
-  --slider-thumb-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  .localSelector {
+    width: 80%;
+    margin-left: 10%;
   }
- 
-.sliderContainer input[type="range"] {
-  width: 80%;
-  margin-left: 10%;
-  padding: 10px;
-  
-}
 
+  .periodo input[type="date"] {
+    width: 65%;
+    margin-left: 15%;
+  }
+
+  .sliderContainer input[type="range"] {
+    width: 85%;
+    margin-left: 7.5%;
+  }
 }
 
 /* Responsividade para telas ainda menores (como smartphones) */
 @media (max-width: 480px) {
   .title {
-    font-size: 18px;
+    font-size: 22px;
   }
 
   .searchInput {
@@ -319,7 +330,7 @@
   }
 
   .metric {
-    flex: 1 1 48%; /* Duas métricas por linha */
+    flex: 1 1 48%;
   }
 
   .exportButton {

@@ -5,6 +5,7 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import GaugeChart from 'react-gauge-chart';
 import styles from "./graficoPizza.module.css";
 import { format } from 'date-fns';
+import { div } from "@tensorflow/tfjs";
 
 
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -95,7 +96,11 @@ const PieChart = ({ usuarios = [], initialLocal }) => {
 
     return (
         <div className={styles.chartContainer}>
+        
             <h2 className={styles.title}>Pontuação por {selectedLocal || "Todos os Locais"}</h2>
+            <img aria-hidden="true" src="https://cdn-icons-png.flaticon.com/512/271/271210.png" alt="Ver cursos abaixo" className={styles.img}></img>
+
+
 
             <input
                 type="text"
@@ -169,7 +174,8 @@ const PieChart = ({ usuarios = [], initialLocal }) => {
             <button className={styles.exportButton} onClick={handleExportCSV}>
                 Exportar Dados para CSV
             </button>
-        </div>
+            </div>
+    
     );
 };
 
