@@ -11,8 +11,13 @@
   background-color: rgba(255, 255, 255, 0.5);
   border: 1px solid black;
   transition: transform 0.3s, box-shadow 0.3s;
-  width: 100%;
-  box-sizing: border-box;
+/*coloque o footer no final da pagina*/
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin-bottom: 50px;
+
+
 }
 
 /* Estilo para o título principal */
