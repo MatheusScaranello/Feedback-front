@@ -18,7 +18,7 @@
 /* Estilo do parágrafo dentro do footer */
 .footerp {
   color: white; /* Cor do texto como branco */
-  font-size: 2vw; /* Usando unidades relativas à largura da tela */
+  font-size: 18px; /* Usando unidades relativas à largura da tela */
   margin: 0; /* Remove margens extras */
   text-align: center; /* Garante que o texto fique centralizado */
   line-height: 1.5; /* Ajusta o espaçamento entre as linhas */
@@ -32,7 +32,7 @@
   }
 
   .footerp {
-    font-size: 3vw; /* Ajusta o tamanho da fonte para tablets */
+    font-size: 16px; /* Ajusta o tamanho da fonte para tablets */
   }
 }
 
@@ -44,7 +44,7 @@
   }
 
   .footerp {
-    font-size: 4vw; /* Ajuste da fonte para telas menores */
+    font-size: 14px; /* Ajuste da fonte para telas menores */
   }
 }
 
@@ -56,7 +56,7 @@
   }
 
   .footerp {
-    font-size: 5vw; /* Ajuste de tamanho da fonte para telas muito pequenas */
+    font-size: 14px; /* Ajuste de tamanho da fonte para telas muito pequenas */
   }
 }
 
@@ -68,6 +68,6 @@
   }
 
   .footerp {
-    font-size: 1.5vw; /* Ajuste do tamanho da fonte para telas grandes */
+    font-size: 18px; /* Ajuste do tamanho da fonte para telas grandes */
   }
 }

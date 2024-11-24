@@ -1,5 +1,6 @@
 "use client"; // Indica que este componente deve ser renderizado no lado do cliente
 import { useState, useEffect } from "react";
+import styles from "./videoLink.module.css"; // Importa o estilo do componente
 import apiVideo from "../../service/video"; // Importa o serviço de vídeo
 
 const VideoLink = () => {
@@ -83,7 +84,7 @@ const VideoLink = () => {
     };
 
     // Função que salva as alterações no servidor
-    const saveVideoChanges = async (e) => {
+    const saveVideoChanges = async () => {
         setIsSaving(true);
         setError(null);
         try {
@@ -95,8 +96,6 @@ const VideoLink = () => {
         } finally {
             setIsSaving(false);
         }
-
-        return false;
     };
 
     // Função para recarregar o vídeo em caso de erro
@@ -107,8 +106,8 @@ const VideoLink = () => {
     };
 
     return (
-        <div style={styles.container}>
-            <h1>Editar Vídeo</h1>
+        <div className={styles.container}>
+            <h1 className={styles.h1}>Editar Vídeo</h1>
 
             {/* Feedback de carregamento */}
             {loading && <p>Carregando...</p>}
@@ -128,9 +127,9 @@ const VideoLink = () => {
                 <div>
                     {!editMode ? (
                         <div>
-                            <h2>Vídeo Atual</h2>
+                            <h2 className={styles.h2}>Vídeo Atual</h2>
                             <VideoIframe videoId={videoId} />
-                            <button onClick={handleEditClick} style={styles.button}>
+                            <button onClick={handleEditClick} className={styles.button}>
                                 Editar Link
                             </button>
                         </div>
@@ -141,14 +140,14 @@ const VideoLink = () => {
                                 type="text"
                                 value={newUrl}
                                 onChange={(e) => setNewUrl(e.target.value)}
-                                style={styles.input}
+                                className={styles.input} // Corrigido para usar className
                                 placeholder="Insira o novo link do vídeo"
                             />
                             <div>
-                                <button onClick={handleSaveEdit} style={styles.button}>
+                                <button onClick={handleSaveEdit} className={styles.button}>
                                     Salvar
                                 </button>
-                                <button onClick={handleCancelEdit} style={styles.button}>
+                                <button onClick={handleCancelEdit} className={styles.button}>
                                     Cancelar
                                 </button>
                             </div>
@@ -166,7 +165,7 @@ const VideoLink = () => {
 const VideoIframe = ({ videoId }) => {
     return (
         <iframe
-            style={styles.video}
+            className={styles.video} // Corrigido para usar className
             src={`https://www.youtube.com/embed/${videoId}?autoplay=1&modestbranding=1&loop=1&playlist=${videoId}&controls=0`}
             title="YouTube video player"
             frameBorder="0"
@@ -178,9 +177,9 @@ const VideoIframe = ({ videoId }) => {
 
 const ErrorComponent = ({ message, onRetry }) => {
     return (
-        <div style={styles.errorContainer}>
-            <p style={styles.error}>{message}</p>
-            <button onClick={onRetry} style={styles.button}>
+        <div className={styles.errorContainer}>
+            <p className={styles.error}>{message}</p>
+            <button onClick={onRetry} className={styles.button}>
                 Tentar Novamente
             </button>
         </div>
@@ -189,64 +188,10 @@ const ErrorComponent = ({ message, onRetry }) => {
 
 const SuccessComponent = () => {
     return (
-        <div style={styles.successMessage}>
+        <div className={styles.successMessage}>
             <p>Alterações salvas com sucesso!</p>
         </div>
     );
-};
-
-const styles = {
-    container: {
-        textAlign: "center",
-        padding: "20px",
-        borderRadius: "8px",
-        backgroundColor: "#f9f9f9",
-        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-        transition: "all 0.3s ease",
-    },
-    errorContainer: {
-        backgroundColor: "#f8d7da",
-        border: "1px solid #f5c6cb",
-        padding: "10px",
-        borderRadius: "5px",
-        margin: "10px 0",
-    },
-    successMessage: {
-        backgroundColor: "#d4edda",
-        border: "1px solid #c3e6cb",
-        padding: "10px",
-        borderRadius: "5px",
-        margin: "10px 0",
-    },
-    error: {
-        color: "#721c24",
-        fontSize: "14px",
-        marginBottom: "10px",
-    },
-    input: {
-        width: "80%",
-        padding: "10px",
-        fontSize: "16px",
-        margin: "10px 0",
-        borderRadius: "4px",
-        border: "1px solid #ccc",
-    },
-    button: {
-        padding: "8px 12px",
-        margin: "5px",
-        fontSize: "14px",
-        borderRadius: "4px",
-        border: "1px solid #ccc",
-        backgroundColor: "#007bff",
-        color: "white",
-        cursor: "pointer",
-    },
-    video: {
-        width: "100%",
-        height: "315px",
-        maxWidth: "560px",
-        margin: "20px auto",
-    },
 };
 
 export default VideoLink;
