@@ -8,9 +8,10 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     background-color: rgba(255, 255, 255, 0.5);
     border: 1px solid black;
-    margin: 20px auto; /* Centraliza o container */
-    max-width: 650px; /* Define uma largura máxima */
+    margin: 100px auto; /* Centraliza o container */
+    max-width: 850px; /* Define uma largura máxima */
     transition: all 0.3s ease;
+    min-height: 70vh;
 }
 
 .errorContainer {
