@@ -3,7 +3,7 @@ import { useState } from "react";
 import styles from "./admin.module.css";
 import Header from "../components/header/Header";
 import Footer from "../components/footer/footerPage";
-import Grafico from "../components/graficoPizza/GraficoPizza";
+import Grafico from "../components/rangeDate/RangeDate.jsx";
 import Comentarios from "../components/comentarios/comentariosPage";
 import VideoLink from "../components/videoLink/videoLink";
 
