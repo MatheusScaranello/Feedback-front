@@ -1,18 +1,16 @@
-"use client"; // Indica que este componente deve ser renderizado no lado do cliente (relevante em frameworks como Next.js)
+"use client";
 
-import { useState, useEffect, useCallback } from "react"; // Importa hooks do React para gerenciar estado e efeitos colaterais
-import styles from "./video.module.css"; // Importa estilos CSS específicos para este componente
+import { useState, useEffect, useCallback } from "react";
+import styles from "./video.module.css";
+import videoService from "../../service/video";
 
-import videoService from "../../service/video"; // Importa o serviço de vídeo para buscar dados
-
-// Componente principal para a página de vídeo
 export default function VideoPage({ videoId: initialVideoId }) {
-    const [isVisible, setIsVisible] = useState(true); // Estado para controlar a visibilidade do vídeo
-    const [loading, setLoading] = useState(true); // Estado para controlar o carregamento do vídeo
-    const [error, setError] = useState(null); // Estado para armazenar erros
-    const [videoId, setVideoId] = useState(initialVideoId || ""); // Estado para armazenar o ID do vídeo, podendo ser passado como prop
+    const [isVisible, setIsVisible] = useState(true);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [videoId, setVideoId] = useState(initialVideoId || "");
+    const [timer, setTimer] = useState(null); // New state to track the timer
 
-    // Função para extrair o ID do vídeo da URL
     const extractVideoId = useCallback((url) => {
         const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})(?=[^\w-]|$)/;
         const match = url.match(regex);
@@ -20,21 +18,31 @@ export default function VideoPage({ videoId: initialVideoId }) {
         return match[1];
     }, []);
 
-    // Função para lidar com cliques na tela
-    const handleScreenClick = () => {
-        setIsVisible(false); // Oculta o vídeo ao clicar na tela
-    };
+    // Modified to handle timer reset
+    const startHideTimer = useCallback(() => {
+        // Clear existing timer if any
+        if (timer) clearTimeout(timer);
+        
+        // Set new timer
+        const newTimer = setTimeout(() => setIsVisible(false), 10000);
+        setTimer(newTimer);
+    }, [timer]);
 
-    // Função assíncrona para buscar o vídeo
+    // Modified click handler
+    const handleInteraction = useCallback(() => {
+        setIsVisible(true);
+        startHideTimer();
+    }, [startHideTimer]);
+
     const fetchVideo = useCallback(async () => {
         setLoading(true);
         setError(null);
         try {
-            const [video] = await videoService.getVideo(); // Supondo que 'videoService' tenha o método correto para obter o vídeo
+            const [video] = await videoService.getVideo();
             if (!video?.url) throw new Error("URL do vídeo inválida.");
 
             const id = extractVideoId(video.url);
-            setVideoId(id); // Atualiza o ID do vídeo
+            setVideoId(id);
         } catch (err) {
             console.error("Erro ao carregar o vídeo: ", err);
             setError(err.message || "Erro ao carregar o vídeo.");
@@ -43,47 +51,53 @@ export default function VideoPage({ videoId: initialVideoId }) {
         }
     }, [extractVideoId]);
 
+    // Effect for video fetching
     useEffect(() => {
-        // Executa a função apenas se o ID do vídeo não estiver definido
         if (!videoId) {
             fetchVideo();
         }
     }, [videoId, fetchVideo]);
 
-    // Efeito que controla a visibilidade do vídeo
+    // Effect for handling interactions
     useEffect(() => {
-        let timeout; // Declara uma variável para armazenar o timeout
+        // Start initial timer
+        startHideTimer();
 
-        if (!isVisible) {
-            // Se o vídeo não estiver visível, configura o temporizador para torná-lo visível novamente após 10 segundos
-            timeout = setTimeout(() => setIsVisible(true), 10000);
-        }
+        // Add event listeners for both click and keyboard
+        const handleGlobalClick = (e) => handleInteraction();
+        const handleKeyPress = (e) => handleInteraction();
 
-        // Limpa o timeout quando o componente é desmontado ou quando o estado 'isVisible' muda
+        window.addEventListener('click', handleGlobalClick);
+        window.addEventListener('keydown', handleKeyPress);
+
+        // Cleanup
         return () => {
-            clearTimeout(timeout); // Cancela o temporizador se o componente for desmontado ou se 'isVisible' mudar
+            if (timer) clearTimeout(timer);
+            window.removeEventListener('click', handleGlobalClick);
+            window.removeEventListener('keydown', handleKeyPress);
         };
-    }, [isVisible]); // Reexecuta o efeito sempre que 'isVisible' muda
+    }, [handleInteraction, startHideTimer, timer]);
 
     return (
-        <div className={styles.videoWrapper}> {/* Contêiner principal do vídeo */}
-            {loading && <div className={styles.loading}>Carregando...</div>} {/* Exibe mensagem de carregamento */}
-            {error && <div className={styles.error}>{error}</div>} {/* Exibe erro se houver */}
+        <div className={styles.videoWrapper}>
+            {loading && <div className={styles.loading}>Carregando...</div>}
+            {error && <div className={styles.error}>{error}</div>}
 
-            {isVisible && !loading && !error && ( // Renderiza o vídeo apenas se não houver erro ou carregamento
+            {isVisible && !loading && !error && (
                 <>
-                    {/* Contêiner do Vídeo */}
                     <iframe
-                        className={styles.video} // Aplica estilos ao iframe do vídeo
-                        src={`https://www.youtube.com/embed/${videoId}?autoplay=1&modestbranding=1&loop=1&playlist=${videoId}&controls=0`} // URL do vídeo do YouTube, configurado para autoplay e loop
-                        title="YouTube video player" // Título acessível para o iframe
-                        frameBorder="0" // Remove a borda do iframe
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" // Permissões para o iframe
-                        allowFullScreen // Permite que o vídeo seja exibido em tela cheia
+                        className={styles.video}
+                        src={`https://www.youtube.com/embed/${videoId}?autoplay=1&modestbranding=1&loop=1&playlist=${videoId}&controls=0`}
+                        title="YouTube video player"
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
                     ></iframe>
 
-                    {/* Camada de Overlay Invisível para Capturar o Clique */}
-                    <div className={styles.clickOverlay} onClick={handleScreenClick}></div> {/* Camada que captura cliques para ocultar o vídeo */}
+                    <div 
+                        className={styles.clickOverlay} 
+                        onClick={handleInteraction}
+                    />
                 </>
             )}
         </div>
