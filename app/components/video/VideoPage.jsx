@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback } from "react";
 import styles from "./video.module.css";
 import videoService from "../../service/video";
 
@@ -9,10 +9,7 @@ export default function VideoPage({ videoId: initialVideoId }) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [videoId, setVideoId] = useState(initialVideoId || "");
-    const timerRef = useRef(null);
-    const isTypingRef = useRef(false);
-    const lastKeyPressRef = useRef(0);
-    const typingTimeoutRef = useRef(null);
+    const [timer, setTimer] = useState(null); // New state to track the timer
 
     const extractVideoId = useCallback((url) => {
         const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})(?=[^\w-]|$)/;
@@ -21,60 +18,20 @@ export default function VideoPage({ videoId: initialVideoId }) {
         return match[1];
     }, []);
 
+    // Modified to handle timer reset
     const startHideTimer = useCallback(() => {
-        if (timerRef.current) {
-            clearTimeout(timerRef.current);
-        }
-        timerRef.current = setTimeout(() => {
-            if (!isTypingRef.current) {
-                setIsVisible(false);
-            }
-        }, 10000);
-    }, []);
+        // Clear existing timer if any
+        if (timer) clearTimeout(timer);
+        
+        // Set new timer
+        const newTimer = setTimeout(() => setIsVisible(false), 10000);
+        setTimer(newTimer);
+    }, [timer]);
 
-    const handleClick = useCallback((e) => {
-        // Ignora cliques em elementos de input ou textarea
-        if (e.target.tagName.toLowerCase() === 'input' || 
-            e.target.tagName.toLowerCase() === 'textarea') {
-            return;
-        }
-
-        // Verifica se não está digitando
-        if (!isTypingRef.current) {
-            setIsVisible(true);
-            startHideTimer();
-        }
-    }, [startHideTimer]);
-
-    const handleKeyPress = useCallback((e) => {
-        // Atualiza o timestamp da última tecla pressionada
-        lastKeyPressRef.current = Date.now();
-
-        // Marca como digitando
-        isTypingRef.current = true;
-
-        // Limpa o timeout anterior se existir
-        if (typingTimeoutRef.current) {
-            clearTimeout(typingTimeoutRef.current);
-        }
-
-        // Define um novo timeout para verificar se parou de digitar
-        typingTimeoutRef.current = setTimeout(() => {
-            const timeSinceLastKeyPress = Date.now() - lastKeyPressRef.current;
-            if (timeSinceLastKeyPress >= 1000) { // 1 segundo sem digitar
-                isTypingRef.current = false;
-                startHideTimer();
-            }
-        }, 1000);
-
-        // Se for tecla de atalho (Ctrl, Alt, etc) ou teclas de navegação
-        if (e.ctrlKey || e.altKey || e.metaKey || 
-            ['Tab', 'Escape', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
-            if (!isTypingRef.current) {
-                setIsVisible(true);
-                startHideTimer();
-            }
-        }
+    // Modified click handler
+    const handleInteraction = useCallback(() => {
+        setIsVisible(true);
+        startHideTimer();
     }, [startHideTimer]);
 
     const fetchVideo = useCallback(async () => {
@@ -83,6 +40,7 @@ export default function VideoPage({ videoId: initialVideoId }) {
         try {
             const [video] = await videoService.getVideo();
             if (!video?.url) throw new Error("URL do vídeo inválida.");
+
             const id = extractVideoId(video.url);
             setVideoId(id);
         } catch (err) {
@@ -93,59 +51,39 @@ export default function VideoPage({ videoId: initialVideoId }) {
         }
     }, [extractVideoId]);
 
+    // Effect for video fetching
     useEffect(() => {
         if (!videoId) {
             fetchVideo();
         }
     }, [videoId, fetchVideo]);
 
+    // Effect for handling interactions
     useEffect(() => {
+        // Start initial timer
         startHideTimer();
 
-        window.addEventListener('click', handleClick);
+        // Add event listeners for both click and keyboard
+        const handleGlobalClick = (e) => handleInteraction();
+        const handleKeyPress = (e) => handleInteraction();
+
+        window.addEventListener('click', handleGlobalClick);
         window.addEventListener('keydown', handleKeyPress);
 
+        // Cleanup
         return () => {
-            if (timerRef.current) clearTimeout(timerRef.current);
-            if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current);
-            window.removeEventListener('click', handleClick);
+            if (timer) clearTimeout(timer);
+            window.removeEventListener('click', handleGlobalClick);
             window.removeEventListener('keydown', handleKeyPress);
         };
-    }, [handleClick, handleKeyPress, startHideTimer]);
-
-    // Detecta quando o foco está em elementos de input
-    useEffect(() => {
-        const handleFocus = (e) => {
-            if (e.target.tagName.toLowerCase() === 'input' || 
-                e.target.tagName.toLowerCase() === 'textarea') {
-                isTypingRef.current = true;
-                setIsVisible(false);
-            }
-        };
-
-        const handleBlur = (e) => {
-            if (e.target.tagName.toLowerCase() === 'input' || 
-                e.target.tagName.toLowerCase() === 'textarea') {
-                isTypingRef.current = false;
-                startHideTimer();
-            }
-        };
-
-        document.addEventListener('focus', handleFocus, true);
-        document.addEventListener('blur', handleBlur, true);
-
-        return () => {
-            document.removeEventListener('focus', handleFocus, true);
-            document.removeEventListener('blur', handleBlur, true);
-        };
-    }, [startHideTimer]);
+    }, [handleInteraction, startHideTimer, timer]);
 
     return (
         <div className={styles.videoWrapper}>
             {loading && <div className={styles.loading}>Carregando...</div>}
             {error && <div className={styles.error}>{error}</div>}
 
-            {isVisible && !loading && !error && !isTypingRef.current && (
+            {isVisible && !loading && !error && (
                 <>
                     <iframe
                         className={styles.video}
@@ -157,8 +95,8 @@ export default function VideoPage({ videoId: initialVideoId }) {
                     ></iframe>
 
                     <div 
-                        className={styles.clickOverlay}
-                        onClick={handleClick}
+                        className={styles.clickOverlay} 
+                        onClick={handleInteraction}
                     />
                 </>
             )}
