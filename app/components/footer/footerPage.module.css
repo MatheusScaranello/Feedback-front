@@ -59,6 +59,15 @@
     font-size: 14px; /* Ajuste de tamanho da fonte para telas muito pequenas */
   }
 }
+@media (max-width: 320px) {
+  .footer {
+    min-height: 35px; /* Ajuste de altura para dispositivos muito pequenos */
+    padding: 5vh 0; /* Padding ajustado para dispositivos muito pequenos */
+  }
+  .footerp {
+    font-size: 12px; /* Ajuste de tamanho da fonte para telas muito pequenas */
+  }
+}
 
 /* Responsividade para grandes telas de desktop */
 @media (min-width: 1280px) {
@@ -69,5 +78,17 @@
 
   .footerp {
     font-size: 18px; /* Ajuste do tamanho da fonte para telas grandes */
+  }
+}
+
+/* Estilo para telas de 7 polegadas*/
+@media (min-width: 1024px) and (max-width: 1280px) {
+  .footer {
+    min-height: 60px; /* Altura do footer para telas de 7 polegadas */
+    padding: 2vh 0; /* Padding ajustado para telas de 7 polegadas */
+  }
+
+  .footerp {
+    font-size: 16px; /* Tamanho da fonte para telas de 7 polegadas */
   }
 }
