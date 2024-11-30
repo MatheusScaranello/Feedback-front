@@ -20,7 +20,7 @@
 }
 
 .rightSide {
-    flex: 2; /* O texto ocupa uma parte maior do espaço disponível */
+    flex: 1.5; /* O texto ocupa uma parte maior do espaço disponível */
     text-align: center; /* Centraliza o texto dentro do lado direito */
     margin-top: 10px; /* Margem superior para espaçamento */
 }
@@ -33,7 +33,7 @@
 }
 
 .h1 {
-    font-size: 25px; /* Tamanho da fonte do título */
+    font-size: 16px; /* Tamanho da fonte do título */
     color: #333; /* Cor do texto (um cinza escuro) */
     margin: 0; /* Remove margens para evitar espaçamento indesejado */
     margin-right: 190px; /* Margem direita para afastar do lado da tela */
@@ -49,22 +49,36 @@
     margin-right: 30px; /* Margem direita adicional para espaçamento */
 }
 
-@media (max-width: 768px) {
+/* Estilo para telas de 7 polegadas (largura entre 600px e 800px) */
+@media (min-width: 600px) and (max-width: 800px) {
+    .header {
+        flex-direction: column; /* Itens empilhados verticalmente */
+        height: auto; /* Altura ajustável */
+        padding: 10px; /* Espaçamento interno para evitar bordas apertadas */
+    }
+
     .leftSide, .rightSide {
-        flex-direction: column; /* Alinha itens verticalmente em telas menores */
-        align-items: center; /* Centraliza itens verticalmente */
-        margin-left: 0; /* Remove margem à esquerda */
+        flex-direction: column; /* Itens alinhados verticalmente */
+        align-items: center; /* Centraliza o conteúdo */
+        margin: 0; /* Remove margens laterais */
+        text-align: center; /* Centraliza o texto */
     }
 
     .img {
-        margin-left: 0; /* Remove margem à esquerda */
-        height: 150px; /* Reduz a altura da imagem */    
-        width: auto; /* Redimensiona a imagem para manter a proporção */
+        width: 200px; /* Reduz a largura da imagem */
+        height: auto; /* Mantém a proporção da imagem */
+        margin-top: 10px; /* Espaçamento superior */
     }
-    
+
     .h1 {
-        margin-right: 0; /* Remove margem à direita */
-        font-size: 15px; /* Reduz o tamanho da fonte do título */
+        font-size: 16px; /* Reduz o tamanho do texto */
+        text-align: center; /* Centraliza o título */
+        margin: 10px 0; /* Espaço acima e abaixo do texto */
     }
-    
+
+    .divider {
+        height: 30px; /* Altura menor da divisória */
+        background-color: #ff0000; /* Mantém a cor vermelha */
+        margin: 10px 0; /* Espaçamento vertical */
+    }
 }
