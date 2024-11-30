@@ -12,7 +12,7 @@
     height: 530px; /* Altura fixa do cartão */
     margin: auto; /* Centraliza o cartão horizontalmente */
     background-color: rgba(255, 255, 255, 0.5); /* Fundo branco com transparência */
-    margin-top: 35px; /* Espaço acima do cartão */
+    margin-top: 60px; /* Espaço acima do cartão */
 }
 
 /* Estilo do fundo da página */
@@ -135,4 +135,143 @@
     font-size: 17px; /* Tamanho da fonte */
     margin-top: 10px; /* Margem superior */
     margin-right: 320px; /* Margem à direita */
+}
+
+/* Estilo geral para telas menores */
+@media screen and (max-width: 768px) {
+    .card {
+        max-width: 90%; /* Ajusta a largura do cartão */
+        height: auto; /* Permite que a altura seja adaptativa */
+        padding: 15px; /* Reduz o espaçamento interno */
+        margin-top: 60px; /* Reduz o espaço acima */
+    }
+
+    .fundo {
+        height: auto; /* Adapta a altura ao conteúdo */
+        background-size: contain; /* Ajusta o tamanho do fundo */
+    }
+
+    .scale {
+        flex-wrap: wrap; /* Permite que os botões quebrem linha */
+        margin: 20px 0; /* Reduz a margem vertical */
+    }
+
+    .button {
+        margin: 5px; /* Reduz o espaçamento entre os botões */
+        padding: 8px; /* Reduz o espaçamento interno */
+        font-size: 14px; /* Reduz o tamanho da fonte */
+    }
+
+    .textarea {
+        width: 100%; /* Ajusta a largura ao container */
+        height: auto; /* Permite que a altura seja adaptativa */
+    }
+
+    .submit {
+        width: 100%; /* Botão de envio ocupa toda a largura disponível */
+        height: auto; /* Altura adaptativa */
+        padding: 10px; /* Ajusta o espaçamento interno */
+    }
+
+    .avaliContainer {
+        flex-direction: column; /* Alinha os itens em coluna */
+        align-items: center; /* Centraliza os itens */
+    }
+
+    .avali, .avali01 {
+        margin: 10px 0; /* Ajusta a margem vertical */
+        font-size: 14px; /* Reduz o tamanho da fonte */
+        margin-left: 0; /* Remove margens laterais */
+        margin-right: 0;
+    }
+
+    .text, .text02 {
+        font-size: 16px; /* Reduz o tamanho da fonte */
+        margin: 10px 0; /* Ajusta margens superiores */
+    }
+}
+
+/* Estilo específico para telas de 7 polegadas (como tablets) */
+@media screen and (min-width: 600px) and (max-width: 800px) {
+    .card {
+        max-width: 85%; /* Ligeiramente maior em telas médias */
+        height: auto; /* Permite ajuste ao conteúdo */
+        margin-top: 15px;
+    }
+
+    .fundo {
+        background-position: center; /* Centraliza melhor o fundo */
+        background-size: cover; /* Mantém o fundo ajustado */
+    }
+
+     /* Escala dos botões */
+     .scale {
+        flex-wrap: wrap;
+        justify-content: center;
+        margin: 20px 0;
+    }
+
+
+    .submit {
+        width: 40%; /* Botão ocupa menos largura */
+    }
+
+    .avaliContainer {
+        margin: 20px 0; /* Ajusta a margem para melhor espaçamento */
+    }
+
+    .avali, .avali01 {
+        font-size: 16px; /* Mantém o texto legível */
+        margin-left: 200px;
+    }
+    .button, .selected, .notSelected {
+        width: 40px;
+        height: 40px;
+        font-size: 14px;
+        margin: 5px;
+    }
+     /* Área de texto */
+     .textarea {
+        width: 90%;
+        height: 80px;
+        margin-top: 5px;
+        font-size: 14px;
+    }
+
+    /* Botão de envio */
+    .submit {
+        width: 60%;
+        height: auto;
+        font-size: 16px;
+    }
+
+    /* Texto do questionário */
+    .text {
+        font-size: 16px;
+        margin: 10px 0;
+        margin-top: 15px;
+    }
+
+    .text02 {
+        font-size: 14px;
+        margin-top: 30px;
+        margin-right: 280px;
+    }
+
+    .avali {
+        margin: -25px 0; /* Margem negativa para ajuste */
+        font-family: "Inter", sans-serif; /* Fonte definida como Inter */
+        margin-right: -470px; /* Margem negativa à direita */
+        
+    }
+    .avali01 {
+        margin: -25px 0; /* Margem negativa para ajuste */
+        font-family: "Inter", sans-serif; /* Fonte definida como Inter */
+        margin-right: 440px; /* Margem à direita */
+        font-size: 15px; /* Tamanho da fonte */
+    }
+   .footer {
+        margin-top: 20px;
+        font-size: 14px;
+    }
 }
