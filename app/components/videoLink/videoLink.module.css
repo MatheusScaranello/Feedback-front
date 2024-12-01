@@ -85,3 +85,143 @@
     /*coloque no centro*/
     text-align: center;
 }
+/* Responsividade para telas médias (tablets, como o iPad Pro) */
+/* Responsividade para telas médias (tablets, como o iPad Pro) */
+@media (max-width: 1024px) {
+    .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center; /* Centraliza verticalmente */
+        align-items: center; /* Centraliza horizontalmente */
+        padding: 20px;
+        margin: 20px auto;
+        width: 100%;  /* Garante que o container ocupe toda a largura disponível */
+        max-width: 850px;
+        height: 80vh; /* Ajusta a altura para 80% da altura da tela */
+        min-width: 400px; /* Garante que não fique muito estreito */
+    }
+
+    .input,
+    .button {
+        font-size: 14px;
+        padding: 14px;
+    }
+
+    .video {
+        width: 90%;
+        height: 240px;
+        max-width: 560px;
+        margin: 20px auto;
+        display: block;
+    }
+
+    .h1 {
+        font-size: 18px;
+        margin-top: 10%;
+        text-align: center; /* Certifica-se de que o texto fique centralizado */
+    }
+
+    .h2 {
+        font-size: 14px;
+        text-align: center; /* Centraliza o texto */
+    }
+}
+
+/* Responsividade para telas de 7 polegadas (smartphones grandes ou tablets pequenos) */
+@media (max-width: 768px) {
+    .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center; /* Centraliza o conteúdo verticalmente */
+        align-items: center; /* Centraliza horizontalmente */
+        padding: 15px;
+        margin: 20px auto;
+        width: 100%;
+        max-width: 500px;
+        height: auto; /* Permite que o conteúdo se ajuste automaticamente */
+        min-width: 300px;
+    }
+
+    .input,
+    .button {
+        font-size: 14px;
+        padding: 14px;
+    }
+
+    .video {
+        height: 240px;
+        width: 80%;
+        margin: 10px auto;
+    }
+
+    .h1 {
+        font-size: 18px;
+        margin-top: 15%;
+        text-align: center; /* Centraliza o título */
+    }
+
+    .h2 {
+        font-size: 14px;
+        text-align: center; /* Centraliza o subtítulo */
+    }
+}
+
+/* Responsividade para telas pequenas (smartphones) */
+@media (max-width: 480px) {
+    .container {
+        padding: 10px;
+        width: 90%;
+        max-width: 400px;
+    }
+
+    .input,
+    .button {
+        padding: 14px;
+        font-size: 14px;
+    }
+
+    .video {
+       max-width: 300px;
+       height: 300px;
+        max-width: 250px;
+        margin: 10px auto;
+        margin-top: 25%; /* Adiciona margem superior para descer o vídeo */
+    }
+
+    .h1 {
+        font-size: 16px;
+    }
+
+    .h2 {
+        font-size: 12px;
+    }
+}
+
+/* Responsividade para telas muito pequenas (smartphones muito pequenos) */
+@media (max-width: 360px) {
+    .container {
+        padding: 10px;
+        margin: 10px auto;
+        width: 85%; /* Diminui o container para telas pequenas */
+        max-width: 320px; /* Largura reduzida para telas menores */
+    }
+
+    .input,
+    .button {
+        padding: 12px;
+        font-size: 12px;
+    }
+
+    .video {
+        height: 300px;
+        margin-top: 30%; /* Ajusta a margem superior para centralizar o vídeo */
+    }
+
+    .h1 {
+        font-size: 14px;
+    }
+
+    .h2 {
+        font-size: 10px;
+    }
+}

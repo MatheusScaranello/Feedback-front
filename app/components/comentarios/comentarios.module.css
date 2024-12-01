@@ -211,6 +211,8 @@
   }
   .controls {
     flex-direction: column;
+    align-items: center;
+    
   }
   .sortButton {
     width: 80%;
@@ -218,8 +220,9 @@
     
   }
   .item {
-    width: 80%; /* Cards ocupam 100% da largura em telas muito pequenas */
+    width: 93%; /* Cards ocupam 100% da largura em telas muito pequenas */
     height: auto; /* Ajusta a altura automaticamente */
     text-align: center;
+    align-items: center;
   }
 }

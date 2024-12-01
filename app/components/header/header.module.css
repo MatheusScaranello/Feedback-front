@@ -82,3 +82,26 @@
         margin: 10px 0; /* Espaçamento vertical */
     }
 }
+@media (max-width: 600px) {
+    .leftSide, .rightSide {
+        flex-direction: column; /* Itens alinhados verticalmente */
+        align-items: center; /* Centraliza o conteúdo */
+        margin: 0; /* Remove margens laterais */
+        text-align: center; /* Centraliza o texto */
+    }
+    .img {
+        width: 100px; /* Reduz a largura da imagem */
+        height: auto; /* Mantém a proporção da imagem */
+        margin-top: 10px; /* Espaçamento superior */
+    }
+    .h1 {
+        font-size: 12px; /* Reduz o tamanho do texto */
+        text-align: center; /* Centraliza o título */
+        margin: 10px 0; /* Espaço acima e abaixo do texto */
+    }
+    .divider {
+        height: 30px; /* Altura menor da divisória */
+        background-color: #ff0000; /* Mantém a cor vermelha */
+        margin: 10px 0; /* Espaçamento vertical */
+    }
+}
