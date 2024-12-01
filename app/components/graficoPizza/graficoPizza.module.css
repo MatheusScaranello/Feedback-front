@@ -51,15 +51,10 @@
   padding: 40px;
   font-family: 'Inter', Arial, sans-serif;
   border-radius: 12px;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
-  background-color: rgba(255, 255, 255, 0.9);
-  border: 1px solid #ddd;
   margin-top: 60px;
-  transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
 .chartContainer:hover {
-  transform: translateY(-8px);
   box-shadow: 0 18px 50px rgba(0, 0, 0, 0.2);
 }
 
@@ -70,10 +65,7 @@
   width: 100%;
   padding: 14px;
   font-size: 18px;
-  border: 1px solid #ddd;
   border-radius: 8px;
-  background: #f9f9f9;
-  transition: border-color 0.3s ease, background 0.3s ease;
   margin-bottom: 22px;
   box-sizing: border-box;
 }
@@ -226,7 +218,6 @@
 .gaugeContainer {
   margin: 25px auto;
   text-align: center;
-  background: #ffffff;
   border: 3px solid #e60000;
   border-radius: 14px;
   padding: 30px;
@@ -258,83 +249,82 @@
   margin-top: 6px;
 }
 
-/* Responsividade para telas menores */
-@media (max-width: 768px) {
+/* Responsividade para diferentes larguras de tela */
+@media (max-width: 1024px) {
   .title {
-    font-size: 26px;
-  }
-
-  .searchInput {
-    width: 70%;
-    margin-left: 15%;
-  }
-
-  .metric {
-    flex: 1 1 calc(48% - 20px); /* Duas métricas por linha */
-  }
-
-  .metrics {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
-
-  .exportButton {
-    width: 70%;
-    margin-left: 15%;
-  }
-
-  .chartContainer {
-    margin-top: 25px;
-  }
-
-  .searchInput {
-    width: 85%;
-    margin-left: 7.5%;
+    font-size: clamp(24px, 5vw, 32px); /* Ajuste fluido */
   }
 
   .metric {
     flex: 1 1 calc(48% - 15px); /* Duas métricas por linha */
   }
 
-  .exportButton {
-    width: 80%;
-    margin-left: 10%;
-  }
-
-  .localSelector {
-    width: 80%;
-    margin-left: 10%;
-  }
-
+  .exportButton, 
+  .searchInput, 
+  .localSelector, 
   .periodo input[type="date"] {
-    width: 65%;
-    margin-left: 15%;
+    width: 90%;
+    margin: 0 auto; /* Centraliza elementos */
   }
 
   .sliderContainer input[type="range"] {
     width: 85%;
-    margin-left: 7.5%;
+  }
+
+  .chartContainer {
+    padding: 20px;
   }
 }
 
-/* Responsividade para telas ainda menores (como smartphones) */
-@media (max-width: 480px) {
+@media (max-width: 768px) {
   .title {
     font-size: 22px;
   }
 
-  .searchInput {
-    width: 90%;
-    margin-left: 5%;
-  }
-
   .metric {
-    flex: 1 1 48%;
+    flex: 1 1 calc(48% - 10px); /* Mais espaçamento para telas menores */
   }
 
   .exportButton {
+    font-size: 18px;
+    padding: 12px;
+  }
+
+  .gaugeContainer {
+    padding: 20px;
+  }
+
+  .searchInput {
+    width: 85%;
+  }
+
+  .sliderContainer input[type="range"] {
     width: 90%;
-    margin-left: 5%;
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: clamp(18px, 4vw, 22px);
+  }
+
+  .metric {
+    flex: 1 1 calc(100% - 10px); /* Uma métrica por linha */
+    margin: 10px auto;
+  }
+
+  .exportButton {
+    padding: 10px;
+    font-size: 16px;
+  }
+
+  .localSelector,
+  .periodo input[type="date"],
+  .searchInput {
+    width: 95%;
+  }
+
+  .sliderContainer input[type="range"] {
+    width: 95%;
   }
 }
