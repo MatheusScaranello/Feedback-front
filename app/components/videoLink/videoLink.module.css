@@ -134,7 +134,7 @@
         flex-direction: column;
         justify-content: center; /* Centraliza o conteúdo verticalmente */
         align-items: center; /* Centraliza horizontalmente */
-        padding: 15px;
+        padding: 40px;
         margin: 20px auto;
         width: 100%;
         max-width: 500px;
@@ -150,7 +150,7 @@
 
     .video {
         height: 240px;
-        width: 80%;
+        width: 100%;
         margin: 10px auto;
     }
 
