@@ -9,10 +9,11 @@
   font-family: 'Inter', sans-serif; /* Define a fonte */
   position: relative; /* Define a posição relativa para posicionamento do conteúdo */
   padding: 2vh 0; /* Padding ajustado com unidades relativas à altura da tela */
-  z-index: 1500; /* Garante que o footer fique acima de outros elementos */
+  z-index: 1800; /* Garante que o footer fique acima de outros elementos */
   display: flex; /* Usando flexbox para centralizar o conteúdo */
   justify-content: center; /* Centraliza horizontalmente */
   align-items: center; /* Centraliza verticalmente */
+  margin-top: 200px; /* Ajuste de margem para telas grandes */
 }
 
 /* Estilo do parágrafo dentro do footer */
@@ -86,6 +87,7 @@
   .footer {
     min-height: 60px; /* Altura do footer para telas de 7 polegadas */
     padding: 2vh 0; /* Padding ajustado para telas de 7 polegadas */
+    margin-top: 650px; /* Ajuste de margem para telas de 7 polegadas */
   }
 
   .footerp {

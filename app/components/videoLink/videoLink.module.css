@@ -13,7 +13,7 @@
     width: 100%; /* Garante que o container ocupe toda a largura disponível */
     min-width: 400px; /* Define uma largura mínima para não ficar muito estreito */
     transition: none; /* Remove a transição para evitar encolhimento durante o carregamento */
-    min-height: 70vh; /* Garante que o container tenha uma altura mínima */
+   
 }
 
 .errorContainer {
@@ -136,8 +136,8 @@
         align-items: center; /* Centraliza horizontalmente */
         padding: 40px;
         margin: 20px auto;
-        width: 100%;
-        max-width: 500px;
+        width: 100%; /* Garante que o container ocupe toda a largura disponível */
+        max-width: 450px;
         height: auto; /* Permite que o conteúdo se ajuste automaticamente */
         min-width: 300px;
     }
@@ -151,7 +151,7 @@
     .video {
         height: 240px;
         width: 100%;
-        margin: 10px auto;
+        margin-top: 15%; /* Adiciona margem superior para descer o vídeo */
     }
 
     .h1 {
@@ -170,7 +170,7 @@
 @media (max-width: 480px) {
     .container {
         padding: 10px;
-        width: 90%;
+        width: 80%;
         max-width: 400px;
     }
 
@@ -202,6 +202,7 @@
     .container {
         padding: 10px;
         margin: 10px auto;
+        margin-top: 350px; /* Ajusta a margem superior para centralizar o container */
         width: 85%; /* Diminui o container para telas pequenas */
         max-width: 320px; /* Largura reduzida para telas menores */
     }
@@ -214,7 +215,7 @@
 
     .video {
         height: 300px;
-        margin-top: 30%; /* Ajusta a margem superior para centralizar o vídeo */
+        margin-top: 50%; /* Ajusta a margem superior para centralizar o vídeo */
     }
 
     .h1 {
@@ -224,4 +225,5 @@
     .h2 {
         font-size: 10px;
     }
+   
 }
