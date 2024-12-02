@@ -81,14 +81,14 @@ export default function VideoPage({
         }
 
         hideTimerRef.current = setTimeout(() => {
-            setIsVisible(false); // Esconde o vídeo após 10 segundos
+            setIsVisible(true); // Exibe o vídeo após 10 segundos sem interação
         }, HIDE_DELAY);
     }, []);
 
     // Função para manipular a interação do usuário
     const handleUserInteraction = useCallback(() => {
-        setIsVisible(true); // Exibe o vídeo quando há interação
-        startHideTimer(); // Reinicia o timer de esconder
+        setIsVisible(false); // Esconde o vídeo quando há interação
+        startHideTimer(); // Reinicia o timer para exibir após 10 segundos
     }, [startHideTimer]);
 
     // Buscar o vídeo ao montar o componente
