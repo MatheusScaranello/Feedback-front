@@ -9,19 +9,18 @@ const RETRY_ATTEMPTS = 3; // Máximo de tentativas para carregar o vídeo
 const RETRY_DELAY = 2000; // Intervalo entre tentativas (ms)
 
 export default function VideoPage({
-    autoHide = true, // Esconde o player automaticamente após interação
     showControls = false, // Exibir controles no player
     onError, // Callback para erros
     onVideoLoad, // Callback para sucesso no carregamento do vídeo
 }) {
     const [videoId, setVideoId] = useState(null);
-    const [isVisible, setIsVisible] = useState(true);
-    const [isMuted, setIsMuted] = useState(true);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const [retryCount, setRetryCount] = useState(0);
-    const iframeRef = useRef(null);
-    const hideTimerRef = useRef(null);
+    const [isVisible, setIsVisible] = useState(true); // Controle de visibilidade
+    const [isMuted, setIsMuted] = useState(true); // Controle de som
+    const [loading, setLoading] = useState(true); // Estado de carregamento
+    const [error, setError] = useState(null); // Estado de erro
+    const [retryCount, setRetryCount] = useState(0); // Contador de tentativas de retry
+    const iframeRef = useRef(null); // Referência ao iframe do vídeo
+    const hideTimerRef = useRef(null); // Referência ao timer de esconder o vídeo
 
     // Função para extrair o ID do vídeo a partir da URL
     const extractVideoId = (url) => {
@@ -77,27 +76,45 @@ export default function VideoPage({
 
     // Configurar timer de auto-hide
     const startHideTimer = useCallback(() => {
-        if (!autoHide) return;
-
         if (hideTimerRef.current) {
             clearTimeout(hideTimerRef.current);
         }
 
         hideTimerRef.current = setTimeout(() => {
-            setIsVisible(false);
+            setIsVisible(false); // Esconde o vídeo após 10 segundos
         }, HIDE_DELAY);
-    }, [autoHide]);
+    }, []);
 
-    // Interação do usuário reinicia o timer de auto-hide
-    const handleInteraction = useCallback(() => {
-        setIsVisible(true);
-        startHideTimer();
+    // Função para manipular a interação do usuário
+    const handleUserInteraction = useCallback(() => {
+        setIsVisible(true); // Exibe o vídeo quando há interação
+        startHideTimer(); // Reinicia o timer de esconder
     }, [startHideTimer]);
 
     // Buscar o vídeo ao montar o componente
     useEffect(() => {
         fetchVideo();
-    }, [fetchVideo]);
+
+        // Adicionar eventos de interação do usuário
+        const interactionEvents = [
+            "click", "mousemove", "keydown", "touchstart", "scroll"
+        ];
+
+        interactionEvents.forEach((event) => {
+            window.addEventListener(event, handleUserInteraction);
+        });
+
+        // Limpar os eventos e o timer ao desmontar o componente
+        return () => {
+            if (hideTimerRef.current) {
+                clearTimeout(hideTimerRef.current);
+            }
+
+            interactionEvents.forEach((event) => {
+                window.removeEventListener(event, handleUserInteraction);
+            });
+        };
+    }, [fetchVideo, handleUserInteraction]);
 
     // Limpar o timer ao desmontar o componente
     useEffect(() => {
@@ -137,7 +154,6 @@ export default function VideoPage({
     return (
         <div
             className={`${styles.videoWrapper} ${isVisible ? styles.fadeIn : styles.fadeOut}`}
-            onClick={handleInteraction}
         >
             <iframe
                 ref={iframeRef}
