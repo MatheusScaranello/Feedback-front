@@ -4,12 +4,11 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import styles from "./video.module.css";
 import videoService from "../../service/video";
 
-const HIDE_DELAY = 10000; // 10 seconds
+const HIDE_DELAY = 10000; // 10 segundos
 const RETRY_ATTEMPTS = 3;
-const RETRY_DELAY = 2000; // 2 seconds
+const RETRY_DELAY = 2000; // 2 segundos
 
 export default function VideoPage({ 
-    videoId: initialVideoId,
     autoHide = true,
     showControls = false,
     onError,
@@ -18,7 +17,7 @@ export default function VideoPage({
     const [isVisible, setIsVisible] = useState(true);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [videoId, setVideoId] = useState(initialVideoId || "");
+    const [videoId, setVideoId] = useState("");
     const [retryCount, setRetryCount] = useState(0);
     const [isMuted, setIsMuted] = useState(true);
     const timerRef = useRef(null);
@@ -46,16 +45,13 @@ export default function VideoPage({
         }
 
         timerRef.current = setTimeout(() => {
-            setIsVisible(false);
+            setIsVisible(true); // Reaparece após 10 segundos
         }, HIDE_DELAY);
     }, [autoHide]);
 
-    const handleInteraction = useCallback((event) => {
-        // Prevent interaction if clicking on control elements
-        if (event?.target?.closest('.video-controls')) return;
-
-        setIsVisible(true);
-        startHideTimer();
+    const handleInteraction = useCallback(() => {
+        setIsVisible(false); // Esconde o vídeo
+        startHideTimer(); // Inicia o timer para reaparecer
     }, [startHideTimer]);
 
     const handleVideoError = useCallback((error) => {
@@ -80,13 +76,8 @@ export default function VideoPage({
         setError(null);
 
         try {
-            const [video] = await videoService.getVideo();
-            
-            if (!video?.url) {
-                throw new Error("URL do vídeo não encontrada.");
-            }
-
-            const id = extractVideoId(video.url);
+            const url = await videoService.getVideo();
+            const id = extractVideoId(url);
             setVideoId(id);
             setRetryCount(0); // Reset retry count on success
             
@@ -104,7 +95,7 @@ export default function VideoPage({
         setIsMuted(prev => !prev);
         
         if (iframeRef.current) {
-            // Communicate with YouTube iframe using postMessage
+            // Comunica com o iframe do YouTube usando postMessage
             iframeRef.current.contentWindow.postMessage(
                 JSON.stringify({
                     event: 'command',
@@ -115,45 +106,15 @@ export default function VideoPage({
         }
     }, [isMuted]);
 
-    // Effect for video fetching
     useEffect(() => {
-        if (!videoId) {
-            fetchVideo();
-        } else {
-            setLoading(false);
+        fetchVideo();
+    }, [fetchVideo]);
+
+    useEffect(() => {
+        if (timerRef.current) {
+            clearTimeout(timerRef.current);
         }
-    }, [videoId, fetchVideo]);
 
-    // Effect for handling interactions
-    useEffect(() => {
-        if (!autoHide) return;
-
-        startHideTimer();
-
-        const handleGlobalClick = (e) => handleInteraction(e);
-        const handleKeyPress = (e) => handleInteraction(e);
-        const handleVisibilityChange = () => {
-            if (document.hidden) {
-                setIsVisible(false);
-            }
-        };
-
-        window.addEventListener('click', handleGlobalClick);
-        window.addEventListener('keydown', handleKeyPress);
-        document.addEventListener('visibilitychange', handleVisibilityChange);
-
-        return () => {
-            if (timerRef.current) {
-                clearTimeout(timerRef.current);
-            }
-            window.removeEventListener('click', handleGlobalClick);
-            window.removeEventListener('keydown', handleKeyPress);
-            document.removeEventListener('visibilitychange', handleVisibilityChange);
-        };
-    }, [handleInteraction, startHideTimer, autoHide]);
-
-    // Cleanup on unmount
-    useEffect(() => {
         return () => {
             if (timerRef.current) {
                 clearTimeout(timerRef.current);
@@ -190,44 +151,21 @@ export default function VideoPage({
         );
     }
 
-    // Modificar a parte do return do componente
-return (
-    <div className={`${styles.videoWrapper} ${isVisible ? styles.fadeIn : styles.fadeOut}`}>
-        <iframe
-            ref={iframeRef}
-            className={styles.video}
-            src={`https://www.youtube.com/embed/${videoId}?autoplay=1&modestbranding=1&loop=1&playlist=${videoId}&controls=${showControls ? 1 : 0}&mute=${isMuted ? 1 : 0}&enablejsapi=1`}
-            title="YouTube video player"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            onError={handleVideoError}
-        />
-
+    return (
         <div 
-            className={styles.clickOverlay} 
-            onClick={(e) => {
-                e.stopPropagation();
-                setIsVisible(false);
-                // Reinicia o timer para mostrar o vídeo novamente após 10 segundos
-                setTimeout(() => {
-                    setIsVisible(true);
-                }, HIDE_DELAY);
-            }}
+            className={`${styles.videoWrapper} ${isVisible ? styles.fadeIn : styles.fadeOut}`} 
+            onClick={handleInteraction}
         >
-            <div className={`${styles.videoControls} video-controls`} onClick={e => e.stopPropagation()}>
-                <button 
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        toggleMute();
-                    }}
-                    className={styles.muteButton}
-                    aria-label={isMuted ? "Ativar som" : "Desativar som"}
-                >
-                    {isMuted ? "🔇" : "🔊"}
-                </button>
-            </div>
+            <iframe
+                ref={iframeRef}
+                className={styles.video}
+                src={`https://www.youtube.com/embed/${videoId}?autoplay=1&modestbranding=1&loop=1&playlist=${videoId}&controls=${showControls ? 1 : 0}&mute=${isMuted ? 1 : 0}&enablejsapi=1`}
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                onError={handleVideoError}
+            />
         </div>
-    </div>
-);
+    );
 }
