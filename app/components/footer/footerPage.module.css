@@ -13,7 +13,7 @@
   display: flex; /* Usando flexbox para centralizar o conteúdo */
   justify-content: center; /* Centraliza horizontalmente */
   align-items: center; /* Centraliza verticalmente */
-  margin-top: 200px; /* Ajuste de margem para telas grandes */
+  
 }
 
 /* Estilo do parágrafo dentro do footer */

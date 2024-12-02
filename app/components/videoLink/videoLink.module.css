@@ -8,7 +8,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     background-color: rgba(255, 255, 255, 0.5);
     border: 1px solid black;
-    margin: 100px auto; /* Centraliza o container */
+    margin: 180px auto; /* Centraliza o container */
     max-width: 850px; /* Define uma largura máxima */
     width: 100%; /* Garante que o container ocupe toda a largura disponível */
     min-width: 400px; /* Define uma largura mínima para não ficar muito estreito */
@@ -94,7 +94,7 @@
         justify-content: center; /* Centraliza verticalmente */
         align-items: center; /* Centraliza horizontalmente */
         padding: 20px;
-        margin: 20px auto;
+        margin: 10px auto;
         width: 100%;  /* Garante que o container ocupe toda a largura disponível */
         max-width: 850px;
         height: 80vh; /* Ajusta a altura para 80% da altura da tela */
