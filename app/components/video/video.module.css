@@ -1,29 +1,121 @@
 .videoWrapper {
-    position: fixed; /* Mantém o contêiner do vídeo fixo na viewport, mesmo ao rolar a página */
-    top: 0; /* Alinha o contêiner ao topo da página */
-    left: 0; /* Alinha o contêiner à esquerda da página */
-    width: 100vw; /* Define a largura do contêiner como 100% da largura da viewport */
-    height: 100vh; /* Define a altura do contêiner como 100% da altura da viewport */
-    display: flex; /* Usa flexbox para organizar o conteúdo interno */
-    justify-content: center; /* Centraliza o conteúdo horizontalmente */
-    align-items: center; /* Centraliza o conteúdo verticalmente */
-    z-index: 9999; /* Define um índice z alto para garantir que o contêiner fique acima de outros elementos na página */
-    pointer-events: none; /* Impede qualquer interação direta com o vídeo, permitindo que eventos de mouse passem pelo contêiner */
-}
-
-.video {
-    width: 100%; /* Define a largura do vídeo como 100% do contêiner pai */
-    height: 100%; /* Define a altura do vídeo como 100% do contêiner pai */
-    pointer-events: none; /* Impede qualquer interação direta com o vídeo, como pausar ou tocar */
-}
-
-.clickOverlay {
-    position: absolute; /* Posiciona a sobreposição em relação ao contêiner pai */
-    top: 0; /* Alinha a sobreposição ao topo do pai */
-    left: 0; /* Alinha a sobreposição à esquerda do pai */
-    width: 100%; /* Define a largura da sobreposição como 100% do pai */
-    height: 100%; /* Define a altura da sobreposição como 100% do pai */
-    cursor: pointer; /* Muda o cursor para indicar que a sobreposição é clicável */
-    background: transparent; /* Define um fundo transparente, permitindo que o vídeo seja visto por trás */
-    pointer-events: auto; /* Permite interações com a sobreposição, como cliques */
-}
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+    pointer-events: none; /* Permite clicar através do wrapper */
+  }
+  
+  .video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.3s ease-in-out;
+  }
+  
+  .clickOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: auto; /* Permite interação com o overlay */
+    cursor: pointer;
+  }
+  
+  .videoControls {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    z-index: 10000;
+  }
+  
+  .muteButton {
+    background: rgba(0, 0, 0, 0.6);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    color: white;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+  }
+  
+  .muteButton:hover {
+    background: rgba(0, 0, 0, 0.8);
+  }
+  
+  .loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+  }
+  
+  .spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 1s ease-in-out infinite;
+    margin: 0 auto 10px;
+  }
+  
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .error {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    border-radius: 8px;
+  }
+  
+  .retryButton {
+    margin-top: 10px;
+    padding: 8px 16px;
+    background: #2196f3;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .retryButton:hover {
+    background: #1976d2;
+  }
+  
+  /* Animação de fade para o vídeo */
+  .fadeIn {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+  }
+  
+  .fadeOut {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+  }
