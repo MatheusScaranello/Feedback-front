@@ -4,29 +4,34 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import styles from "./video.module.css";
 import videoService from "../../service/video";
 
-const HIDE_DELAY = 10000; // 10 segundos
-const RETRY_ATTEMPTS = 3;
-const RETRY_DELAY = 2000; // 2 segundos
+const HIDE_DELAY = 10000; // Tempo de delay para esconder/reaparecer o vídeo (em ms)
+const RETRY_ATTEMPTS = 3; // Número máximo de tentativas ao buscar o vídeo
+const RETRY_DELAY = 2000; // Delay entre tentativas de recuperação do vídeo (em ms)
 
-export default function VideoPage({ 
-    autoHide = true,
-    showControls = false,
-    onError,
-    onVideoLoad 
+export default function VideoPage({
+    autoHide = true, // Esconde o vídeo após interação?
+    showControls = false, // Exibir controles do player?
+    onError, // Callback para erros
+    onVideoLoad, // Callback para carregamento de vídeo
 }) {
+    const [videoId, setVideoId] = useState("");
     const [isVisible, setIsVisible] = useState(true);
+    const [isMuted, setIsMuted] = useState(true);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [videoId, setVideoId] = useState("");
     const [retryCount, setRetryCount] = useState(0);
-    const [isMuted, setIsMuted] = useState(true);
-    const timerRef = useRef(null);
     const iframeRef = useRef(null);
+    const hideTimerRef = useRef(null);
 
+    // Função para extrair o ID de um vídeo do YouTube a partir da URL
     const extractVideoId = useCallback((url) => {
+        if (typeof url !== "string") {
+            throw new Error("A URL fornecida não é uma string válida.");
+        }
+
         const patterns = [
             /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})(?=[^\w-]|$)/,
-            /^[a-zA-Z0-9_-]{11}$/ // Direct video ID
+            /^[a-zA-Z0-9_-]{11}$/, // Caso o input já seja um ID direto
         ];
 
         for (const pattern of patterns) {
@@ -37,87 +42,82 @@ export default function VideoPage({
         throw new Error("URL inválida. Não é um vídeo do YouTube válido.");
     }, []);
 
-    const startHideTimer = useCallback(() => {
-        if (!autoHide) return;
-        
-        if (timerRef.current) {
-            clearTimeout(timerRef.current);
-        }
-
-        timerRef.current = setTimeout(() => {
-            setIsVisible(true); // Reaparece após 10 segundos
-        }, HIDE_DELAY);
-    }, [autoHide]);
-
-    const handleInteraction = useCallback(() => {
-        setIsVisible(false); // Esconde o vídeo
-        startHideTimer(); // Inicia o timer para reaparecer
-    }, [startHideTimer]);
-
-    const handleVideoError = useCallback((error) => {
-        console.error("Erro no vídeo:", error);
-        setError(error.message);
-        
-        if (onError) {
-            onError(error);
-        }
-
-        // Retry logic
-        if (retryCount < RETRY_ATTEMPTS) {
-            setTimeout(() => {
-                setRetryCount(prev => prev + 1);
-                fetchVideo();
-            }, RETRY_DELAY);
-        }
-    }, [retryCount, onError]);
-
+    // Função para buscar o vídeo na API
     const fetchVideo = useCallback(async () => {
         setLoading(true);
         setError(null);
 
         try {
             const url = await videoService.getVideo();
+
+            if (!url || typeof url !== "string") {
+                throw new Error("URL do vídeo ausente ou inválida.");
+            }
+
             const id = extractVideoId(url);
             setVideoId(id);
-            setRetryCount(0); // Reset retry count on success
-            
-            if (onVideoLoad) {
-                onVideoLoad(id);
-            }
+            setRetryCount(0); // Reset ao obter sucesso
+            if (onVideoLoad) onVideoLoad(id);
         } catch (err) {
-            handleVideoError(err);
+            console.error("Erro ao carregar o vídeo:", err);
+            setError(err.message);
+            if (onError) onError(err);
+
+            // Retry logic
+            if (retryCount < RETRY_ATTEMPTS) {
+                setTimeout(() => {
+                    setRetryCount((prev) => prev + 1);
+                    fetchVideo();
+                }, RETRY_DELAY);
+            }
         } finally {
             setLoading(false);
         }
-    }, [extractVideoId, handleVideoError, onVideoLoad]);
+    }, [extractVideoId, onError, onVideoLoad, retryCount]);
 
+    // Função para alternar o estado de som
     const toggleMute = useCallback(() => {
-        setIsMuted(prev => !prev);
-        
+        setIsMuted((prev) => !prev);
         if (iframeRef.current) {
-            // Comunica com o iframe do YouTube usando postMessage
             iframeRef.current.contentWindow.postMessage(
                 JSON.stringify({
-                    event: 'command',
-                    func: isMuted ? 'unMute' : 'mute'
+                    event: "command",
+                    func: isMuted ? "unMute" : "mute",
                 }),
-                '*'
+                "*"
             );
         }
     }, [isMuted]);
 
+    // Timer para esconder o vídeo
+    const startHideTimer = useCallback(() => {
+        if (!autoHide) return;
+
+        if (hideTimerRef.current) {
+            clearTimeout(hideTimerRef.current);
+        }
+
+        hideTimerRef.current = setTimeout(() => {
+            setIsVisible(false);
+        }, HIDE_DELAY);
+    }, [autoHide]);
+
+    // Interação do usuário que reinicia o timer
+    const handleInteraction = useCallback(() => {
+        setIsVisible(true);
+        startHideTimer();
+    }, [startHideTimer]);
+
+    // Fetch inicial do vídeo
     useEffect(() => {
         fetchVideo();
     }, [fetchVideo]);
 
+    // Cleanup do timer ao desmontar o componente
     useEffect(() => {
-        if (timerRef.current) {
-            clearTimeout(timerRef.current);
-        }
-
         return () => {
-            if (timerRef.current) {
-                clearTimeout(timerRef.current);
+            if (hideTimerRef.current) {
+                clearTimeout(hideTimerRef.current);
             }
         };
     }, []);
@@ -139,10 +139,7 @@ export default function VideoPage({
                 <div className={styles.error}>
                     <p>{error}</p>
                     {retryCount < RETRY_ATTEMPTS && (
-                        <button 
-                            onClick={fetchVideo}
-                            className={styles.retryButton}
-                        >
+                        <button onClick={fetchVideo} className={styles.retryButton}>
                             Tentar novamente
                         </button>
                     )}
@@ -152,8 +149,8 @@ export default function VideoPage({
     }
 
     return (
-        <div 
-            className={`${styles.videoWrapper} ${isVisible ? styles.fadeIn : styles.fadeOut}`} 
+        <div
+            className={`${styles.videoWrapper} ${isVisible ? styles.fadeIn : styles.fadeOut}`}
             onClick={handleInteraction}
         >
             <iframe
@@ -164,8 +161,20 @@ export default function VideoPage({
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
-                onError={handleVideoError}
             />
+
+            <div className={styles.videoControls}>
+                <button
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        toggleMute();
+                    }}
+                    className={styles.muteButton}
+                    aria-label={isMuted ? "Ativar som" : "Desativar som"}
+                >
+                    {isMuted ? "🔇" : "🔊"}
+                </button>
+            </div>
         </div>
     );
 }
